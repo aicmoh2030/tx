@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>متابعة المعاملات</title>
+<meta name="theme-color" content="#17324d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="المعاملات">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--navy:#17324d;--navy2:#254d70;--gold:#b78324;--ink:#17212b;--muted:#6b7785;--line:#e3e8ee}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--navy);font-family:-apple-system,"SF Arabic","Geeza Pro","Segoe UI",Tahoma,sans-serif;-webkit-text-size-adjust:100%}
+body{display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
+#app{flex:1;width:100%;border:0;display:block;background:#f5f7fa}
+.screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:calc(env(safe-area-inset-top) + 1.5rem) 1.25rem calc(env(safe-area-inset-bottom) + 1.5rem);background:linear-gradient(160deg,var(--navy2),var(--navy));color:#fff;text-align:center;z-index:5}
+.screen.on{display:flex}
+.logo{width:96px;height:96px;border-radius:22px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+h1{font-size:1.35rem;margin:.2rem 0 0}
+p{margin:0;color:rgba(255,255,255,.75);line-height:1.8;font-size:.95rem;max-width:26rem}
+.spin{width:28px;height:28px;border:3px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:s 1s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+.card{background:#fff;color:var(--ink);border-radius:16px;padding:1.1rem;width:100%;max-width:26rem;text-align:right;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.card label{display:block;font-weight:700;margin-bottom:.45rem}
+.card input{width:100%;font-size:16px;padding:.8rem;border:1px solid var(--line);border-radius:10px;direction:ltr;text-align:left}
+.card small{display:block;color:var(--muted);margin-top:.5rem;line-height:1.7}
+.err{color:#b42318!important}
+.btn{appearance:none;border:0;border-radius:12px;padding:.85rem 1.4rem;font:inherit;font-weight:700;font-size:1rem;background:var(--gold);color:#fff;cursor:pointer}
+.btn.ghost{background:rgba(255,255,255,.14)}
+.card .btn{width:100%;margin-top:.9rem}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
+.credit{position:absolute;bottom:calc(env(safe-area-inset-bottom) + 1rem);font-size:.75rem;color:rgba(255,255,255,.5)}
+</style>
+</head>
+<body>
+<iframe id="app" title="نظام متابعة المعاملات" allow="clipboard-read; clipboard-write; fullscreen" hidden></iframe>
+
+<div class="screen" id="splash">
+  <img class="logo" src="icon-180.png" alt="">
+  <h1>نظام متابعة المعاملات</h1>
+  <div class="spin"></div>
+  <p id="splashMsg">جاري الفتح…</p>
+  <div class="row" id="slowBtns" hidden>
+    <button class="btn" data-a="retry">إعادة المحاولة</button>
+    <button class="btn ghost" data-a="setup">تغيير الرابط</button>
+  </div>
+  <div class="credit">تصميم وتطوير: بندر الجش</div>
+</div>
+
+<div class="screen" id="offline">
+  <img class="logo" src="icon-180.png" alt="">
+  <h1>لا يوجد اتصال بالإنترنت</h1>
+  <p>البيانات محفوظة في قوقل وتظهر بمجرد عودة الاتصال.</p>
+  <button class="btn" data-a="retry">إعادة المحاولة</button>
+</div>
+
+<div class="screen" id="setup">
+  <img class="logo" src="icon-180.png" alt="">
+  <h1>ربط التطبيق بالنموذج</h1>
+  <form class="card" id="setupForm">
+    <label for="url">رابط النموذج على قوقل</label>
+    <input id="url" type="text" dir="ltr" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="https://script.google.com/macros/s/…/exec">
+    <small id="hint">انسخ رابط تطبيق الويب (الذي آخره كلمة exec) والصقه هنا. يُطلب مرة واحدة فقط.</small>
+    <button class="btn" type="submit">حفظ وفتح</button>
+  </form>
+  <div class="credit">تصميم وتطوير: بندر الجش</div>
+</div>
+
+<script>
+/* ضع رابط النموذج هنا (اختياري) ليفتح التطبيق مباشرة عند كل الموظفين بدون سؤال */
+const APP_URL = 'https://script.google.com/macros/s/AKfycbwtJ6YENA7ClODBr78zzzY1eRETBDZJVkzetYDe8JC_pbOI-CG8ne1p_Ek8n9ex_-dqbw/exec';
+
+const KEY='tx_app_url';
+const $=id=>document.getElementById(id);
+const frame=$('app');
+let slowTimer=null,loaded=false;
+
+function getSaved(){try{return localStorage.getItem(KEY)||''}catch(e){return ''}}
+function setSaved(v){try{localStorage.setItem(KEY,v)}catch(e){}}
+function normalize(raw){
+  let u=String(raw||'').trim();
+  const m=u.match(/https:\/\/script\.google\.com\/[^\s"'<>]+/);if(!m)return null;
+  u=m[0].replace(/\/macros\/u\/\d+\/s\//,'/macros/s/');   // إزالة /u/1/ التي تسبب الخطأ مع تعدد الحسابات
+  u=u.replace(/[?#].*$/,'');
+  if(/\/dev$/.test(u))return 'dev';
+  if(!/\/macros\/(a\/[^/]+\/)?s\/[A-Za-z0-9_-]+\/exec$/.test(u))return null;
+  return u;
+}
+function show(id){['splash','offline','setup'].forEach(s=>$(s).classList.toggle('on',s===id))}
+function appUrl(){const p=new URLSearchParams(location.search);if(p.has('setup'))return '';return normalize(APP_URL)||normalize(getSaved())||''}
+
+function open(){
+  const url=appUrl();
+  if(!url){show('setup');setTimeout(()=>$('url').focus(),300);return}
+  if(!navigator.onLine){show('offline');return}
+  loaded=false;$('slowBtns').hidden=true;$('splashMsg').textContent='جاري الفتح…';show('splash');
+  frame.hidden=false;frame.src=url;
+  clearTimeout(slowTimer);
+  slowTimer=setTimeout(()=>{if(!loaded){$('splashMsg').textContent='الفتح يأخذ وقتًا أطول من المعتاد. تأكد من الاتصال أو من صحة الرابط.';$('slowBtns').hidden=false}},20000);
+}
+frame.addEventListener('load',()=>{if(!frame.src)return;loaded=true;clearTimeout(slowTimer);setTimeout(()=>show(''),250)});
+
+$('setupForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const v=normalize($('url').value),h=$('hint');
+  if(v==='dev'){h.textContent='هذا رابط تجريبي (آخره dev). استخدم رابط النشر الذي آخره exec من «إدارة عمليات النشر».';h.className='err';return}
+  if(!v){h.textContent='الرابط غير صحيح. انسخ رابط تطبيق الويب من قوقل كاملًا (آخره كلمة exec).';h.className='err';return}
+  setSaved(v);
+  if(location.search)history.replaceState(null,'',location.pathname);
+  open();
+});
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-a]');if(!a)return;
+  if(a.dataset.a==='retry')open();
+  if(a.dataset.a==='setup'){$('url').value=getSaved();show('setup')}
+});
+window.addEventListener('online',()=>{if(!loaded)open()});
+window.addEventListener('offline',()=>{if(!loaded)show('offline')});
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+open();
+</script>
+</body>
+</html>
