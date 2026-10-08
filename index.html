@@ -1,128 +1,2100 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>متابعة المعاملات</title>
-<meta name="theme-color" content="#17324d">
+<script>window.__CLOUD_URL__="https://script.google.com/macros/s/AKfycbwtJ6YENA7ClODBr78zzzY1eRETBDZJVkzetYDe8JC_pbOI-CG8ne1p_Ek8n9ex_-dqbw/exec";</script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="المعاملات">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17324d">
+<title>نظام متابعة المعاملات</title>
+<script>
+(function(){function show(m){try{var b=document.getElementById('fatalBox');if(!b){b=document.createElement('div');b.id='fatalBox';b.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:99;background:#fbe9e7;color:#8a1f17;border:1px solid #e3b1ab;border-radius:10px;padding:10px 12px;font:13px Tahoma,Arial;direction:rtl;text-align:right;white-space:pre-wrap';(document.body||document.documentElement).appendChild(b)}b.textContent='حدث خطأ في تشغيل النظام. صوّر هذه الرسالة وأرسلها:\n'+m}catch(x){}}
+window.addEventListener('error',function(e){show((e.message||'')+' @'+(e.lineno||'')+':'+(e.colno||''))});
+window.addEventListener('unhandledrejection',function(e){var r=e.reason;show('Promise: '+((r&&r.message)||r))});})();
+</script>
 <style>
-:root{--navy:#17324d;--navy2:#254d70;--gold:#b78324;--ink:#17212b;--muted:#6b7785;--line:#e3e8ee}
+:root{--navy:#17324d;--navy2:#254d70;--navy-fg:#ffffff;--head:#17324d;--gold:#b78324;--gold-fg:#ffffff;--bg:#f5f7fa;--paper:#ffffff;--surface:#fbfcfd;--ink:#17212b;--muted:#6b7785;--line:#e3e8ee;--blue:#2d6ea3;--amber:#a86f18;--orange:#c05b20;--green:#28784f;--red:#b34239;--green-bg:rgba(40,120,79,.13);--red-bg:rgba(179,66,57,.12);--shadow:0 8px 24px rgba(23,50,77,.08);--r:14px;--fs:16px}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;background:var(--navy);font-family:-apple-system,"SF Arabic","Geeza Pro","Segoe UI",Tahoma,sans-serif;-webkit-text-size-adjust:100%}
-body{display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
-#app{flex:1;width:100%;border:0;display:block;background:#f5f7fa}
-.screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:calc(env(safe-area-inset-top) + 1.5rem) 1.25rem calc(env(safe-area-inset-bottom) + 1.5rem);background:linear-gradient(160deg,var(--navy2),var(--navy));color:#fff;text-align:center;z-index:5}
-.screen.on{display:flex}
-.logo{width:96px;height:96px;border-radius:22px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
-h1{font-size:1.35rem;margin:.2rem 0 0}
-p{margin:0;color:rgba(255,255,255,.75);line-height:1.8;font-size:.95rem;max-width:26rem}
-.spin{width:28px;height:28px;border:3px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:s 1s linear infinite}
-@keyframes s{to{transform:rotate(360deg)}}
-.card{background:#fff;color:var(--ink);border-radius:16px;padding:1.1rem;width:100%;max-width:26rem;text-align:right;box-shadow:0 10px 30px rgba(0,0,0,.25)}
-.card label{display:block;font-weight:700;margin-bottom:.45rem}
-.card input{width:100%;font-size:16px;padding:.8rem;border:1px solid var(--line);border-radius:10px;direction:ltr;text-align:left}
-.card small{display:block;color:var(--muted);margin-top:.5rem;line-height:1.7}
-.err{color:#b42318!important}
-.btn{appearance:none;border:0;border-radius:12px;padding:.85rem 1.4rem;font:inherit;font-weight:700;font-size:1rem;background:var(--gold);color:#fff;cursor:pointer}
-.btn.ghost{background:rgba(255,255,255,.14)}
-.card .btn{width:100%;margin-top:.9rem}
-.row{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
-.credit{position:absolute;bottom:calc(env(safe-area-inset-bottom) + 1rem);font-size:.75rem;color:rgba(255,255,255,.5)}
+html{font-size:var(--fs);-webkit-text-size-adjust:100%}
+body{margin:0;direction:rtl;background:var(--bg);color:var(--ink);font-family:Tahoma,"Segoe UI",Arial,sans-serif;font-size:.875rem}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.app{min-height:100vh;display:flex}
+.sidebar{width:15.5rem;flex:none;background:var(--navy);color:var(--navy-fg);padding:1.4rem .9rem;display:flex;flex-direction:column;gap:.35rem;overflow-y:auto}
+.brand{display:flex;gap:.7rem;align-items:center;padding:.25rem .45rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:.5rem}
+.brand-mark{width:2.5rem;height:2.5rem;border-radius:.7rem;background:var(--gold);color:var(--gold-fg);display:grid;place-items:center;font-weight:900;font-size:1.2rem;flex:none}
+.brand strong{display:block;font-size:.95rem}
+.brand small{display:block;opacity:.7;margin-top:.2rem;font-size:.72rem}
+.nav-title{font-size:.7rem;opacity:.6;font-weight:700;padding:.8rem .75rem .2rem}
+.nav-btn{width:100%;border:0;background:transparent;color:inherit;text-align:right;border-radius:.65rem;padding:.7rem .75rem;display:flex;align-items:center;gap:.65rem;opacity:.88;min-height:2.6rem}
+.nav-btn .ico{width:1.2rem;text-align:center;flex:none}
+.nav-btn:hover,.nav-btn.active{background:rgba(255,255,255,.12);opacity:1}
+.nav-btn.active{box-shadow:inset -3px 0 var(--gold);font-weight:700}
+.side-foot{margin-top:auto;border-top:1px solid rgba(255,255,255,.14);padding:.9rem .5rem 0;font-size:.72rem;line-height:1.7;color:rgba(255,255,255,.7)}
+.side-foot .credit{margin-top:.6rem;padding-top:.6rem;border-top:1px dashed rgba(255,255,255,.14);display:flex;flex-direction:column;gap:.1rem}
+.side-foot .credit span{color:rgba(255,255,255,.92);font-weight:600}
+.side-foot .credit a{color:inherit;text-decoration:none;font-size:.68rem;overflow-wrap:anywhere;text-align:right}
+.side-foot .credit a:hover{text-decoration:underline}
+.main{flex:1;min-width:0;padding:1.5rem 2rem;max-width:1500px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:.9rem;margin-bottom:1.2rem}
+.topbar h1{font-size:1.45rem;margin:0 0 .3rem}
+.topbar p{margin:0;color:var(--muted);font-size:.8rem}
+.top-actions{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.sync{display:inline-flex;align-items:center;gap:.45rem;color:var(--muted);font-size:.75rem}
+.dot{width:.55rem;height:.55rem;border-radius:50%;background:var(--muted);display:inline-block;flex:none}
+.dot.ok{background:var(--green)}.dot.bad{background:var(--red)}.dot.wait{background:var(--amber)}
+.btn{border:0;border-radius:.55rem;padding:.6rem .95rem;font-weight:700;min-height:2.4rem}
+.primary{background:var(--gold);color:var(--gold-fg);box-shadow:0 4px 11px rgba(0,0,0,.12)}
+.secondary{background:var(--paper);color:var(--navy2);border:1px solid var(--line)}
+.danger{color:var(--red);background:var(--red-bg)}
+.view-host{min-height:50vh}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:1.2rem;margin-bottom:1.1rem}
+.panel.flat{box-shadow:none}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-bottom:.9rem;flex-wrap:wrap}
+.panel-head h2{font-size:1rem;margin:0}
+.panel-head p{font-size:.75rem;color:var(--muted);margin:.25rem 0 0}
+.dash{display:grid;grid-template-columns:repeat(12,1fr);gap:.8rem;margin-bottom:1.1rem;align-items:stretch}
+.dash>.stat{grid-column:span 2}
+.dash>.panel{grid-column:span 6;margin:0}
+.dash>.panel.full{grid-column:span 12}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:.95rem 1rem;box-shadow:var(--shadow)}
+.stat .num{font-size:1.65rem;font-weight:900;color:var(--head)}
+.stat .label{font-size:.75rem;color:var(--muted);margin-top:.3rem}
+.filters{display:flex;gap:.55rem;flex-wrap:wrap;margin-bottom:.9rem}
+.filters input,.filters select,.field input,.field select,.field textarea,.inp{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:.55rem;padding:.6rem .7rem;outline:none;min-height:2.4rem;max-width:100%}
+.filters input:focus,.filters select:focus,.field input:focus,.field select:focus,.field textarea:focus,.inp:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(183,131,36,.15)}
+.filters input[type=search]{min-width:14rem;flex:1}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:.65rem}
+table{width:100%;border-collapse:collapse;min-width:42rem;font-size:.8rem}
+th{background:var(--navy);color:var(--navy-fg);text-align:right;padding:.7rem .65rem;white-space:nowrap;user-select:none}
+th.sortable{cursor:pointer}
+td{padding:.7rem .65rem;border-bottom:1px solid var(--line);white-space:nowrap}
+tbody tr:hover{background:rgba(183,131,36,.06)}
+tbody tr:last-child td{border-bottom:0}
+td.wrap{white-space:normal;min-width:10rem}
+.badge{display:inline-flex;padding:.25rem .6rem;border-radius:100px;font-size:.7rem;font-weight:700}
+.row-actions{display:flex;gap:.35rem}
+.icon{border:1px solid var(--line);background:var(--paper);color:var(--navy2);border-radius:.45rem;padding:.3rem .55rem;min-height:1.9rem}
+.icon.danger{border-color:transparent}
+.empty{text-align:center;color:var(--muted);padding:2rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.95rem}
+.form-grid.two{grid-template-columns:repeat(2,1fr)}
+.field{display:flex;flex-direction:column;gap:.35rem;min-width:0}
+.field label{font-size:.75rem;font-weight:700;color:var(--navy2)}
+.field small{color:var(--muted);font-size:.7rem}
+.field.full{grid-column:1/-1}
+.field textarea{min-height:5rem;resize:vertical}
+.form-actions{display:flex;gap:.5rem;margin-top:1.2rem;flex-wrap:wrap}
+.sec-title{grid-column:1/-1;margin:.5rem 0 0;color:var(--navy2);font-weight:800;border-bottom:1px solid var(--line);padding-bottom:.4rem}
+.notice{background:rgba(45,110,163,.09);border:1px solid rgba(45,110,163,.25);color:var(--navy2);border-radius:.65rem;padding:.7rem .85rem;font-size:.75rem;line-height:1.7;margin-bottom:1rem}
+.notice.warn{background:rgba(168,111,24,.1);border-color:rgba(168,111,24,.3);color:var(--amber)}
+.timeline{border-right:2px solid var(--line);padding-right:1.1rem}
+.event{position:relative;margin:0 0 1.1rem}
+.event:before{content:"";position:absolute;right:-1.55rem;top:.25rem;width:.55rem;height:.55rem;border-radius:50%;background:var(--gold);border:3px solid var(--paper)}
+.event small{display:block;color:var(--muted);margin-top:.25rem}
+.topic-list{display:grid;gap:.6rem}
+.topic-item{border:1px solid var(--line);border-radius:.65rem;padding:.75rem}
+.topic-item strong{display:block;margin-bottom:.3rem}
+.topic-item small{color:var(--muted)}
+.bar-row{display:flex;align-items:center;gap:.6rem;margin:.5rem 0;font-size:.78rem}
+.bar-row .nm{width:6.5rem;flex:none}
+.bar-row .track{flex:1;background:var(--line);border-radius:100px;height:.6rem;overflow:hidden}
+.bar-row .fill{height:100%;border-radius:100px}
+.bar-row .ct{width:2.2rem;text-align:left;color:var(--muted);font-weight:700}
+.modal{position:fixed;inset:0;background:rgba(12,25,38,.55);display:none;align-items:center;justify-content:center;padding:1.2rem;z-index:30}
+.modal.show{display:flex}
+.modal-box{width:min(52rem,100%);max-height:92vh;overflow:auto;background:var(--paper);border-radius:1.1rem;padding:1.4rem;box-shadow:0 25px 70px rgba(0,0,0,.28)}
+.modal-box.sm{width:min(36rem,100%)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;gap:.6rem}
+.modal-head h2{margin:0;font-size:1.1rem}
+.close{border:0;background:var(--line);border-radius:50%;width:2rem;height:2rem;font-size:1.2rem;color:var(--muted);flex:none}
+.toast{position:fixed;bottom:1.2rem;left:1.2rem;background:var(--navy);color:var(--navy-fg);padding:.75rem 1rem;border-radius:.6rem;display:none;z-index:50;font-size:.8rem;align-items:center;gap:.8rem;max-width:calc(100vw - 2.4rem)}
+.toast.show{display:flex}
+.toast button{background:transparent;border:1px solid rgba(255,255,255,.5);color:inherit;border-radius:.4rem;padding:.2rem .6rem}
+.mobile-menu{display:none;border:1px solid var(--line);background:var(--paper);padding:.55rem .7rem;border-radius:.55rem;min-height:2.4rem}
+.tabs{display:flex;gap:.35rem;overflow-x:auto;padding-bottom:.4rem;margin-bottom:1rem;border-bottom:1px solid var(--line)}
+.tab{border:0;background:transparent;padding:.65rem .9rem;border-radius:.55rem .55rem 0 0;white-space:nowrap;color:var(--muted);font-weight:700;min-height:2.5rem}
+.tab.active{background:var(--paper);color:var(--head);box-shadow:inset 0 -3px var(--gold)}
+.rowlist{display:grid;gap:.5rem;margin-bottom:.9rem}
+.rowitem{display:flex;align-items:center;gap:.6rem;padding:.6rem .75rem;border:1px solid var(--line);border-radius:.65rem;background:var(--surface);flex-wrap:wrap}
+.rowitem.off{opacity:.55}
+.rowitem .grow{flex:1;min-width:8rem}
+.rowitem .grow small{display:block;color:var(--muted);font-size:.7rem;margin-top:.15rem}
+.mini{border:1px solid var(--line);background:var(--paper);border-radius:.4rem;padding:.25rem .5rem;min-width:2rem;min-height:2rem;color:var(--navy2)}
+.mini.danger{color:var(--red);border-color:transparent;background:var(--red-bg)}
+.swatch{width:1.1rem;height:1.1rem;border-radius:50%;flex:none;border:1px solid rgba(0,0,0,.15)}
+.tag{display:inline-block;background:var(--line);border-radius:100px;padding:.1rem .55rem;font-size:.68rem;color:var(--muted)}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(10rem,1fr));gap:.4rem}
+.checks label{display:flex;align-items:center;gap:.4rem;font-weight:400;color:var(--ink);font-size:.8rem}
+.colorgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(10rem,1fr));gap:.9rem}
+.colorgrid input[type=color]{width:100%;height:2.6rem;padding:.15rem;border-radius:.5rem;border:1px solid var(--line);background:var(--surface)}
+hr.sep{border:0;border-top:1px solid var(--line);margin:1.2rem 0}
+h3.sub{font-size:.9rem;margin:1.2rem 0 .6rem;color:var(--navy2)}
+input[type=date]{direction:ltr;text-align:right;font-variant-numeric:tabular-nums;unicode-bidi:plaintext}
+.adv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem;margin-bottom:.9rem;background:var(--surface);border:1px solid var(--line);border-radius:.65rem;padding:.9rem}
+.adv .field input,.adv .field select{width:100%}
+.adv .acts{grid-column:1/-1;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.adv-toggle{display:none}
+.ptable{min-width:54rem;font-size:.76rem}
+.ptable th,.ptable td{text-align:center;padding:.5rem .4rem}
+.ptable td:first-child,.ptable th:first-child{text-align:right}
+.ptable input[type=checkbox]{width:1.15rem;height:1.15rem}
+.ptable select{padding:.3rem .4rem;border:1px solid var(--line);border-radius:.4rem;background:var(--surface);min-height:2rem;max-width:7rem}
+.login{position:fixed;inset:0;background:var(--bg);z-index:60;display:none;align-items:center;justify-content:center;padding:1.2rem}
+.login.show{display:flex}
+.login .box{width:min(24rem,100%);background:var(--paper);border:1px solid var(--line);border-radius:1.1rem;padding:1.6rem;box-shadow:var(--shadow)}
+.login h2{margin:0 0 .3rem;font-size:1.15rem}
+.login .err{color:var(--red);font-size:.78rem;min-height:1.2rem;margin:.5rem 0 0}
+@media(max-width:1050px){.adv{grid-template-columns:repeat(2,minmax(0,1fr))}.dash>.stat{grid-column:span 4}.dash>.panel{grid-column:span 12}.form-grid{grid-template-columns:repeat(2,1fr)}.sidebar{width:14rem}.main{padding:1.2rem}}
+@media(max-width:720px){
+ .app{display:block}
+ .sidebar{position:fixed;inset:0 0 0 auto;width:17rem;transform:translateX(105%);transition:transform .2s;z-index:25;padding-top:calc(1.4rem + env(safe-area-inset-top))}
+ .sidebar.open{transform:none}
+ .mobile-menu{display:inline-flex}
+ .main{padding:1rem 1rem calc(1.5rem + env(safe-area-inset-bottom))}
+ .topbar{align-items:flex-start;flex-wrap:wrap}
+ .topbar h1{font-size:1.2rem}
+ .dash>.stat{grid-column:span 6}
+ .grid2,.form-grid,.form-grid.two{grid-template-columns:1fr}
+ .field.full{grid-column:auto}
+ .panel{padding:.95rem}
+ .filters input[type=search]{min-width:100%}
+ .filters>*{flex:1;min-width:8rem}
+ .adv{grid-template-columns:1fr}
+ input,select,textarea{font-size:16px !important}
+ .top-actions .sync{display:flex;width:100%;order:9;font-size:.72rem;line-height:1.5}
+ .top-actions .sync #syncText{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+ .btn,.nav-btn{min-height:2.75rem}
+ .adv:not(.open) .field:not(:first-child){display:none}
+ .adv-toggle{display:inline-flex;align-items:center}
+ .panel-head [data-act=add]{display:none}
+ /* الجداول تتحول إلى بطاقات على الجوال */
+ .cards-m{border:0;overflow:visible}
+ .cards-m table{min-width:0 !important;font-size:.85rem}
+ .cards-m thead{display:none}
+ .cards-m tbody tr{display:block;border:1px solid var(--line);border-radius:.75rem;margin:0 0 .6rem;padding:.55rem .8rem;background:var(--paper);box-shadow:var(--shadow)}
+ .cards-m tbody tr:hover{background:var(--paper)}
+ .cards-m td{display:flex;justify-content:space-between;align-items:flex-start;gap:.9rem;border:0 !important;padding:.3rem 0;white-space:normal;text-align:left;min-width:0}
+ .cards-m td.wrap{min-width:0}
+ .cards-m td[data-label]:before{content:attr(data-label);color:var(--muted);font-weight:700;flex:none;text-align:right;max-width:45%}
+ .cards-m td.acts-cell{border-top:1px solid var(--line) !important;margin-top:.35rem;padding-top:.55rem}
+ .cards-m td.acts-cell .row-actions{width:100%}
+ .cards-m td.acts-cell .icon{flex:1;min-height:2.5rem}
+ .cards-m td.empty{display:block;text-align:center}
+ .modal{padding:0;align-items:stretch}
+ .modal-box,.modal-box.sm{width:100%;max-height:100dvh;border-radius:0;padding:1rem}
+ .form-actions .btn{flex:1 1 8rem}
+ .top-actions{width:100%}
+ .top-actions #addBtn{flex:1}
+ .tabs{position:sticky;top:0;background:var(--bg);z-index:5}
+ .toast{left:.6rem;right:.6rem;bottom:calc(.6rem + env(safe-area-inset-bottom))}
+}
+@media print{.sidebar,.topbar,.filters,.row-actions,.toast,.modal{display:none !important}.main{padding:0}}
 </style>
 </head>
 <body>
-<iframe id="app" title="نظام متابعة المعاملات" allow="clipboard-read; clipboard-write; fullscreen" hidden></iframe>
-
-<div class="screen" id="splash">
-  <img class="logo" src="icon-180.png" alt="">
-  <h1>نظام متابعة المعاملات</h1>
-  <div class="spin"></div>
-  <p id="splashMsg">جاري الفتح…</p>
-  <div class="row" id="slowBtns" hidden>
-    <button class="btn" data-a="retry">إعادة المحاولة</button>
-    <button class="btn ghost" data-a="setup">تغيير الرابط</button>
-  </div>
-  <div class="credit">تصميم وتطوير: بندر الجش</div>
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <header class="topbar">
+      <div style="display:flex;gap:.7rem;align-items:flex-start"><button class="mobile-menu" id="menuBtn" aria-label="القائمة">☰</button><div><h1 id="pageTitle"></h1><p id="pageDesc"></p></div></div>
+      <div class="top-actions"><span class="sync"><i class="dot" id="syncDot"></i><span id="syncText"></span></span><select class="inp" id="userSel" title="المستخدم الحالي"></select><button class="btn secondary" id="lockBtn" style="display:none"></button><button class="btn primary" id="addBtn"></button></div>
+    </header>
+    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 5.7)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
+  </main>
 </div>
-
-<div class="screen" id="offline">
-  <img class="logo" src="icon-180.png" alt="">
-  <h1>لا يوجد اتصال بالإنترنت</h1>
-  <p>البيانات محفوظة في قوقل وتظهر بمجرد عودة الاتصال.</p>
-  <button class="btn" data-a="retry">إعادة المحاولة</button>
-</div>
-
-<div class="screen" id="setup">
-  <img class="logo" src="icon-180.png" alt="">
-  <h1>ربط التطبيق بالنموذج</h1>
-  <form class="card" id="setupForm">
-    <label for="url">رابط النموذج على قوقل</label>
-    <input id="url" type="text" dir="ltr" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="https://script.google.com/macros/s/…/exec">
-    <small id="hint">انسخ رابط تطبيق الويب (الذي آخره كلمة exec) والصقه هنا. يُطلب مرة واحدة فقط.</small>
-    <button class="btn" type="submit">حفظ وفتح</button>
-  </form>
-  <div class="credit">تصميم وتطوير: بندر الجش</div>
-</div>
-
+<div class="modal" id="formModal"><div class="modal-box"><div class="modal-head"><h2 id="formTitle"></h2><button class="close" data-close aria-label="إغلاق">×</button></div><form id="txForm" novalidate></form></div></div>
+<div class="modal" id="detailModal"><div class="modal-box"><div class="modal-head"><h2 id="detailTitle"></h2><button class="close" data-close aria-label="إغلاق">×</button></div><div id="detailBody"></div></div></div>
+<div class="modal" id="editorModal"><div class="modal-box sm"><div class="modal-head"><h2 id="edTitle"></h2><button class="close" data-close aria-label="إغلاق">×</button></div><form id="edForm"></form></div></div>
+<div class="login" id="loginModal"><form class="box" id="loginForm"><h2 id="loginTitle"></h2><p id="loginSub" style="margin:0 0 1rem;color:var(--muted);font-size:.8rem"></p>
+<div class="field" style="margin-bottom:.8rem"><label id="loginUserLbl"></label><select id="loginUser"></select></div>
+<div class="field" id="loginPinWrap"><label id="loginPinLbl"></label><input id="loginPin" type="password" inputmode="numeric" autocomplete="off" dir="ltr"></div>
+<p class="err" id="loginErr"></p>
+<div class="form-actions" style="margin-top:.6rem"><button class="btn primary" type="submit" id="loginBtn"></button><button class="btn secondary" type="button" id="loginCancel"></button></div></form></div>
+<div class="toast" id="toast"><span id="toastMsg"></span><button id="toastBtn" style="display:none"></button></div>
 <script>
-/* ضع رابط النموذج هنا (اختياري) ليفتح التطبيق مباشرة عند كل الموظفين بدون سؤال */
-const APP_URL = 'https://script.google.com/macros/s/AKfycbwtJ6YENA7ClODBr78zzzY1eRETBDZJVkzetYDe8JC_pbOI-CG8ne1p_Ek8n9ex_-dqbw/exec';
+(() => {
+'use strict';
+/* ======================= ثوابت وأدوات ======================= */
+const KEY_TX='unified_transactions_v1', KEY_CFG='unified_config_v2', KEY_LOCAL='unified_local_v2', KEY_TOMB='unified_tomb_v2', KEY_OLD='unified_settings_v1';
+const APP_TAG='unified-tx-v4';
+/* تخزين آمن: بعض المتصفحات تمنع localStorage داخل الإطارات (مثل رابط Google) وترمي خطأ.
+   عندها نحفظ في الذاكرة مؤقتًا ويبقى النظام يعمل، والبيانات تُحفظ في السحابة. */
+const store=(()=>{
+  let ok=false;const mem={};
+  try{const k='__probe__';window.localStorage.setItem(k,'1');window.localStorage.removeItem(k);ok=true}catch(e){ok=false}
+  return {
+    ok,
+    getItem(k){if(ok){try{return window.localStorage.getItem(k)}catch(e){}}return Object.prototype.hasOwnProperty.call(mem,k)?mem[k]:null},
+    setItem(k,v){if(ok){try{window.localStorage.setItem(k,v);return}catch(e){}}mem[k]=String(v)},
+    removeItem(k){if(ok){try{window.localStorage.removeItem(k)}catch(e){}}delete mem[k]}
+  };
+})();
+/* عند رفع النموذج على Google Apps Script يحقن الخادم رابط التخزين هنا، فلا يحتاج المستخدم إلا الرمز السري */
+const HOSTED=(typeof window.__CLOUD_URL__==='string')?window.__CLOUD_URL__:'';
+const IN_FRAME=(()=>{try{return window.self!==window.top}catch(e){return true}})();
+document.documentElement.dir='rtl';document.documentElement.lang='ar';
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+const pad=n=>String(n).padStart(2,'0');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const uid=p=>p+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const clone=o=>JSON.parse(JSON.stringify(o));
+const jparse=(s,d)=>{try{const v=JSON.parse(s);return v==null?d:v}catch(e){return d}};
+const dfmt=new Intl.DateTimeFormat('ar-SA-u-ca-gregory-nu-latn',{year:'numeric',month:'short',day:'numeric'});
+const fmt=d=>{if(!d)return '—';const p=String(d).slice(0,10).split('-');if(p.length<3)return esc(d);return dfmt.format(new Date(+p[0],+p[1]-1,+p[2]))};
+function hexRgb(h){h=String(h||'#000').replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');const n=parseInt(h,16);return [(n>>16)&255,(n>>8)&255,n&255]}
+const rgba=(h,a)=>{const [r,g,b]=hexRgb(h);return `rgba(${r},${g},${b},${a})`};
+const toHex=(r,g,b)=>'#'+[r,g,b].map(x=>Math.max(0,Math.min(255,Math.round(x))).toString(16).padStart(2,'0')).join('');
+const mix=(h1,h2,p)=>{const a=hexRgb(h1),b=hexRgb(h2);return toHex(a[0]+(b[0]-a[0])*p,a[1]+(b[1]-a[1])*p,a[2]+(b[2]-a[2])*p)};
+const lum=h=>{const [r,g,b]=hexRgb(h).map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*r+.7152*g+.0722*b};
+const readable=h=>lum(h)>.5?'#17212b':'#ffffff';
 
-const KEY='tx_app_url';
-const $=id=>document.getElementById(id);
-const frame=$('app');
-let slowTimer=null,loaded=false;
-
-function getSaved(){try{return localStorage.getItem(KEY)||''}catch(e){return ''}}
-function setSaved(v){try{localStorage.setItem(KEY,v)}catch(e){}}
-function normalize(raw){
-  let u=String(raw||'').trim();
-  const m=u.match(/https:\/\/script\.google\.com\/[^\s"'<>]+/);if(!m)return null;
-  u=m[0].replace(/\/macros\/u\/\d+\/s\//,'/macros/s/');   // إزالة /u/1/ التي تسبب الخطأ مع تعدد الحسابات
-  u=u.replace(/[?#].*$/,'');
-  if(/\/dev$/.test(u))return 'dev';
-  if(!/\/macros\/(a\/[^/]+\/)?s\/[A-Za-z0-9_-]+\/exec$/.test(u))return null;
-  return u;
+/* SHA-256 مضمّن (يعمل حتى عند فتح الملف محليًا) — لتخزين بصمة الرقم السري لا الرقم نفسه */
+function sha256(str){
+  const rr=(v,a)=>(v>>>a)|(v<<(32-a));
+  const isP=x=>{for(let i=2;i*i<=x;i++)if(x%i===0)return false;return true};
+  const frac=x=>((x-Math.floor(x))*4294967296)|0;
+  const K=[],H=[];let n=2,c=0;
+  while(c<64){if(isP(n)){if(c<8)H[c]=frac(Math.pow(n,1/2));K[c]=frac(Math.pow(n,1/3));c++}n++}
+  const bytes=new TextEncoder().encode(str),l=bytes.length,bl=((l+9+63)>>6)<<6;
+  const m=new Uint8Array(bl);m.set(bytes);m[l]=0x80;
+  const dv=new DataView(m.buffer);dv.setUint32(bl-8,Math.floor(l*8/4294967296));dv.setUint32(bl-4,(l*8)>>>0);
+  const w=new Int32Array(64);
+  for(let o=0;o<bl;o+=64){
+    for(let i=0;i<16;i++)w[i]=dv.getInt32(o+i*4);
+    for(let i=16;i<64;i++){const a=w[i-15],b=w[i-2];w[i]=(w[i-16]+(rr(a,7)^rr(a,18)^(a>>>3))+w[i-7]+(rr(b,17)^rr(b,19)^(b>>>10)))|0}
+    let a=H[0],b=H[1],c2=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+    for(let i=0;i<64;i++){
+      const t1=(h+(rr(e,6)^rr(e,11)^rr(e,25))+((e&f)^(~e&g))+K[i]+w[i])|0;
+      const t2=((rr(a,2)^rr(a,13)^rr(a,22))+((a&b)^(a&c2)^(b&c2)))|0;
+      h=g;g=f;f=e;e=(d+t1)|0;d=c2;c2=b;b=a;a=(t1+t2)|0;
+    }
+    H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c2)|0;H[3]=(H[3]+d)|0;H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+  }
+  return H.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('');
 }
-function show(id){['splash','offline','setup'].forEach(s=>$(s).classList.toggle('on',s===id))}
-function appUrl(){const p=new URLSearchParams(location.search);if(p.has('setup'))return '';return normalize(APP_URL)||normalize(getSaved())||''}
+/* تطبيع النص العربي للبحث: يتجاهل التشكيل واختلاف الهمزات والتاء المربوطة والأرقام الهندية */
+const norm=s=>String(s??'').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).trim();
 
-function open(){
-  const url=appUrl();
-  if(!url){show('setup');setTimeout(()=>$('url').focus(),300);return}
-  if(!navigator.onLine){show('offline');return}
-  loaded=false;$('slowBtns').hidden=true;$('splashMsg').textContent='جاري الفتح…';show('splash');
-  frame.hidden=false;frame.src=url;
-  clearTimeout(slowTimer);
-  slowTimer=setTimeout(()=>{if(!loaded){$('splashMsg').textContent='الفتح يأخذ وقتًا أطول من المعتاد. تأكد من الاتصال أو من صحة الرابط.';$('slowBtns').hidden=false}},20000);
-}
-frame.addEventListener('load',()=>{if(!frame.src)return;loaded=true;clearTimeout(slowTimer);setTimeout(()=>show(''),250)});
+/* مفتاح موحّد لرقم المعاملة: يتجاهل المسافات والأرقام الهندية و".0" التي يضيفها Excel — يمنع التكرار */
+const numKey=v=>norm(v).replace(/\s+/g,'').replace(/\.0+$/,'');
 
-$('setupForm').addEventListener('submit',e=>{
-  e.preventDefault();
-  const v=normalize($('url').value),h=$('hint');
-  if(v==='dev'){h.textContent='هذا رابط تجريبي (آخره dev). استخدم رابط النشر الذي آخره exec من «إدارة عمليات النشر».';h.className='err';return}
-  if(!v){h.textContent='الرابط غير صحيح. انسخ رابط تطبيق الويب من قوقل كاملًا (آخره كلمة exec).';h.className='err';return}
-  setSaved(v);
-  if(location.search)history.replaceState(null,'',location.pathname);
-  open();
+/* ======================= النصوص الافتراضية ======================= */
+const TEXT_DEFAULTS={
+ 'btn.add':'+ معاملة جديدة','btn.addIn':'+ إضافة معاملة','btn.save':'حفظ المعاملة','btn.cancel':'إلغاء','btn.view':'عرض','btn.edit':'تعديل','btn.delete':'حذف',
+ 'btn.changeStatus':'تطبيق الحالة','btn.clear':'مسح البحث','btn.viewAll':'عرض الكل','btn.undo':'تراجع','btn.open':'فتح',
+ 'search.ph':'بحث شامل بالرقم أو الموضوع أو الجهة...','filter.allStatuses':'كل الحالات','filter.allTypes':'كل الأنواع','filter.allOwners':'كل الموظفين','filter.allDepts':'كل الإدارات',
+ 'filter.date':'تاريخ محدد','filter.from':'من تاريخ','filter.to':'إلى تاريخ','filter.count':'عدد النتائج',
+ 'empty.rows':'لا توجد بيانات.','empty.match':'لا توجد معاملات مطابقة.','empty.topics':'لا توجد موضوعات.','empty.due':'لا توجد تذكيرات.',
+ 'form.addTitle':'إضافة معاملة جديدة','form.editTitle':'تعديل المعاملة','detail.title':'تفاصيل المعاملة','detail.timeline':'الخط الزمني','detail.status':'تغيير الحالة',
+ 'msg.saved':'تم حفظ المعاملة','msg.deleted':'تم حذف المعاملة','msg.dupNumber':'رقم المعاملة موجود مسبقًا','msg.confirmDelete':'حذف هذه المعاملة نهائيًا؟','msg.statusChanged':'تم تحديث حالة المعاملة إلى ',
+ 'due.now':'مستحق الآن','due.soon':'موعد التذكير: ','due.badgeDue':'مستحق','due.badgeSoon':'قادم',
+ 'topic.count':'معاملة مرتبطة','side.foot':'تُحفظ البيانات على هذا الجهاز، وعند ربط رابط التخزين تتزامن بين كل الأجهزة.','side.credit':'تصميم وتطوير: بندر الجش','side.email':'bahaalmutairi@moh.gov.sa',
+ 'export.csv':'CSV','export.excel':'Excel','export.word':'Word','export.pdf':'PDF / طباعة','export.title':'تقرير المعاملات',
+ 'sync.off':'غير مربوط بالسحابة — محفوظ على هذا الجهاز','sync.ok':'متصل بالسحابة','sync.bad':'تعذر الاتصال بالسحابة','sync.wait':'جاري المزامنة…',
+ 'noaccess':'ليست لديك صلاحية لهذه الصفحة.','viewer':'ليست لديك صلاحية لهذا الإجراء.',
+ 'btn.export':'تصدير / طباعة النتائج','btn.lock':'خروج','filter.allPriorities':'كل الأولويات',
+ 'adv.q':'كلمة البحث','adv.in':'البحث في','adv.inAll':'كل الحقول','adv.status':'الحالة','adv.type':'النوع','adv.priority':'الأولوية','adv.owner':'الموظف المسؤول','adv.employee':'الموظف','filter.allEmployees':'كل الموظفين','adv.dept':'الإدارة','adv.party':'الجهة','adv.dateField':'التاريخ المقصود','adv.from':'من تاريخ','adv.to':'إلى تاريخ',
+ 'login.title':'تسجيل الدخول','login.sub':'اختر اسمك وأدخل رقمك السري.','login.user':'المستخدم','login.pin':'الرقم السري','login.btn':'دخول','login.cancel':'إلغاء','login.bad':'الرقم السري غير صحيح'
+};
+const TEXT_GROUPS=[['الأزرار',/^btn\./],['البحث والتصفية',/^(search|filter|adv)\./],['الرسائل الفارغة',/^empty\./],['النموذج والتفاصيل',/^(form|detail)\./],['الرسائل',/^msg\./],['التذكيرات والمواضيع',/^(due|topic)\./],['التصدير',/^export\./],['المزامنة والتنبيهات',/^(sync|noaccess|viewer|side)/],['تسجيل الدخول',/^login\./]];
+
+/* ======================= الإعدادات الافتراضية ======================= */
+const VIRTUAL={_due:'حالة التذكير',_updated:'آخر تحديث',_closed:'تاريخ الإغلاق',_created:'تاريخ الإنشاء'};
+const ICONS=['⌂','▤','⇩','⇧','◌','◷','✓','◎','⚙','★','⚑','✉','☰','✎','☎','⚠','♦','●','▣','◆','☑','⌖','⇄','✦'];
+const ROLE_NAMES={'':'عادية',new:'الحالة الافتراضية للجديد',reminder:'تحتاج تذكير',closed:'مغلقة/مكتملة'};
+const THEME_LABELS={navy:'لون الشريط والعناوين',gold:'لون الأزرار المميز',bg:'خلفية الصفحة',paper:'خلفية البطاقات',ink:'لون النص',muted:'النص الثانوي',line:'لون الحدود',blue:'أزرق',green:'أخضر (النجاح)',red:'أحمر (التنبيه)',amber:'كهرماني',orange:'برتقالي'};
+const PRESETS={
+ 'الكلاسيكي':{navy:'#17324d',gold:'#b78324',bg:'#f5f7fa',paper:'#ffffff',ink:'#17212b',muted:'#6b7785',line:'#e3e8ee',blue:'#2d6ea3',green:'#28784f',red:'#b34239',amber:'#a86f18',orange:'#c05b20'},
+ 'الأخضر':{navy:'#14463a',gold:'#c28a1e',bg:'#f3f7f5',paper:'#ffffff',ink:'#16231f',muted:'#62756e',line:'#dde8e3',blue:'#2d6ea3',green:'#1f7a4d',red:'#b34239',amber:'#a86f18',orange:'#c05b20'},
+ 'الأرجواني':{navy:'#3b2a63',gold:'#d08a2c',bg:'#f7f5fb',paper:'#ffffff',ink:'#1f1a2b',muted:'#6e6783',line:'#e7e2f1',blue:'#4a6fb5',green:'#2f7d58',red:'#b8434a',amber:'#a86f18',orange:'#c05b20'},
+ 'الداكن':{navy:'#0f1722',gold:'#d9a441',bg:'#141c27',paper:'#1b2533',ink:'#e8edf3',muted:'#93a1b3',line:'#2a3647',blue:'#6fa8dc',green:'#5fc08d',red:'#ef8a80',amber:'#e3b767',orange:'#f0a070'}
+};
+/* الصلاحيات: القالب الافتراضي لكل دور، والمدير يعدّلها لكل مستخدم من جدول الصلاحيات */
+const ROLE_PERMS={
+ 'مدير':{scope:'all',add:true,edit:'all',status:true,del:true,export:true,settings:true},
+ 'موظف':{scope:'all',add:true,edit:'all',status:true,del:false,export:true,settings:false},
+ 'مشاهد':{scope:'all',add:false,edit:'none',status:false,del:false,export:false,settings:false}
+};
+const DEFAULT_FIELDS=()=>[
+ {id:'number',label:'رقم المعاملة',type:'text',section:'sec_main',builtin:true,locked:true,required:true,visible:true,ph:'مثال: 1450'},
+ {id:'type',label:'نوع المعاملة',type:'type',section:'sec_main',builtin:true,required:true,visible:true},
+ {id:'topic',label:'رقم الموضوع',type:'text',section:'sec_main',builtin:true,visible:true,ph:'ينشأ تلقائيًا إن تركته فارغًا',help:'للتذكير: اختر رقم الموضوع السابق.'},
+ {id:'subject',label:'الموضوع المختصر',type:'text',section:'sec_main',builtin:true,locked:true,required:true,visible:true,full:true,ph:'اكتب وصفًا مختصرًا وواضحًا'},
+ {id:'party',label:'الجهة / الدولة',type:'text',section:'sec_main',builtin:true,visible:true,ph:'اختياري'},
+ {id:'department',label:'الإدارة',type:'combo',list:'departments',section:'sec_main',builtin:true,visible:true},
+ {id:'owner',label:'الموظف المسؤول',type:'combo',list:'employees',section:'sec_main',builtin:true,visible:false},
+ {id:'employee',label:'الموظف',type:'combo',list:'employees',section:'sec_main',builtin:true,visible:true},
+ {id:'received',label:'تاريخ الورود',type:'date',section:'sec_main',builtin:true,locked:true,required:true,visible:true},
+ {id:'priority',label:'الأولوية',type:'priority',section:'sec_main',builtin:true,visible:true},
+ {id:'status',label:'الحالة',type:'status',section:'sec_main',builtin:true,locked:true,required:true,visible:true},
+ {id:'reminderDate',label:'تاريخ التذكير',type:'date',section:'sec_rem',builtin:true,visible:true,showWhen:'reminder',help:'يظهر عند اختيار حالة "تحتاج تذكير".'},
+ {id:'reminderOwner',label:'مسؤول التذكير',type:'combo',list:'employees',section:'sec_rem',builtin:true,visible:true,showWhen:'reminder'},
+ {id:'notes',label:'ملاحظات مختصرة',type:'textarea',section:'sec_notes',builtin:true,visible:true,full:true,ph:'اختياري'}
+];
+const DEFAULT_PAGES=()=>[
+ {id:'dashboard',kind:'dashboard',builtin:true,title:'لوحة التحكم',desc:'نظرة سريعة على دورة المعاملات من الوارد إلى الإغلاق.',icon:'⌂',group:'g_home',visible:true,addBtn:true},
+ {id:'all',kind:'list',builtin:true,title:'كل المعاملات',desc:'سجل موحد لجميع المعاملات — كل معاملة تُسجل مرة واحدة والأقسام الأخرى عروض حسب الحالة.',icon:'▤',group:'g_tx',visible:true,toolbar:'full',exports:true,addBtn:true,addText:'+ إضافة معاملة',filter:{},columns:['number','topic','subject','type','department','employee','status','reminderDate']},
+ {id:'incoming',kind:'list',builtin:true,title:'الوارد / الجديدة',desc:'تظهر هنا تلقائيًا المعاملات التي لم تبدأ مراجعتها.',icon:'⇩',group:'g_tx',visible:true,toolbar:'basic',addBtn:true,addText:'+ تسجيل وارد',note:'غيّر الحالة من تفاصيل المعاملة، ولن تحتاج إلى إدخالها مرة أخرى في شاشة المراجعة أو الصادر.',filter:{statuses:['s_new']},columns:['number','subject','party','received','priority','status']},
+ {id:'review',kind:'list',builtin:true,title:'قيد المراجعة',desc:'عرض تلقائي للمعاملات التي تحتاج إجراءً.',icon:'◌',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_review','s_work']},columns:['number','subject','department','employee','received','status']},
+ {id:'outgoing',kind:'list',builtin:true,title:'الصادر',desc:'المعاملات التي تم إصدارها، مع خيار التذكير أو الإغلاق.',icon:'⇧',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_out','s_rem']},columns:['number','subject','_updated','reminderDate','status']},
+ {id:'reminders',kind:'list',builtin:true,title:'التذكيرات',desc:'المعاملات التي تحتاج متابعة بعد الإصدار.',icon:'◷',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_rem']},columns:['number','subject','reminderDate','reminderOwner','_due']},
+ {id:'closed',kind:'list',builtin:true,title:'المكتملة',desc:'سجل المعاملات التي أُغلقت بعد انتهاء الإجراء والتذكير.',icon:'✓',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_done']},columns:['number','subject','topic','_closed','employee']},
+ {id:'topics',kind:'topics',builtin:true,title:'الموضوعات المرتبطة',desc:'يجمع الموضوع الأصلي والتذكيرات أو الردود ذات الأرقام المختلفة.',icon:'◎',group:'g_org',visible:true,addBtn:false},
+ {id:'settings',kind:'settings',builtin:true,title:'الإعدادات',desc:'تحكم كامل بالصفحات والنصوص والألوان والحقول والمستخدمين.',icon:'⚙',group:'g_org',visible:true,addBtn:false}
+];
+const DEFAULT_WIDGETS=()=>[
+ {id:'w_total',type:'stat',label:'إجمالي المعاملات',metric:'total',visible:true},
+ {id:'w_new',type:'stat',label:'جديدة',metric:'status',statuses:['s_new'],visible:true},
+ {id:'w_prog',type:'stat',label:'قيد المراجعة',metric:'status',statuses:['s_review','s_work'],visible:true},
+ {id:'w_out',type:'stat',label:'صادرة',metric:'status',statuses:['s_out'],visible:true},
+ {id:'w_due',type:'stat',label:'تذكيرات مستحقة',metric:'due',color:'#b34239',visible:true},
+ {id:'w_done',type:'stat',label:'مكتملة',metric:'status',statuses:['s_done'],color:'#28784f',visible:true},
+ {id:'w_recent',type:'recent',title:'آخر المعاملات تحديثًا',desc:'اضغط على أي معاملة لعرض التفاصيل والحركة.',limit:6,columns:['number','subject','status','_updated'],link:'all',size:'half',visible:true},
+ {id:'w_duelist',type:'due',title:'التذكيرات',desc:'الأقرب استحقاقًا أولًا.',limit:5,link:'reminders',size:'half',visible:true}
+];
+const defaultCfg=()=>({
+ v:2,rev:0,
+ brand:{title:'متابعة المعاملات',subtitle:'نظام موحد لمتابعة المعاملات',mark:'م',org:'إدارة المعاملات'},
+ theme:{...PRESETS['الكلاسيكي'],radius:14,fontScale:100,font:'Tahoma'},
+ texts:{},
+ statuses:[
+  {id:'s_new',name:'جديدة',color:'#2d6ea3',role:'new'},
+  {id:'s_review',name:'قيد المراجعة',color:'#6653a5',role:''},
+  {id:'s_work',name:'قيد المعالجة',color:'#a86f18',role:''},
+  {id:'s_out',name:'صادرة',color:'#c05b20',role:''},
+  {id:'s_rem',name:'تحتاج تذكير',color:'#ae6712',role:'reminder'},
+  {id:'s_done',name:'مكتملة',color:'#28784f',role:'closed'}],
+ types:['أصلية','تذكير','رد'],
+ priorities:['عادي','مهم','عاجل'],
+ users:[{id:'u1',name:'سعد',role:'مدير',active:true},{id:'u2',name:'بندر',role:'موظف',active:true},{id:'u3',name:'محمد',role:'موظف',active:true},{id:'u4',name:'عمر',role:'موظف',active:true},{id:'u5',name:'سلمان',role:'موظف',active:true}],
+ /* قوائم الخيارات: يعدّلها المدير من الإعدادات، وتُضاف لها القيم الجديدة المكتوبة في النموذج تلقائيًا */
+ lists:{departments:{title:'الإدارات',items:['إدارة المعاملات']},employees:{title:'الموظفون',items:['سعد','بندر','محمد','عمر','سلمان']}},
+ sections:[{id:'sec_main',title:'البيانات الأساسية',visible:true},{id:'sec_rem',title:'التذكير',visible:true},{id:'sec_notes',title:'ملاحظات',visible:true}],
+ fields:DEFAULT_FIELDS(),
+ navGroups:[{id:'g_home',title:'الرئيسية'},{id:'g_tx',title:'المعاملات'},{id:'g_org',title:'التنظيم'}],
+ pages:DEFAULT_PAGES(),
+ widgets:DEFAULT_WIDGETS(),
+ export:{columns:['number','topic','subject','type','party','department','employee','status','received','reminderDate','notes'],title:'تقرير المعاملات',file:'معاملات'}
 });
+
+function loadCfg(){
+  const raw=jparse(store.getItem(KEY_CFG),null);
+  if(raw&&raw.v===2) return normalizeCfg(raw);
+  return normalizeCfg(migrateV3(jparse(store.getItem(KEY_OLD),null)));
+}
+function normalizeCfg(c){
+  const d=defaultCfg();
+  const noLists=!c||!c.lists;   /* إعدادات قديمة قبل القوائم: نبنيها من المستخدمين واسم الجهة لا من الافتراضي */
+  c=Object.assign({},d,c);
+  if(noLists)c.lists={};
+  c.brand=Object.assign({},d.brand,c.brand);
+  c.theme=Object.assign({},d.theme,c.theme);
+  c.export=Object.assign({},d.export,c.export);
+  c.texts=c.texts||{};
+  ['statuses','types','priorities','users','sections','fields','navGroups','pages','widgets'].forEach(k=>{if(!Array.isArray(c[k])||!c[k].length)c[k]=d[k]});
+  // ضمان وجود الحقول والصفحات الأساسية
+  if(!c.fields.some(x=>x.id==='employee')){
+    const ef=DEFAULT_FIELDS().find(x=>x.id==='employee'),oi=c.fields.findIndex(x=>x.id==='owner');
+    if(oi>-1){ef.section=c.fields[oi].section;c.fields.splice(oi+1,0,ef)}else c.fields.push(ef);
+    const after=(arr)=>{if(Array.isArray(arr)&&arr.includes('owner')&&!arr.includes('employee'))arr.splice(arr.indexOf('owner')+1,0,'employee')};
+    (c.pages||[]).forEach(p=>{if(p.id==='all')after(p.columns)});
+    if(c.export)after(c.export.columns);
+  }
+  DEFAULT_FIELDS().forEach(f=>{if(!c.fields.some(x=>x.id===f.id))c.fields.push(f)});
+  /* 5.2: الاكتفاء بحقل «الموظف» — إخفاء «الموظف المسؤول» مرة واحدة (يمكن إعادته من الإعدادات) */
+  if(!c.mig52){
+    c.mig52=true;
+    const of=c.fields.find(x=>x.id==='owner');if(of)of.visible=false;
+    const swap=arr=>{if(!Array.isArray(arr))return;const i=arr.indexOf('owner');if(i<0)return;if(arr.includes('employee'))arr.splice(i,1);else arr[i]='employee'};
+    (c.pages||[]).forEach(p=>swap(p.columns));
+    (c.widgets||[]).forEach(w=>swap(w.columns));
+    if(c.export)swap(c.export.columns);
+  }
+  DEFAULT_PAGES().filter(p=>p.id==='dashboard'||p.id==='settings').forEach(p=>{if(!c.pages.some(x=>x.id===p.id))c.pages.push(p)});
+  c.sections.forEach(s=>{if(s.visible==null)s.visible=true});
+  /* القوائم: ترحيل الإعدادات القديمة (الإدارة كانت نصًا، والموظف كان من مستخدمي الدخول) */
+  if(!c.lists||typeof c.lists!=='object'||Array.isArray(c.lists))c.lists={};
+  if(!c.lists.departments)c.lists.departments={title:'الإدارات',items:[c.brand.org].filter(Boolean)};
+  if(!c.lists.employees)c.lists.employees={title:'الموظفون',items:c.users.filter(u=>u&&u.active!==false).map(u=>u.name)};
+  c.fields.forEach(f=>{
+    if(f.id==='department'&&f.type==='text'){f.type='combo';f.list='departments'}
+    if(f.type==='owner'){f.type='combo';f.list='employees'}
+    if((f.type==='select'||f.type==='combo')&&!f.list){const k='l_'+f.id;if(!c.lists[k])c.lists[k]={title:f.label,items:(f.options||[]).slice()};f.list=k}
+    if(f.type==='select'||f.type==='combo'){delete f.options;if(!c.lists[f.list])c.lists[f.list]={title:f.label,items:[]}}
+  });
+  Object.keys(c.lists).forEach(k=>{const l=c.lists[k];if(!l||typeof l!=='object'){delete c.lists[k];return}if(!Array.isArray(l.items))l.items=[];if(!l.title)l.title=k});
+  c.users.forEach((u,i)=>{
+    if(!u.id)u.id='u'+(i+1)+Date.now().toString(36);
+    const base=ROLE_PERMS[u.role]||ROLE_PERMS['موظف'];
+    u.perms=u.role==='مدير'?Object.assign({},ROLE_PERMS['مدير']):Object.assign({},base,u.perms||{});
+    if(!Array.isArray(u.perms.pages)||u.role==='مدير')u.perms.pages=[];
+  });
+  c.fields.forEach(f=>{if(!c.sections.some(s=>s.id===f.section))f.section=c.sections[0].id});
+  c.pages.forEach(p=>{if(!c.navGroups.some(g=>g.id===p.group))p.group=c.navGroups[0].id});
+  return c;
+}
+function migrateV3(old){
+  const c=defaultCfg();
+  if(!old||typeof old!=='object') return c;
+  const ui=old.ui||{};
+  if(ui.brandTitle)c.brand.title=ui.brandTitle;
+  if(ui.brandSubtitle&&ui.brandSubtitle!=='نسخة أولية — Google Apps Script')c.brand.subtitle=ui.brandSubtitle;
+  if(old.org)c.brand.org=old.org;
+  if(old.colors)Object.keys(old.colors).forEach(k=>{if(k in c.theme)c.theme[k]=old.colors[k]});
+  if(Array.isArray(old.users)&&old.users.length)c.users=old.users.map((u,i)=>({id:u.id||('u'+(i+1)),name:u.name,role:u.role||'موظف',active:u.active!==false}));
+  const lbl=s=>String(s||'').replace(/\s*\*\s*$/,'').trim();
+  const map={transactionNumberLabel:'number',topicNumberLabel:'topic',subjectLabel:'subject',statusLabel:'status',notesLabel:'notes'};
+  Object.keys(map).forEach(k=>{if(ui[k]){const f=c.fields.find(x=>x.id===map[k]);if(f)f.label=lbl(ui[k])}});
+  const dash=c.pages.find(p=>p.id==='dashboard');
+  if(ui.dashboardTitle&&dash)dash.title=ui.dashboardTitle;
+  if(ui.dashboardDesc&&dash)dash.desc=ui.dashboardDesc;
+  const fv=old.fields||{};
+  ['party','department','owner','priority','notes'].forEach(k=>{if(fv[k]===false){const f=c.fields.find(x=>x.id===k);if(f)f.visible=false}});
+  if(fv.reminder===false)['reminderDate','reminderOwner'].forEach(k=>{c.fields.find(x=>x.id===k).visible=false});
+  (old.customSections||[]).forEach(s=>c.sections.push({id:s.id||uid('sec_'),title:s.title,visible:s.active!==false}));
+  (old.customFields||[]).forEach(f=>{
+    let sec=c.sections.find(s=>s.title===f.section);
+    if(!sec){sec={id:uid('sec_'),title:f.section||'بيانات إضافية',visible:true};c.sections.push(sec)}
+    c.fields.push({id:f.id||uid('cf_'),label:f.label,type:['text','date','number','textarea'].includes(f.type)?f.type:'text',section:sec.id,builtin:false,required:!!f.required,visible:f.active!==false});
+  });
+  if(Array.isArray(old.exportColumns)&&old.exportColumns.length)c.export.columns=old.exportColumns.filter(k=>c.fields.some(f=>f.id===k));
+  if(old.user)L.user=old.user;
+  return c;
+}
+const SEED_NOW=Date.now();
+const seed=()=>[
+ {id:'t1',number:'1450',topic:'موضوع-2026-0087',type:'أصلية',subject:'طلب التعاون مع الجهة س',party:'الجهة س',department:'إدارة المعاملات',owner:'',employee:'سعد',received:'2026-10-01',priority:'مهم',status:'تحتاج تذكير',reminderDate:'2026-10-12',reminderOwner:'سعد',notes:'بانتظار الرد النهائي',updated:'2026-10-06',closed:null,history:[['2026-10-01','جديدة','سعد'],['2026-10-02','قيد المراجعة','سعد'],['2026-10-04','صادرة','سعد'],['2026-10-06','تحتاج تذكير','سعد']]},
+ {id:'t2',number:'1458',topic:'موضوع-2026-0091',type:'أصلية',subject:'خطاب تنسيق زيارة رسمية',party:'دولة الكويت',department:'إدارة المعاملات',owner:'',employee:'بندر',received:'2026-10-03',priority:'عادي',status:'قيد المعالجة',reminderDate:'',reminderOwner:'',notes:'',updated:'2026-10-05',closed:null,history:[['2026-10-03','جديدة','بندر'],['2026-10-04','قيد المراجعة','بندر'],['2026-10-05','قيد المعالجة','بندر']]},
+ {id:'t3',number:'1682',topic:'موضوع-2026-0087',type:'تذكير',subject:'تذكير بطلب التعاون مع الجهة س',party:'الجهة س',department:'إدارة المعاملات',owner:'',employee:'محمد',received:'2026-10-06',priority:'عاجل',status:'جديدة',reminderDate:'',reminderOwner:'',notes:'مرتبط بالمعاملة 1450',updated:'2026-10-06',closed:null,history:[['2026-10-06','جديدة','محمد']]},
+ {id:'t4',number:'1432',topic:'موضوع-2026-0074',type:'أصلية',subject:'اعتماد محضر الاجتماع',party:'الجهة ص',department:'إدارة المعاملات',owner:'',employee:'عمر',received:'2026-09-27',priority:'عادي',status:'مكتملة',reminderDate:'',reminderOwner:'',notes:'تم الإغلاق',updated:'2026-10-03',closed:'2026-10-03',history:[['2026-09-27','جديدة','عمر'],['2026-09-29','قيد المراجعة','عمر'],['2026-10-01','صادرة','عمر'],['2026-10-03','مكتملة','عمر']]}
+].map((t,i)=>({...t,demo:true,created:4-i,rev:1,customFields:{}}));  /* rev=1: المعاملة التجريبية لا تغلب أبدًا بيانات حقيقية عند الدمج */
+function loadTx(){
+  const raw=jparse(store.getItem(KEY_TX),null);
+  let list=Array.isArray(raw)?raw:(HOSTED?[]:seed());   /* من رابط Google أو التطبيق: لا بيانات تجريبية */
+  return list.map((t,i)=>normTx(t,i));
+}
+function normTx(t,i){
+  t=Object.assign({},t);
+  t.id=t.id||uid('t');
+  if(!Array.isArray(t.history))t.history=[];
+  if(!t.customFields||typeof t.customFields!=='object')t.customFields={};
+  const base=t.updated?Date.parse(t.updated):0;
+  if(!t.rev)t.rev=(isNaN(base)?0:base)+(i||0);
+  if(!t.created)t.created=t.rev;
+  if(!t.updated)t.updated=today();
+  return t;
+}
+
+/* ======================= الحالة ======================= */
+let L=Object.assign({user:'',uid:'',url:'',token:'',sess:'',lastVer:''},jparse(store.getItem(KEY_LOCAL),{}));
+/* رابط قوقل: إزالة /u/1/ (تعدد الحسابات يسبب خطأ 404) والمسافات */
+const normUrl=u=>String(u||'').trim().replace(/\/macros\/u\/\d+\/s\//,'/macros/s/');
+if(L.url)L.url=normUrl(L.url);
+let cfg=loadCfg();
+let transactions=loadTx();
+let tomb=jparse(store.getItem(KEY_TOMB),{});
+const UI={page:'dashboard',tab:'general',filters:{},sort:{}};
+const T=k=>(cfg.texts&&cfg.texts[k]!=null&&cfg.texts[k]!=='')?cfg.texts[k]:(TEXT_DEFAULTS[k]??k);
+
+/* ======================= اختصارات منطقية ======================= */
+const st=n=>cfg.statuses.find(s=>s.name===n);
+const stRole=t=>(st(t.status)||{}).role||'';
+const isDue=t=>stRole(t)==='reminder'&&t.reminderDate&&t.reminderDate<=today();
+const defStatus=()=>(cfg.statuses.find(s=>s.role==='new')||cfg.statuses[0]).name;
+const activeUsers=()=>cfg.users.filter(u=>u.active);
+/* المستخدم الحالي يُحدَّد بمعرّفه (ثابت حتى لو تغيّر الاسم)، ثم بالاسم للتوافق مع النسخ السابقة */
+const me=()=>(L.uid&&cfg.users.find(u=>u.id===L.uid))||cfg.users.find(u=>u.name===L.user)||activeUsers()[0]||cfg.users[0]||{name:'',role:'موظف'};
+const isAdmin=()=>me().role==='مدير';
+const P=()=>me().perms||ROLE_PERMS['موظف'];
+const myEmp=()=>me().employee||me().name;
+const ownerOn=()=>{const f=(cfg.fields||[]).find(x=>x.id==='owner');return !!(f&&f.visible!==false)};
+const empOf=t=>t.employee||t.owner||'';
+const ownKey=t=>ownerOn()?(t.owner||''):empOf(t);
+/* عند إخفاء «الموظف المسؤول»: يُنقل اسمه إلى «الموظف» إن كان فارغًا (مرة واحدة لكل سجل) */
+function migrateOwner(){
+  if(ownerOn())return 0;let n=0;
+  transactions.forEach(t=>{if(t&&!t.demo&&t.owner&&!t.employee){t.employee=t.owner;t.owner='';t.rev=Date.now();n++}else if(t&&t.demo&&t.owner&&!t.employee){t.employee=t.owner;t.owner=''}});
+  return n;
+}
+const isMine=t=>t.owner===myEmp()||t.employee===myEmp()||t.reminderOwner===myEmp();
+const listItems=f=>((cfg.lists[(f&&f.list)||'']||{}).items)||[];
+const empList=()=>((cfg.lists.employees||{}).items)||[];
+const visTx=()=>P().scope==='own'?transactions.filter(isMine):transactions;
+const canAdd=()=>!!P().add;
+const canEditTx=t=>P().edit==='all'||(P().edit==='own'&&isMine(t));
+const canStatusTx=t=>!!P().status&&(P().scope!=='own'||isMine(t));
+const canDeleteTx=t=>!!P().del&&(P().scope!=='own'||isMine(t));
+const canExport=()=>!!P().export;
+const settingsAllowed=()=>isAdmin()||!!P().settings||!cfg.users.some(u=>u.active&&u.role==='مدير');
+const pageAllowed=p=>p.kind==='settings'?settingsAllowed():(isAdmin()||!(P().pages||[]).length||P().pages.includes(p.id));
+const page=id=>cfg.pages.find(p=>p.id===id);
+const fieldOf=id=>cfg.fields.find(f=>f.id===id);
+const fieldLabel=id=>VIRTUAL[id]||(fieldOf(id)||{}).label||id;
+function badge(name){const s=st(name);const c=s?s.color:'#6b7785';return `<span class="badge" style="background:${rgba(c,.14)};color:${c}">${esc(name)}</span>`}
+function getVal(t,f){return f.builtin?t[f.id]:(t.customFields||{})[f.id]}
+function plain(t,f){
+  if(f==='_due')return isDue(t)?T('due.badgeDue'):(stRole(t)==='reminder'?T('due.badgeSoon'):'');
+  if(f==='_updated')return t.updated||'';
+  if(f==='_closed')return t.closed||'';
+  if(f==='_created')return t.created?new Date(t.created).toISOString().slice(0,10):'';
+  const fd=typeof f==='string'?fieldOf(f):f; if(!fd)return '';
+  let v=getVal(t,fd); if(v==null)return '';
+  if(fd.type==='checkbox')return v?'نعم':'لا';
+  return String(v);
+}
+function cell(t,col){
+  if(col==='_due')return isDue(t)?`<span class="badge" style="background:var(--red-bg);color:var(--red)">${esc(T('due.badgeDue'))}</span>`:(stRole(t)==='reminder'?`<span class="badge" style="background:${rgba(cfg.theme.amber,.14)};color:var(--amber)">${esc(T('due.badgeSoon'))}</span>`:'—');
+  if(col==='_updated')return fmt(t.updated);
+  if(col==='_closed')return fmt(t.closed);
+  if(col==='_created')return fmt(t.created?new Date(t.created).toISOString().slice(0,10):'');
+  const f=fieldOf(col); if(!f)return '';
+  const v=getVal(t,f);
+  if(f.type==='status')return badge(t.status);
+  if(f.type==='date')return v?fmt(v):'—';
+  if(f.id==='number')return `<strong>${esc(v)}</strong>`;
+  if(f.type==='checkbox')return v?'نعم':'لا';
+  if(f.type==='textarea'){const s=String(v||'');return esc(s.length>60?s.slice(0,60)+'…':s)||'—'}
+  return esc(v)||'—';
+}
+const allCols=()=>[...cfg.fields.map(f=>[f.id,f.label]),...Object.entries(VIRTUAL)];
+
+/* ======================= المظهر ======================= */
+function applyTheme(){
+  const th=cfg.theme, r=document.documentElement.style;
+  ['navy','gold','bg','paper','ink','muted','line','blue','green','red','amber','orange'].forEach(k=>r.setProperty('--'+k,th[k]));
+  const dark=lum(th.paper)<.35;
+  r.setProperty('--navy-fg',readable(th.navy));
+  r.setProperty('--gold-fg',readable(th.gold));
+  r.setProperty('--head',dark?th.ink:th.navy);
+  r.setProperty('--navy2',dark?mix(th.gold,'#ffffff',.2):mix(th.navy,'#ffffff',.2));
+  r.setProperty('--surface',dark?mix(th.paper,'#ffffff',.05):mix(th.paper,th.ink,.02));
+  r.setProperty('--green-bg',rgba(th.green,.14));
+  r.setProperty('--red-bg',rgba(th.red,.13));
+  r.setProperty('--r',(th.radius||14)+'px');
+  r.setProperty('--fs',(16*(th.fontScale||100)/100)+'px');
+  document.body.style.fontFamily=`${th.font||'Tahoma'},Tahoma,"Segoe UI",Arial,sans-serif`;
+  const m=document.querySelector('meta[name=theme-color]'); if(m)m.content=th.navy;
+}
+
+/* ======================= رسائل ونوافذ ======================= */
+let toastTimer=null;
+function hideToast(){$('#toast').classList.remove('show')}
+function toast(msg,actionText,action,ms){
+  $('#toastMsg').textContent=msg;
+  const b=$('#toastBtn');
+  if(actionText){b.style.display='';b.textContent=actionText;b.onclick=()=>{hideToast();action()}}else b.style.display='none';
+  $('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(hideToast,ms||(actionText?7000:2600));
+}
+const anyModal=()=>!!document.querySelector('.modal.show');
+function closeModals(){$$('.modal').forEach(m=>m.classList.remove('show'))}
+function openModal(id){$('#'+id).classList.add('show')}
+
+/* محرر عام (نافذة تعديل بحقول يتم وصفها برمجيًا) */
+function edField(fl,vals){
+  const v=vals[fl.k]??fl.def??'';
+  const lab=`<label>${esc(fl.label)}${fl.req?' *':''}</label>`, help=fl.help?`<small>${esc(fl.help)}</small>`:'';
+  const k=`data-k="${fl.k}"`;
+  switch(fl.type){
+    case 'textarea':return `<div class="field" style="margin-bottom:.8rem">${lab}<textarea ${k}>${esc(v)}</textarea>${help}</div>`;
+    case 'number':return `<div class="field" style="margin-bottom:.8rem">${lab}<input type="number" ${k} value="${esc(v)}" ${fl.min!=null?`min="${fl.min}"`:''} ${fl.max!=null?`max="${fl.max}"`:''}>${help}</div>`;
+    case 'color':return `<div class="field" style="margin-bottom:.8rem">${lab}<input type="color" ${k} value="${esc(v||'#888888')}" style="height:2.6rem;padding:.15rem">${help}</div>`;
+    case 'check':return `<div class="field" style="margin-bottom:.8rem"><label style="display:flex;gap:.5rem;align-items:center;font-weight:700"><input type="checkbox" ${k} ${v?'checked':''}> ${esc(fl.label)}</label>${help}</div>`;
+    case 'select':return `<div class="field" style="margin-bottom:.8rem">${lab}<select ${k}>${fl.opts.map(o=>`<option value="${esc(o[0])}"${String(o[0])===String(v)?' selected':''}>${esc(o[1])}</option>`).join('')}</select>${help}</div>`;
+    case 'multi':{const sel=Array.isArray(v)?v:[];return `<div class="field" style="margin-bottom:.8rem">${lab}<div class="checks" data-multi="${fl.k}">${fl.opts.map(o=>`<label><input type="checkbox" value="${esc(o[0])}"${sel.includes(o[0])?' checked':''}> ${esc(o[1])}</label>`).join('')||'<small>لا توجد خيارات.</small>'}</div>${help}</div>`}
+    case 'icon':return `<div class="field" style="margin-bottom:.8rem">${lab}<input ${k} value="${esc(v)}" list="iconList" maxlength="4" style="max-width:8rem">${help}</div>`;
+    default:return `<div class="field" style="margin-bottom:.8rem">${lab}<input ${k} value="${esc(v)}" ${fl.ph?`placeholder="${esc(fl.ph)}"`:''}>${help}</div>`;
+  }
+}
+function openEditor(spec){
+  $('#edTitle').textContent=spec.title;
+  const f=$('#edForm');
+  f.innerHTML=(spec.intro?`<div class="notice">${esc(spec.intro)}</div>`:'')+spec.fields.map(fl=>edField(fl,spec.values||{})).join('')+
+    `<datalist id="iconList">${ICONS.map(i=>`<option value="${i}">`).join('')}</datalist>`+
+    `<div class="form-actions"><button class="btn primary" type="submit">${esc(spec.saveText||'حفظ')}</button><button class="btn secondary" type="button" data-close>إلغاء</button>${spec.onDelete?`<button class="btn danger" type="button" id="edDel" style="margin-inline-start:auto">${esc(spec.deleteText||'حذف')}</button>`:''}</div>`;
+  f.onsubmit=e=>{
+    e.preventDefault();
+    const vals={};
+    for(const fl of spec.fields){
+      let v;
+      if(fl.type==='multi')v=$$(`[data-multi="${fl.k}"] input:checked`,f).map(x=>x.value);
+      else if(fl.type==='check')v=$(`[data-k="${fl.k}"]`,f).checked;
+      else{v=$(`[data-k="${fl.k}"]`,f).value;if(fl.type==='number')v=v===''?null:Number(v);else if(typeof v==='string')v=v.trim()}
+      if(fl.req&&(v===''||v==null||(Array.isArray(v)&&!v.length))){toast('أكمل الحقل المطلوب: '+fl.label);return}
+      vals[fl.k]=v;
+    }
+    if(spec.onSave(vals)!==false)closeModals();
+  };
+  if(spec.onDelete)$('#edDel').onclick=()=>{if(spec.onDelete()!==false)closeModals()};
+  openModal('editorModal');
+  const first=$('input:not([type=checkbox]),textarea,select',f);if(first&&!/(Android|iPhone|iPad)/.test(navigator.userAgent))first.focus();
+}
+
+/* ======================= التنقل والعرض ======================= */
+const host=()=>$('#viewHost');
+function renderNav(){
+  let html=`<div class="brand"><div class="brand-mark">${esc(cfg.brand.mark)}</div><div><strong>${esc(cfg.brand.title)}</strong><small>${esc(cfg.brand.subtitle)}</small></div></div>`;
+  cfg.navGroups.forEach(g=>{
+    const ps=cfg.pages.filter(p=>p.group===g.id&&p.visible!==false&&pageAllowed(p));
+    if(!ps.length)return;
+    html+=`<div class="nav-title">${esc(g.title)}</div>`+ps.map(p=>`<button class="nav-btn${UI.page===p.id?' active':''}" data-nav="${esc(p.id)}"><span class="ico">${esc(p.icon||'•')}</span><span>${esc(p.title)}</span></button>`).join('');
+  });
+  const cr=T('side.credit'),em=T('side.email');
+  html+=`<div class="side-foot">${esc(T('side.foot'))}${cr||em?`<div class="credit">${cr?`<span>${esc(cr)}</span>`:''}${em?`<a href="mailto:${esc(em)}" dir="ltr">${esc(em)}</a>`:''}</div>`:''}</div>`;
+  $('#sidebar').innerHTML=html;
+  document.title=cfg.brand.title;
+}
+function renderUserSel(){
+  const sel=$('#userSel');
+  /* بعد الدخول بالرمز من رابط Google: المستخدم ثابت على صاحب الجلسة — التبديل يكون بالخروج ثم الدخول */
+  if(HOSTED&&!L.sess&&!L.token){sel.innerHTML='<option selected>تسجيل الدخول…</option>';sel.disabled=true;const lb=$('#lockBtn');lb.style.display='none';return}
+  if(L.sess&&!L.uid){try{const v=decodeURIComponent(escape(atob(L.sess.split('.')[0].replace(/-/g,'+').replace(/_/g,'/'))));const id=v.slice(0,v.lastIndexOf('|'));if(cfg.users.some(u=>u.id===id)){L.uid=id;saveLocal()}}catch(e){}}
+  if(L.sess&&L.uid){
+    const u=cfg.users.find(x=>x.id===L.uid);
+    if(u&&u.name!==L.user){L.user=u.name;saveLocal()}
+    sel.innerHTML=`<option selected>${esc(u?u.name:L.user)}</option>`;sel.disabled=true;
+  }else{
+    const list=activeUsers();sel.disabled=false;
+    const cur=me();
+    if(cur&&cur.name&&cur.name!==L.user&&list.some(x=>x.id===cur.id)){L.user=cur.name}
+    if(!list.some(u=>u.name===L.user))L.user=(list[0]||cfg.users[0]||{}).name||'';
+    sel.innerHTML=list.map(u=>`<option${u.name===L.user?' selected':''}>${esc(u.name)}</option>`).join('');
+  }
+  const lb=$('#lockBtn');lb.textContent=T('btn.lock');lb.style.display=(anyPin()||L.sess)?'':'none';
+}
+function firstAllowed(){
+  for(const g of cfg.navGroups){const p=cfg.pages.find(x=>x.group===g.id&&x.visible!==false&&pageAllowed(x));if(p)return p.id}
+  return 'dashboard';
+}
+function goTo(id){
+  const p=page(id);
+  if(!p||(p.visible===false&&p.id!=='settings')||!pageAllowed(p))id=firstAllowed();
+  UI.page=id;$('#sidebar').classList.remove('open');
+  renderNav();renderPage();window.scrollTo(0,0);
+}
+function renderPage(){
+  let p=page(UI.page);
+  if(!p||!pageAllowed(p)){UI.page=firstAllowed();p=page(UI.page)||page('dashboard')}
+  $('#pageTitle').textContent=p.title;$('#pageDesc').textContent=p.desc||'';
+  const ab=$('#addBtn');ab.textContent=p.addText&&p.kind!=='dashboard'?p.addText:T('btn.add');
+  ab.style.display=(p.addBtn!==false&&canAdd()&&p.kind!=='settings')?'':'none';
+  if(p.kind==='dashboard')renderDashboard(p);
+  else if(p.kind==='list')renderListPage(p);
+  else if(p.kind==='topics')renderTopics(p);
+  else if(p.kind==='settings')renderSettings(p);
+}
+function renderAll(){renderUserSel();renderNav();renderPage();renderSyncUi();checkAuth()}
+
+/* ======================= لوحة التحكم (الودجات) ======================= */
+function statNames(ids){return (ids||[]).map(id=>(cfg.statuses.find(s=>s.id===id)||{}).name).filter(Boolean)}
+function metricCount(w){
+  switch(w.metric){
+    case 'total':return visTx().length;
+    case 'status':{const n=statNames(w.statuses);return visTx().filter(t=>n.includes(t.status)).length}
+    case 'due':return visTx().filter(isDue).length;
+    case 'today':return visTx().filter(t=>t.received===today()).length;
+    case 'mine':return visTx().filter(t=>ownKey(t)===myEmp()&&stRole(t)!=='closed').length;
+  }
+  return 0;
+}
+const byRecent=(a,b)=>(b.rev||0)-(a.rev||0);
+function miniTable(rows,cols){
+  const head=cols.map(c=>`<th>${esc(fieldLabel(c))}</th>`).join('');
+  const body=rows.map(t=>`<tr data-detail="${esc(t.id)}" style="cursor:pointer" title="${esc(T('btn.view'))}">${cols.map(c=>`<td data-label="${esc(fieldLabel(c))}"${c==='subject'?' class="wrap"':''}>${cell(t,c)}</td>`).join('')}</tr>`).join('')||`<tr><td colspan="${cols.length}" class="empty">${esc(T('empty.rows'))}</td></tr>`;
+  return `<div class="table-wrap cards-m"><table style="min-width:0"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+}
+function panelHead(w,title,desc){return `<div class="panel-head"><div><h2>${esc(title)}</h2>${desc?`<p>${esc(desc)}</p>`:''}</div>${w.link&&page(w.link)?`<button class="btn secondary" data-go="${esc(w.link)}">${esc(T('btn.viewAll'))}</button>`:''}</div>`}
+function renderWidget(w){
+  const cls=w.size==='full'?'panel full':'panel';
+  switch(w.type){
+    case 'stat':return `<div class="stat"><div class="num"${w.color?` style="color:${esc(w.color)}"`:''}>${metricCount(w)}</div><div class="label">${esc(w.label)}</div></div>`;
+    case 'recent':{
+      const cols=(w.columns&&w.columns.length?w.columns:['number','subject','status','_updated']).filter(c=>VIRTUAL[c]||fieldOf(c));
+      return `<div class="${cls}">${panelHead(w,w.title,w.desc)}${miniTable([...visTx()].sort(byRecent).slice(0,w.limit||6),cols)}</div>`}
+    case 'due':{
+      const rows=visTx().filter(t=>stRole(t)==='reminder').sort((a,b)=>(a.reminderDate||'9999').localeCompare(b.reminderDate||'9999')).slice(0,w.limit||5);
+      return `<div class="${cls}">${panelHead(w,w.title,w.desc)}<div class="topic-list">${rows.map(t=>`<div class="topic-item" data-detail="${esc(t.id)}" style="cursor:pointer"><strong>${esc(t.number)} — ${esc(t.subject)}</strong><small>${isDue(t)?esc(T('due.now')):esc(T('due.soon'))+fmt(t.reminderDate)} · ${esc(t.reminderOwner||ownKey(t))}</small></div>`).join('')||`<div class="empty">${esc(T('empty.due'))}</div>`}</div></div>`}
+    case 'bystatus':{
+      const max=Math.max(1,...cfg.statuses.map(s=>visTx().filter(t=>t.status===s.name).length));
+      return `<div class="${cls}">${panelHead(w,w.title,w.desc)}${cfg.statuses.map(s=>{const n=visTx().filter(t=>t.status===s.name).length;return `<div class="bar-row"><span class="nm">${esc(s.name)}</span><span class="track"><span class="fill" style="display:block;width:${n/max*100}%;background:${s.color}"></span></span><span class="ct">${n}</span></div>`}).join('')}</div>`}
+    case 'byowner':{
+      const names=[...new Set([...empList(),...visTx().map(ownKey).filter(Boolean)])];
+      const cnt=names.map(n=>[n,visTx().filter(t=>ownKey(t)===n&&stRole(t)!=='closed').length]);
+      const max=Math.max(1,...cnt.map(c=>c[1]));
+      return `<div class="${cls}">${panelHead(w,w.title,w.desc)}${cnt.map(([n,c])=>`<div class="bar-row"><span class="nm">${esc(n)}</span><span class="track"><span class="fill" style="display:block;width:${c/max*100}%;background:var(--gold)"></span></span><span class="ct">${c}</span></div>`).join('')||`<div class="empty">${esc(T('empty.rows'))}</div>`}</div>`}
+  }
+  return '';
+}
+function renderDashboard(p){
+  const ws=cfg.widgets.filter(w=>w.visible!==false);
+  host().innerHTML=ws.length?`<div class="dash">${ws.map(renderWidget).join('')}</div>`:`<div class="panel"><div class="empty">لا توجد عناصر في لوحة التحكم. أضفها من الإعدادات ← لوحة التحكم.</div></div>`;
+}
+
+/* ======================= صفحات القوائم ======================= */
+function searchText(t){return norm(cfg.fields.map(f=>plain(t,f)).join(' '))}
+const DATE_COLS=()=>[['received',fieldLabel('received')],['_updated',VIRTUAL._updated],['reminderDate',fieldLabel('reminderDate')],['_closed',VIRTUAL._closed],['_created',VIRTUAL._created],...cfg.fields.filter(f=>!f.builtin&&f.type==='date').map(f=>[f.id,f.label])];
+function pageRows(p){
+  const fl=p.filter||{};
+  const names=statNames(fl.statuses);
+  let rows=visTx().filter(t=>
+    (!(fl.statuses||[]).length||names.includes(t.status))&&
+    (!(fl.types||[]).length||fl.types.includes(t.type))&&
+    (!(fl.owners||[]).length||fl.owners.includes(ownKey(t)))&&
+    (!(fl.priorities||[]).length||fl.priorities.includes(t.priority))&&
+    (!fl.dueOnly||isDue(t)));
+  const f=UI.filters[p.id]||{};
+  const terms=norm(f.q||'').split(/\s+/).filter(Boolean), party=norm(f.party||''), df=f.df||'received';
+  rows=rows.filter(t=>{
+    if(terms.length){const hay=f.qf?norm(plain(t,f.qf)):searchText(t);if(!terms.every(w=>hay.includes(w)))return false}
+    if(f.status&&t.status!==f.status)return false;
+    if(f.type&&t.type!==f.type)return false;
+    if(f.priority&&t.priority!==f.priority)return false;
+    if(f.owner&&ownerOn()&&t.owner!==f.owner)return false;
+    if(f.emp&&t.employee!==f.emp)return false;
+    if(f.dept&&t.department!==f.dept)return false;
+    if(party&&!norm(t.party).includes(party))return false;
+    if(f.from||f.to){const d=String(plain(t,df)||'').slice(0,10);if(!d)return false;if(f.from&&d<f.from)return false;if(f.to&&d>f.to)return false}
+    return true;
+  });
+  const s=UI.sort[p.id];
+  if(s)rows=rows.sort((a,b)=>String(plain(a,s.col)).localeCompare(String(plain(b,s.col)),'ar',{numeric:true})*(s.dir==='desc'?-1:1));
+  else rows=rows.sort((a,b)=>(b.created||0)-(a.created||0));
+  return rows;
+}
+function toolbarHtml(p){
+  const tb=p.toolbar||'basic', f=UI.filters[p.id]||{};
+  const opt=(arr,cur,all)=>`<option value="">${esc(all)}</option>`+arr.map(x=>{const v=Array.isArray(x)?x[0]:x,n=Array.isArray(x)?x[1]:x;return `<option value="${esc(v)}"${v===cur?' selected':''}>${esc(n)}</option>`}).join('');
+  const stNamesAll=(p.filter&&p.filter.statuses&&p.filter.statuses.length)?statNames(p.filter.statuses):cfg.statuses.map(s=>s.name);
+  const expBtn=(p.exports&&canExport())?`<button class="btn primary" data-act="export">${esc(T('btn.export'))}</button>`:'';
+  const clearBtn=`<button class="btn secondary" data-act="clear-filters">${esc(T('btn.clear'))}</button>`;
+  if(tb==='full'){
+    const fld=(label,html)=>`<div class="field"><label>${esc(label)}</label>${html}</div>`;
+    const owners=[...new Set([...empList(),...visTx().map(t=>t.owner).filter(Boolean)])];
+    const depts=[...new Set([...(((cfg.lists.departments||{}).items)||[]),...visTx().map(t=>t.department).filter(Boolean)])];
+    const anyF=Object.keys(f).some(k=>k!=='q'&&k!=='df'&&f[k]);
+    return `<div class="adv${(UI.advOpen||anyF)?' open':''}">`+
+      fld(T('adv.q'),`<input type="search" data-flt="q" value="${esc(f.q||'')}" placeholder="${esc(T('search.ph'))}">`)+
+      fld(T('adv.in'),`<select data-flt="qf">${opt(cfg.fields.map(x=>[x.id,x.label]),f.qf,T('adv.inAll'))}</select>`)+
+      fld(T('adv.status'),`<select data-flt="status">${opt(stNamesAll,f.status,T('filter.allStatuses'))}</select>`)+
+      fld(T('adv.type'),`<select data-flt="type">${opt(cfg.types,f.type,T('filter.allTypes'))}</select>`)+
+      fld(T('adv.priority'),`<select data-flt="priority">${opt(cfg.priorities,f.priority,T('filter.allPriorities'))}</select>`)+
+      (ownerOn()?fld(T('adv.owner'),`<select data-flt="owner">${opt(owners,f.owner,T('filter.allOwners'))}</select>`):'')+
+      (fieldOf('employee')&&fieldOf('employee').visible!==false?fld(T('adv.employee'),`<select data-flt="emp">${opt([...new Set([...listItems(fieldOf('employee')),...visTx().map(t=>t.employee).filter(Boolean)])],f.emp,T('filter.allEmployees'))}</select>`):'')+
+      fld(T('adv.dept'),`<select data-flt="dept">${opt(depts,f.dept,T('filter.allDepts'))}</select>`)+
+      fld(T('adv.party'),`<input data-flt="party" value="${esc(f.party||'')}">`)+
+      fld(T('adv.dateField'),`<select data-flt="df">${DATE_COLS().map(([v,n])=>`<option value="${esc(v)}"${(f.df||'received')===v?' selected':''}>${esc(n)}</option>`).join('')}</select>`)+
+      fld(T('adv.from'),`<input type="date" data-flt="from" value="${esc(f.from||'')}">`)+
+      fld(T('adv.to'),`<input type="date" data-flt="to" value="${esc(f.to||'')}">`)+
+      `<div class="acts"><button class="btn secondary adv-toggle" data-act="adv-toggle">خيارات البحث المتقدم</button>${clearBtn}${expBtn}<strong id="tCount2" style="margin-inline-start:auto;color:var(--head)"></strong></div></div>`;
+  }
+  let h='';
+  if(tb!=='none')h+=`<input type="search" data-flt="q" value="${esc(f.q||'')}" placeholder="${esc(T('search.ph'))}">`;
+  if(tb!=='none'&&stNamesAll.length>1)h+=`<select data-flt="status">${opt(stNamesAll,f.status,T('filter.allStatuses'))}</select>`;
+  if(tb!=='none')h+=clearBtn;
+  h+=expBtn;
+  return h?`<div class="filters">${h}</div>`:'';
+}
+function renderListPage(p){
+  UI.filters[p.id]=UI.filters[p.id]||{};
+  host().innerHTML=`<div class="panel"><div class="panel-head"><div><h2>${esc(p.title)}</h2><p>${esc(p.desc||'')}</p></div>${p.addBtn!==false&&canAdd()?`<button class="btn primary" data-act="add">${esc(p.addText||T('btn.addIn'))}</button>`:''}</div>${p.note?`<div class="notice">${esc(p.note)}</div>`:''}${toolbarHtml(p)}<div class="table-wrap cards-m"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div><div id="tEmpty" class="empty" style="display:none"></div><p class="sync" id="tCount" style="margin:.7rem 0 0"></p></div>`;
+  fillTable(p);
+}
+function fillTable(p){
+  const cols=(p.columns||[]).filter(c=>VIRTUAL[c]||fieldOf(c));
+  const s=UI.sort[p.id];
+  $('#thead').innerHTML='<tr>'+cols.map(c=>`<th class="sortable" data-sort="${esc(c)}" title="ترتيب">${esc(fieldLabel(c))}${s&&s.col===c?(s.dir==='desc'?' ▾':' ▴'):''}</th>`).join('')+'<th></th></tr>';
+  const rows=pageRows(p);
+  const wide=['subject','notes'];
+  $('#tbody').innerHTML=rows.map(t=>`<tr>${cols.map(c=>`<td data-label="${esc(fieldLabel(c))}"${wide.includes(c)?' class="wrap"':''}>${cell(t,c)}</td>`).join('')}<td class="acts-cell"><div class="row-actions"><button class="icon" data-detail="${esc(t.id)}">${esc(T('btn.view'))}</button>${canEditTx(t)?`<button class="icon" data-edit="${esc(t.id)}">${esc(T('btn.edit'))}</button>`:''}${canDeleteTx(t)?`<button class="icon danger" data-del="${esc(t.id)}">${esc(T('btn.delete'))}</button>`:''}</div></td></tr>`).join('');
+  const em=$('#tEmpty');em.style.display=rows.length?'none':'block';em.textContent=T('empty.match');
+  const ct=T('filter.count')+': '+rows.length;
+  $('#tCount').textContent=ct;if($('#tCount2'))$('#tCount2').textContent=ct;
+}
+function renderTopics(p){
+  const groups={};
+  visTx().forEach(t=>(groups[t.topic||'بدون موضوع']=groups[t.topic||'بدون موضوع']||[]).push(t));
+  host().innerHTML=`<div class="panel"><div class="panel-head"><div><h2>${esc(p.title)}</h2><p>${esc(p.desc||'')}</p></div></div><div class="topic-list">${Object.entries(groups).map(([topic,items])=>`<div class="topic-item"><strong>${esc(topic)}</strong><small>${items.length} ${esc(T('topic.count'))}</small><div style="margin-top:.55rem;display:flex;gap:.45rem;flex-wrap:wrap">${items.map(t=>`<button class="icon" data-detail="${esc(t.id)}">${esc(t.number)} · ${esc(t.status)}</button>`).join('')}</div></div>`).join('')||`<div class="empty">${esc(T('empty.topics'))}</div>`}</div></div>`;
+}
+
+/* ======================= الحفظ ======================= */
+function saveLocal(){try{store.setItem(KEY_LOCAL,JSON.stringify(L))}catch(e){}}
+function persistTx(){migrateOwner();try{store.setItem(KEY_TX,JSON.stringify(transactions));store.setItem(KEY_TOMB,JSON.stringify(tomb))}catch(e){toast('تعذر الحفظ على هذا الجهاز: المساحة ممتلئة')}schedulePush();scheduleFileWrite();try{renderSyncUi()}catch(e){}}
+function persistCfg(quiet){
+  cfg.rev=Date.now();
+  try{store.setItem(KEY_CFG,JSON.stringify(cfg))}catch(e){toast('تعذر حفظ الإعدادات')}
+  applyTheme();schedulePush();scheduleFileWrite();
+  if(!quiet)refresh();
+}
+function refresh(){const y=window.scrollY;renderAll();window.scrollTo(0,y)}
+
+/* ======================= نموذج المعاملة ======================= */
+function selectHtml(a,opts,val,empty){
+  const list=[...opts];if(val&&!list.includes(val))list.push(val);
+  return `<select ${a}>${empty?'<option value=""></option>':''}${list.map(o=>`<option${o===val?' selected':''}>${esc(o)}</option>`).join('')}</select>`;
+}
+function fieldInput(f,val){
+  const a=`data-f="${esc(f.id)}" id="f_${esc(f.id)}"`+(f.required?' required':''), ph=f.ph?` placeholder="${esc(f.ph)}"`:'';
+  switch(f.type){
+    case 'textarea':return `<textarea ${a}${ph}>${esc(val)}</textarea>`;
+    case 'date':return `<input type="date" ${a} value="${esc(val)}"><small data-dh style="color:var(--head);font-weight:700">${val?fmt(val):''}</small>`;
+    case 'number':return `<input type="number" step="any" ${a}${ph} value="${esc(val)}">`;
+    case 'checkbox':return `<input type="checkbox" data-f="${esc(f.id)}" id="f_${esc(f.id)}" ${val?'checked':''} style="width:1.3rem;height:1.3rem;min-height:0">`;
+    case 'select':return selectHtml(a,listItems(f),val,true);
+    case 'combo':return `<input ${a}${ph} value="${esc(val)}" list="dl_${esc(f.id)}" autocomplete="off"><datalist id="dl_${esc(f.id)}">${listItems(f).map(o=>`<option value="${esc(o)}"></option>`).join('')}</datalist>`;
+    case 'type':return selectHtml(a,cfg.types,val,false);
+    case 'priority':return selectHtml(a,cfg.priorities,val,false);
+    case 'status':return selectHtml(a,cfg.statuses.map(s=>s.name),val,false);
+    default:return `<input ${a}${ph} value="${esc(val)}">`;
+  }
+}
+function syncCond(){
+  const sel=$('#f_status');const role=sel?((st(sel.value)||{}).role||''):'';
+  $$('#txForm [data-when]').forEach(el=>{el.style.display=(role==='reminder')?'':'none'});
+}
+function openForm(id){
+  const t=id?transactions.find(x=>x.id===id):null;
+  if(t?!canEditTx(t):!canAdd())return toast(T('viewer'));
+  $('#formTitle').textContent=t?T('form.editTitle'):T('form.addTitle');
+  const defs={department:cfg.brand.org,owner:ownerOn()?myEmp():'',employee:empList().includes(myEmp())?myEmp():'',reminderOwner:myEmp(),received:today(),status:defStatus(),type:cfg.types[0]||'',priority:cfg.priorities[0]||''};
+  let html=`<input type="hidden" id="editId" value="${esc(t?t.id:'')}"><div class="form-grid">`;
+  cfg.sections.forEach(sec=>{
+    if(sec.visible===false)return;
+    const fs=cfg.fields.filter(f=>f.section===sec.id&&f.visible!==false);
+    if(!fs.length)return;
+    html+=`<div class="sec-title"${fs.every(f=>f.showWhen==='reminder')?' data-when="reminder"':''}>${esc(sec.title)}</div>`;
+    fs.forEach(f=>{
+      const val=t?getVal(t,f):(f.builtin?defs[f.id]:'');
+      html+=`<div class="field${(f.full||f.type==='textarea')?' full':''}"${f.showWhen==='reminder'?' data-when="reminder"':''}><label for="f_${esc(f.id)}">${esc(f.label)}${f.required?' *':''}</label>${fieldInput(f,val??'')}${f.help?`<small>${esc(f.help)}</small>`:''}</div>`;
+    });
+  });
+  html+=`</div><div class="form-actions"><button class="btn primary" type="submit">${esc(T('btn.save'))}</button><button class="btn secondary" type="button" data-close>${esc(T('btn.cancel'))}</button></div>`;
+  $('#txForm').innerHTML=html;syncCond();openModal('formModal');
+}
+function nextTopic(){
+  const y=new Date().getFullYear(),re=new RegExp('^موضوع-'+y+'-(\\d+)$');
+  let max=0;transactions.forEach(t=>{const m=re.exec(t.topic||'');if(m)max=Math.max(max,+m[1])});
+  return 'موضوع-'+y+'-'+String(max+1).padStart(4,'0');
+}
+function applyStatusEffects(t,prev,isNew){
+  if(isNew||prev!==t.status)t.history.push([today(),t.status,me().name]);
+  if(stRole(t)==='closed')t.closed=t.closed||today();else t.closed=null;
+  t.updated=today();t.rev=Date.now();delete t.demo;
+}
+function saveForm(){
+  const id=$('#editId').value;
+  let t=id?transactions.find(x=>x.id===id):null;
+  const vals={};
+  for(const f of cfg.fields){
+    const el=$(`#txForm [data-f="${f.id}"]`);if(!el)continue;
+    const v=f.type==='checkbox'?el.checked:(el.value||'').trim();
+    const hiddenCond=el.closest('[data-when]')&&el.closest('[data-when]').style.display==='none';
+    if(f.required&&f.type!=='checkbox'&&!hiddenCond&&v===''){toast('أكمل الحقل: '+f.label);el.focus();return}
+    vals[f.id]=v;
+  }
+  const num=numKey(vals.number);
+  if(transactions.some(x=>x.id!==(t&&t.id)&&numKey(x.number)===num))return toast(T('msg.dupNumber'));
+  const isNew=!t;
+  if(isNew){t={id:uid('t'),created:Date.now(),history:[],customFields:{},type:cfg.types[0]||'',department:cfg.brand.org,owner:ownerOn()?myEmp():'',priority:cfg.priorities[0]||'',status:defStatus(),received:today(),reminderOwner:myEmp()};transactions.unshift(t)}
+  const prev=t.status;
+  let listsChanged=false;
+  cfg.fields.forEach(f=>{
+    if(!(f.id in vals))return;
+    if(f.builtin)t[f.id]=vals[f.id];else t.customFields[f.id]=vals[f.id];
+    /* قيمة جديدة كُتبت في حقل قائمة: تُحفظ في القائمة لتظهر كخيار لاحقًا */
+    if(f.type==='combo'&&vals[f.id]&&cfg.lists[f.list]&&!cfg.lists[f.list].items.includes(vals[f.id])){cfg.lists[f.list].items.push(vals[f.id]);listsChanged=true}
+  });
+  if(!t.topic)t.topic=nextTopic();
+  applyStatusEffects(t,prev,isNew);
+  persistTx();if(listsChanged)persistCfg(true);closeModals();refresh();toast(T('msg.saved'));
+}
+function openDetail(id){
+  const t=transactions.find(x=>x.id===id);if(!t)return;
+  $('#detailTitle').textContent=T('detail.title');
+  const rem=stRole(t)==='reminder';
+  const rows=cfg.fields.filter(f=>f.visible!==false&&f.id!=='status'&&f.id!=='number'&&f.id!=='type'&&f.id!=='topic'&&(f.showWhen!=='reminder'||rem)).map(f=>{
+    const v=getVal(t,f);
+    const shown=(v===''||v==null)?'—':(f.type==='date'?fmt(v):f.type==='checkbox'?(v?'نعم':'لا'):esc(v));
+    return `<p style="margin:.5rem 0"><strong>${esc(f.label)}:</strong> ${shown}</p>`;
+  }).join('');
+  const stSel=canStatusTx(t)?`<div class="field" style="margin-top:1rem"><label>${esc(T('detail.status'))}</label><div style="display:flex;gap:.5rem;flex-wrap:wrap"><select class="inp" id="detSt">${cfg.statuses.map(s=>`<option${s.name===t.status?' selected':''}>${esc(s.name)}</option>`).join('')}</select><button class="btn secondary" data-act="set-status" data-id="${esc(t.id)}">${esc(T('btn.changeStatus'))}</button></div></div>`:'';
+  $('#detailBody').innerHTML=`<div class="notice"><strong>${esc(t.number)}</strong> · ${esc(t.type)} · ${esc(fieldLabel('topic'))}: <strong>${esc(t.topic)}</strong> · ${badge(t.status)}</div>
+  <div class="grid2"><div>${rows}${stSel}</div><div><h3 class="sub" style="margin-top:0">${esc(T('detail.timeline'))}</h3><div class="timeline">${(t.history||[]).map(h=>`<div class="event"><strong>${badge(h[1])}</strong><small>${fmt(h[0])} · ${esc(h[2])}</small></div>`).join('')||'<small>—</small>'}</div></div></div>
+  <div class="form-actions">${canEditTx(t)?`<button class="btn primary" data-edit="${esc(t.id)}">${esc(T('btn.edit'))}</button>`:''}${canDeleteTx(t)?`<button class="btn danger" data-del="${esc(t.id)}">${esc(T('btn.delete'))}</button>`:''}</div>`;
+  openModal('detailModal');
+}
+function setStatus(id,name){
+  const t=transactions.find(x=>x.id===id);if(!t||!st(name)||t.status===name)return;
+  if(!canStatusTx(t))return toast(T('viewer'));
+  const prev=t.status;t.status=name;applyStatusEffects(t,prev,false);
+  persistTx();closeModals();refresh();toast(T('msg.statusChanged')+name);
+}
+function deleteTx(id){
+  const i=transactions.findIndex(x=>x.id===id);if(i<0)return;
+  const t=transactions[i];
+  transactions.splice(i,1);tomb[id]=Date.now();
+  persistTx();closeModals();refresh();
+  toast(T('msg.deleted'),T('btn.undo'),()=>{delete tomb[id];t.rev=Date.now();transactions.unshift(t);persistTx();refresh()});
+}
+function confirmDelete(id){
+  const t=transactions.find(x=>x.id===id);
+  if(!t||!canDeleteTx(t))return toast(T('viewer'));
+  if(confirm(T('msg.confirmDelete')))deleteTx(id);
+}
+
+/* ======================= التصدير ======================= */
+function download(data,name,type){
+  const a=document.createElement('a');const u=URL.createObjectURL(new Blob([data],{type}));
+  a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500);
+}
+const fname=ext=>`${cfg.export.file||'معاملات'}_${today()}.${ext}`;
+function printHtml(html){
+  const w=window.open('','_blank');
+  if(w){w.document.write(html);w.document.close();w.focus();setTimeout(()=>{try{w.print()}catch(e){}},400);return}
+  const f=document.createElement('iframe');f.style.cssText='position:fixed;width:0;height:0;border:0';document.body.appendChild(f);
+  f.contentDocument.open();f.contentDocument.write(html);f.contentDocument.close();
+  setTimeout(()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(e){toast('تعذر فتح الطباعة')}setTimeout(()=>f.remove(),2000)},400);
+}
+/* وصف نصي لمعايير البحث الحالية — يظهر أعلى التقرير */
+function criteriaText(p){
+  const f=UI.filters[p.id]||{},out=[];
+  if(f.q)out.push(T('adv.q')+': '+f.q+(f.qf?' ('+fieldLabel(f.qf)+')':''));
+  [['status','adv.status'],['type','adv.type'],['priority','adv.priority'],['owner','adv.owner'],['emp','adv.employee'],['dept','adv.dept'],['party','adv.party']].forEach(([k,t])=>{if(f[k])out.push(T(t)+': '+f[k])});
+  if(f.from||f.to)out.push(fieldLabel(f.df||'received')+': '+(f.from?T('adv.from')+' '+fmt(f.from):'')+(f.to?' '+T('adv.to')+' '+fmt(f.to):''));
+  return out.join(' | ');
+}
+const isDateCol=c=>c==='_updated'||c==='_closed'||c==='_created'||((fieldOf(c)||{}).type==='date');
+const disp=(t,c)=>{const v=plain(t,c);return (v&&isDateCol(c))?fmt(v):v};
+function openExport(){
+  if(!canExport())return toast(T('viewer'));
+  const p=page(UI.page);if(!p||p.kind!=='list')return;
+  const n=pageRows(p).length;if(!n)return toast(T('empty.match'));
+  const last=UI.exp||{fmt:'pdf',mode:'table',timeline:true};
+  openEditor({title:T('btn.export')+' ('+n+')',intro:(criteriaText(p)||'بدون تصفية')+' — سيُصدَّر ما يظهر الآن في الجدول فقط.',saveText:'تصدير',
+    fields:[{k:'fmt',label:'الصيغة',type:'select',opts:[['pdf','PDF / طباعة'],['word','Word'],['excel','Excel'],['csv','CSV']]},
+      {k:'mode',label:'نوع التقرير',type:'select',opts:[['table','جدول مختصر (أعمدة إعدادات التصدير)'],['detail','تفصيل كامل لكل معاملة (كل الحقول)']]},
+      {k:'timeline',label:'تضمين الخط الزمني للحالات (في التقرير التفصيلي)',type:'check'},
+      {k:'title',label:'عنوان التقرير'}],
+    values:{...last,title:cfg.export.title||T('export.title')},
+    onSave:v=>{UI.exp={fmt:v.fmt,mode:v.mode,timeline:v.timeline};doExport(v.fmt,v)}});
+}
+function doExport(fmtName,opt){
+  opt=opt||{};
+  const p=page(UI.page)||page('all');
+  const rows=pageRows(p);if(!rows.length)return toast(T('empty.match'));
+  const detail=opt.mode==='detail';
+  const title=opt.title||cfg.export.title||T('export.title');
+  const cols=(detail?[...cfg.fields.filter(f=>f.visible!==false).map(f=>f.id),'_updated','_closed']:cfg.export.columns).filter(c=>fieldOf(c)||VIRTUAL[c]);
+  const hist=t=>(t.history||[]).map(h=>h[0]+' '+h[1]+' ('+h[2]+')').join(' ← ');
+  const crit=criteriaText(p);
+  if(fmtName==='csv'||fmtName==='excel'){
+    const headers=cols.map(fieldLabel),data=rows.map(t=>cols.map(c=>plain(t,c)));
+    if(detail&&opt.timeline){headers.push(T('detail.timeline'));rows.forEach((t,i)=>data[i].push(hist(t)))}
+    if(fmtName==='csv'){
+      const q=v=>{v=String(v);if(/^[=@]/.test(v)||(/^[+\-]/.test(v)&&isNaN(v)))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'};
+      return download('﻿'+[headers,...data].map(r=>r.map(q).join(',')).join('\r\n'),fname('csv'),'text/csv;charset=utf-8');
+    }
+    return download('<'+'html dir="rtl"><'+'head><'+'meta charset="utf-8"></'+'head><'+'body><table border="1"><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr>'+data.map(r=>'<tr>'+r.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('')+'</table></'+'body></'+'html>',fname('xls'),'application/vnd.ms-excel');
+  }
+  const navy=cfg.theme.navy,fg=readable(navy);
+  let body;
+  if(detail){
+    body=rows.map((t,i)=>'<div class="tx"><h3>'+(i+1)+'. '+esc(fieldLabel('number'))+' '+esc(t.number)+' — '+esc(t.subject)+'</h3><table class="kv">'+
+      cols.filter(c=>c!=='number'&&c!=='subject').map(c=>'<tr><th>'+esc(fieldLabel(c))+'</th><td>'+(esc(disp(t,c))||'—')+'</td></tr>').join('')+'</table>'+
+      (opt.timeline&&(t.history||[]).length?'<p class="tl"><b>'+esc(T('detail.timeline'))+':</b></p><table class="grid"><tr><th>التاريخ</th><th>'+esc(fieldLabel('status'))+'</th><th>بواسطة</th></tr>'+t.history.map(h=>'<tr><td>'+fmt(h[0])+'</td><td>'+esc(h[1])+'</td><td>'+esc(h[2])+'</td></tr>').join('')+'</table>':'')+'</div>').join('');
+  }else{
+    body='<table class="grid"><tr><th>#</th>'+cols.map(c=>'<th>'+esc(fieldLabel(c))+'</th>').join('')+'</tr>'+rows.map((t,i)=>'<tr><td>'+(i+1)+'</td>'+cols.map(c=>'<td>'+esc(disp(t,c))+'</td>').join('')+'</tr>').join('')+'</table>';
+  }
+  const html='<'+'html dir="rtl" lang="ar"><'+'head><'+'meta charset="utf-8"><'+'title>'+esc(title)+'</'+'title><'+'style>'+
+    'body{font-family:Tahoma,Arial,sans-serif;padding:18px;color:#111;font-size:12px}h2{margin:0 0 6px}'+
+    '.meta{color:#555;font-size:11px;margin:0 0 4px}.crit{background:#f3f3f3;border:1px solid #ddd;padding:6px 8px;font-size:11px;margin:6px 0 14px}'+
+    'table{border-collapse:collapse;width:100%}th,td{border:1px solid #999;padding:5px 7px;text-align:right;vertical-align:top}'+
+    '.grid th{background:'+navy+';color:'+fg+'}.kv th{background:#f0f0f0;width:28%}'+
+    '.tx{margin:0 0 18px;page-break-inside:avoid}.tx h3{margin:0 0 6px;font-size:13px;background:'+navy+';color:'+fg+';padding:6px 8px}.tl{margin:8px 0 4px}'+
+    '</'+'style></'+'head><'+'body><h2>'+esc(title)+'</h2><p class="meta">'+esc(cfg.brand.org||'')+' — تاريخ التقرير: '+fmt(today())+' — عدد المعاملات: '+rows.length+' — أعدّه: '+esc(me().name)+'</p>'+
+    (crit?'<div class="crit"><b>معايير البحث:</b> '+esc(crit)+'</div>':'')+body+'</'+'body></'+'html>';
+  if(fmtName==='word')return download(html,fname('doc'),'application/msword');
+  printHtml(html);
+}
+
+/* ======================= Excel: قالب للتعبئة واستيراد (xlsx بدون مكتبات خارجية) ======================= */
+const CRC_T=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);t[n]=c>>>0}return t})();
+function crc32(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=CRC_T[(c^b[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
+/* ملف ZIP بدون ضغط (يفتحه Excel مباشرة) */
+function zipStore(files){
+  const enc=new TextEncoder(),parts=[],central=[];let off=0;
+  files.forEach(f=>{
+    const name=enc.encode(f.name),data=enc.encode(f.text),crc=crc32(data);
+    const lh=new DataView(new ArrayBuffer(30));
+    lh.setUint32(0,0x04034b50,true);lh.setUint16(4,20,true);lh.setUint16(6,0x0800,true);lh.setUint16(8,0,true);lh.setUint16(10,0,true);lh.setUint16(12,0x0021,true);
+    lh.setUint32(14,crc,true);lh.setUint32(18,data.length,true);lh.setUint32(22,data.length,true);lh.setUint16(26,name.length,true);lh.setUint16(28,0,true);
+    const ch=new DataView(new ArrayBuffer(46));
+    ch.setUint32(0,0x02014b50,true);ch.setUint16(4,20,true);ch.setUint16(6,20,true);ch.setUint16(8,0x0800,true);ch.setUint16(10,0,true);ch.setUint16(12,0,true);ch.setUint16(14,0x0021,true);
+    ch.setUint32(16,crc,true);ch.setUint32(20,data.length,true);ch.setUint32(24,data.length,true);ch.setUint16(28,name.length,true);ch.setUint32(42,off,true);
+    parts.push(new Uint8Array(lh.buffer),name,data);central.push(new Uint8Array(ch.buffer),name);
+    off+=30+name.length+data.length;
+  });
+  let cs=0;central.forEach(p=>{cs+=p.length});
+  const e=new DataView(new ArrayBuffer(22));
+  e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cs,true);e.setUint32(16,off,true);
+  return new Blob([...parts,...central,new Uint8Array(e.buffer)],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+}
+/* قراءة ZIP (مخزّن أو مضغوط deflate) */
+async function zipRead(buf){
+  const bytes=new Uint8Array(buf),dv=new DataView(buf);let eo=-1;
+  for(let i=bytes.length-22;i>=0&&i>=bytes.length-22-65557;i--){if(dv.getUint32(i,true)===0x06054b50){eo=i;break}}
+  if(eo<0)throw Error('الملف ليس ملف Excel صالحًا (xlsx)');
+  const n=dv.getUint16(eo+10,true);let pos=dv.getUint32(eo+16,true);const out={};
+  for(let i=0;i<n;i++){
+    if(dv.getUint32(pos,true)!==0x02014b50)break;
+    const method=dv.getUint16(pos+10,true),csize=dv.getUint32(pos+20,true),nl=dv.getUint16(pos+28,true),xl=dv.getUint16(pos+30,true),cl=dv.getUint16(pos+32,true),lo=dv.getUint32(pos+42,true);
+    const name=new TextDecoder('utf-8').decode(bytes.subarray(pos+46,pos+46+nl));
+    const ds=lo+30+dv.getUint16(lo+26,true)+dv.getUint16(lo+28,true),comp=bytes.slice(ds,ds+csize);
+    if(/^xl\/(sharedStrings\.xml|workbook\.xml|worksheets\/sheet\d+\.xml)$/.test(name)){
+      if(method===0)out[name]=comp;
+      else if(method===8){
+        if(!('DecompressionStream' in window))throw Error('هذا المتصفح لا يستطيع قراءة ملفات Excel المضغوطة. احفظ الملف بصيغة CSV واستورده.');
+        const st=new DecompressionStream('deflate-raw'),w=st.writable.getWriter();w.write(comp);w.close();
+        out[name]=new Uint8Array(await new Response(st.readable).arrayBuffer());
+      }
+    }
+    pos+=46+nl+xl+cl;
+  }
+  return out;
+}
+const xesc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'');
+const colName=i=>{let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26)}return s};
+const XDECL='<'+'?xml version="1.0" encoding="UTF-8" standalone="yes"?'+'>';
+const NS='http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+const isoToSerial=iso=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso||''));return m?Date.UTC(+m[1],+m[2]-1,+m[3])/864e5+25569:null};
+/* يحوّل قيمة تاريخ من Excel (رقم تسلسلي أو نص بعدة صيغ) إلى YYYY-MM-DD */
+function toIso(v){
+  if(v==null||v==='')return '';
+  const s=norm(v);
+  if(/^\d+(\.\d+)?$/.test(s)){const n=Number(s);if(n>20000&&n<90000)return new Date(Math.round((n-25569)*864e5)).toISOString().slice(0,10)}
+  let m=/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/.exec(s);if(m)return m[1]+'-'+pad(m[2])+'-'+pad(m[3]);
+  m=/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})/.exec(s);if(m)return m[3]+'-'+pad(m[2])+'-'+pad(m[1]);
+  return '';
+}
+const excelFields=()=>cfg.fields.filter(f=>f.visible!==false||f.locked);
+function fieldList(f){
+  if(f.type==='status')return cfg.statuses.map(s=>s.name);
+  if(f.type==='type')return cfg.types;
+  if(f.type==='priority')return cfg.priorities;
+  if(f.type==='select'||f.type==='combo')return listItems(f);
+  if(f.type==='checkbox')return ['نعم','لا'];
+  return null;
+}
+function sheetXml(rows,cols,validations){
+  const body=rows.map((r,ri)=>'<row r="'+(ri+1)+'">'+r.map((c,ci)=>{
+    if(c==null||c.v===''||c.v==null)return '';
+    const ref=colName(ci)+(ri+1),st=c.s?' s="'+c.s+'"':'';
+    return c.n?'<c r="'+ref+'"'+st+'><v>'+c.v+'</v></c>':'<c r="'+ref+'"'+st+' t="inlineStr"><is><t xml:space="preserve">'+xesc(c.v)+'</t></is></c>';
+  }).join('')+'</row>').join('');
+  const dv=(validations||[]).filter(v=>v.list&&v.list.length&&v.list.join(',').length<=250);
+  return XDECL+'<worksheet xmlns="'+NS+'"><sheetViews><sheetView rightToLeft="1" workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><sheetFormatPr defaultRowHeight="18"/>'+
+    '<cols>'+cols.map((c,i)=>'<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+c.w+'" customWidth="1"'+(c.s?' style="'+c.s+'"':'')+'/>').join('')+'</cols>'+
+    '<sheetData>'+body+'</sheetData>'+
+    (dv.length?'<dataValidations count="'+dv.length+'">'+dv.map(v=>'<dataValidation type="list" allowBlank="1" showErrorMessage="0" sqref="'+v.col+'2:'+v.col+'5000"><formula1>"'+xesc(v.list.join(','))+'"</formula1></dataValidation>').join('')+'</dataValidations>':'')+
+    '</worksheet>';
+}
+function buildWorkbook(withData){
+  const fs=excelFields();
+  const head=fs.map(f=>({v:f.label+(f.required?' *':''),s:1}));
+  const cols=fs.map(f=>({w:f.type==='textarea'||f.id==='subject'?40:(f.type==='date'?16:22),s:f.type==='date'?2:(f.type==='number'?0:3)}));
+  const val=fs.map((f,i)=>({col:colName(i),list:fieldList(f)})).filter(v=>v.list);
+  const rows=[head];
+  if(withData)[...visTx()].sort((a,b)=>(b.created||0)-(a.created||0)).forEach(t=>rows.push(fs.map(f=>{
+    const v=getVal(t,f);
+    if(f.type==='date'){const n=isoToSerial(v);return n?{v:n,n:1,s:2}:{v:v||'',s:3}}
+    if(f.type==='number'&&v!==''&&v!=null&&isFinite(Number(v)))return {v:Number(v),n:1};
+    if(f.type==='checkbox')return {v:v?'نعم':'لا',s:3};
+    return {v:v==null?'':String(v),s:3};
+  })));
+  const help=[['طريقة التعبئة'],['1. اكتب كل معاملة في صف مستقل بورقة "المعاملات" ولا تغيّر صف العناوين.'],['2. الأعمدة ذات العلامة * إلزامية. رقم المعاملة يجب ألا يتكرر.'],['3. التواريخ تُكتب بصيغة سنة-شهر-يوم مثل 2026-10-06، أو تُختار كتاريخ من Excel.'],['4. أعمدة الحالة والنوع والأولوية والموظف فيها قوائم اختيار جاهزة.'],['5. بعد التعبئة: الإعدادات ← الربط والنسخ ← "استيراد من Excel".'],['6. إذا وُجد في النظام رقم المعاملة نفسه تُحدَّث بياناته، وإلا تُضاف معاملة جديدة. الخانة الفارغة لا تمسح قيمة موجودة.']].map(r=>r.map(v=>({v})));
+  const styles=XDECL+'<'+'styleSheet xmlns="'+NS+'"><numFmts count="1"><numFmt numFmtId="164" formatCode="yyyy\\-mm\\-dd"/></numFmts>'+
+    '<fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font></fonts>'+
+    '<fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF'+String(cfg.theme.navy||'#17324d').replace('#','').toUpperCase()+'"/><bgColor indexed="64"/></patternFill></fill></fills>'+
+    '<borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>'+
+    '<cellXfs count="4"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="49" fontId="1" fillId="2" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"/><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/><xf numFmtId="49" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></'+'styleSheet>';
+  const R='http://schemas.openxmlformats.org/officeDocument/2006/relationships',PR='http://schemas.openxmlformats.org/package/2006/relationships';
+  return zipStore([
+    {name:'[Content_Types].xml',text:XDECL+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/worksheets/sheet2.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'},
+    {name:'_rels/.rels',text:XDECL+'<Relationships xmlns="'+PR+'"><Relationship Id="rId1" Type="'+R+'/officeDocument" Target="xl/workbook.xml"/></Relationships>'},
+    {name:'xl/workbook.xml',text:XDECL+'<workbook xmlns="'+NS+'" xmlns:r="'+R+'"><bookViews><workbookView/></bookViews><sheets><sheet name="المعاملات" sheetId="1" r:id="rId1"/><sheet name="تعليمات" sheetId="2" r:id="rId2"/></sheets></workbook>'},
+    {name:'xl/_rels/workbook.xml.rels',text:XDECL+'<Relationships xmlns="'+PR+'"><Relationship Id="rId1" Type="'+R+'/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="'+R+'/worksheet" Target="worksheets/sheet2.xml"/><Relationship Id="rId3" Type="'+R+'/styles" Target="styles.xml"/></Relationships>'},
+    {name:'xl/worksheets/sheet1.xml',text:sheetXml(rows,cols,val)},
+    {name:'xl/worksheets/sheet2.xml',text:sheetXml(help,[{w:110}],[])},
+    {name:'xl/styles.xml',text:styles}
+  ]);
+}
+function excelTemplate(withData){
+  const blob=buildWorkbook(withData);
+  const a=document.createElement('a'),u=URL.createObjectURL(blob);
+  a.href=u;a.download=(withData?'معاملات_للتعديل_':'قالب_المعاملات_')+today()+'.xlsx';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500);
+  toast(withData?'تم تنزيل ملف Excel بالمعاملات الحالية':'تم تنزيل قالب Excel');
+}
+/* يقرأ أول ورقة من ملف xlsx ويعيدها كصفوف */
+async function xlsxRows(buf){
+  const files=await zipRead(buf),dec=new TextDecoder('utf-8'),parse=b=>new DOMParser().parseFromString(dec.decode(b),'application/xml');
+  const sheetName=files['xl/worksheets/sheet1.xml']?'xl/worksheets/sheet1.xml':Object.keys(files).filter(k=>/sheet\d+\.xml$/.test(k)).sort()[0];
+  if(!sheetName)throw Error('لم أجد ورقة بيانات داخل الملف');
+  const shared=[];
+  if(files['xl/sharedStrings.xml']){
+    const sd=parse(files['xl/sharedStrings.xml']);
+    [...sd.getElementsByTagName('si')].forEach(si=>{shared.push([...si.getElementsByTagName('t')].filter(t=>t.parentNode.nodeName!=='rPh').map(t=>t.textContent).join(''))});
+  }
+  const doc=parse(files[sheetName]),rows=[];
+  [...doc.getElementsByTagName('row')].forEach(row=>{
+    const r=[];
+    [...row.getElementsByTagName('c')].forEach((c,idx)=>{
+      const ref=c.getAttribute('r')||'';let ci=idx;
+      const m=/^([A-Z]+)/.exec(ref);if(m){ci=0;for(const ch of m[1])ci=ci*26+(ch.charCodeAt(0)-64);ci--}
+      const t=c.getAttribute('t'),vEl=c.getElementsByTagName('v')[0];let v='';
+      if(t==='inlineStr')v=[...c.getElementsByTagName('t')].map(x=>x.textContent).join('');
+      else if(vEl){v=vEl.textContent;if(t==='s')v=shared[+v]??'';else if(t==='b')v=v==='1'?'نعم':'لا'}
+      r[ci]=v;
+    });
+    const ri=(+row.getAttribute('r')||rows.length+1)-1;rows[ri]=r;
+  });
+  return rows.map(r=>r||[]);
+}
+function csvRows(text){
+  text=text.replace(/^﻿/,'');const rows=[];let row=[],cur='',q=false;
+  const delim=(text.split('\n')[0].split(';').length>text.split('\n')[0].split(',').length)?';':',';
+  for(let i=0;i<text.length;i++){
+    const ch=text[i];
+    if(q){if(ch==='"'){if(text[i+1]==='"'){cur+='"';i++}else q=false}else cur+=ch}
+    else if(ch==='"')q=true;
+    else if(ch===delim){row.push(cur);cur=''}
+    else if(ch==='\n'){row.push(cur);rows.push(row);row=[];cur=''}
+    else if(ch!=='\r')cur+=ch;
+  }
+  if(cur!==''||row.length){row.push(cur);rows.push(row)}
+  return rows;
+}
+function ensureStatusName(v){
+  if(st(v))return v;
+  const pal=['#2d6ea3','#6653a5','#a86f18','#c05b20','#28784f','#8a4b7a','#3f7f8c','#7a6a2a'];
+  cfg.statuses.push({id:uid('s_'),name:v,color:pal[cfg.statuses.length%pal.length],role:''});return v;
+}
+function parseImport(rows){
+  const filled=r=>r&&r.some(c=>String(c??'').trim()!=='');
+  const hi=rows.findIndex(filled);if(hi<0)throw Error('الملف فارغ');
+  const clean=s=>norm(String(s??'').replace(/\*/g,'').replace(/\(.*?\)/g,''));
+  const by={};cfg.fields.forEach(f=>{by[clean(f.label)]=f;by[clean(f.id)]=f});
+  const map=[];for(let i=0;i<rows[hi].length;i++)map[i]=by[clean(rows[hi][i])]||null;
+  if(!map.some(f=>f&&f.id==='number'))throw Error('لم أجد عمود "'+fieldLabel('number')+'". استخدم القالب الذي ينزّله النظام ولا تغيّر صف العناوين.');
+  const items=new Map();let skipped=0,repeated=0;
+  rows.slice(hi+1).forEach(r=>{
+    if(!filled(r))return;const o={};
+    map.forEach((f,i)=>{if(!f)return;const raw=r[i]==null?'':r[i];
+      o[f.id]=f.type==='date'?toIso(raw):f.type==='checkbox'?(String(raw).trim()===''?'':/^(نعم|yes|true|1|✓)$/i.test(String(raw).trim())):String(raw).trim()});
+    const k=numKey(o.number);
+    if(!k){skipped++;return}
+    o.number=String(o.number).trim().replace(/\.0+$/,'');
+    if(items.has(k)){repeated++;items.set(k,Object.assign(items.get(k),Object.fromEntries(Object.entries(o).filter(e=>e[1]!==''))))}
+    else items.set(k,o);
+  });
+  return {items:[...items.values()],skipped,repeated,unknown:rows[hi].filter((h,i)=>!map[i]&&String(h??'').trim()!=='')};
+}
+/* الاستيراد: يحدّث الموجود بنفس الرقم، يضيف الجديد، ولا يحذف شيئًا. يعيد دالة تراجع. */
+function applyImport(items){
+  let add=0,upd=0,bad=0;const before=new Map(),added=[];
+  const byNum=new Map();transactions.forEach(t=>{const k=numKey(t.number);if(k&&!byNum.has(k))byNum.set(k,t)});
+  items.forEach((o,i)=>{
+    const k=numKey(o.number);let t=byNum.get(k);const isNew=!t;
+    if(isNew){
+      if(!o.subject){bad++;return}
+      /* معرّف ثابت مشتق من الرقم: لو استورد جهازان الملف نفسه تندمج المعاملتان عند المزامنة ولا تتكرران */
+      let id='n_'+k;if(transactions.some(x=>x.id===id))id=uid('t');
+      t={id,created:Date.now()+i,history:[],customFields:{},number:o.number,type:cfg.types[0]||'',topic:'',subject:'',party:'',department:cfg.brand.org,owner:ownerOn()?myEmp():'',received:today(),priority:cfg.priorities[0]||'',status:defStatus(),reminderDate:'',reminderOwner:'',notes:''};
+      delete tomb[id];transactions.unshift(t);byNum.set(k,t);added.push(id);add++;
+    }else{before.set(t.id,clone(t));upd++}
+    const prev=t.status;
+    Object.keys(o).forEach(id=>{
+      const f=fieldOf(id);let v=o[id];if(!f||v===''||(id==='number'&&!isNew))return;
+      if(f.type==='status')v=ensureStatusName(v);
+      else if(f.type==='type'){if(!cfg.types.includes(v))cfg.types.push(v)}
+      else if(f.type==='priority'){if(!cfg.priorities.includes(v))cfg.priorities.push(v)}
+      else if((f.type==='combo'||f.type==='select')&&cfg.lists[f.list]){if(!cfg.lists[f.list].items.includes(v))cfg.lists[f.list].items.push(v)}
+      if(f.builtin)t[id]=v;else t.customFields[id]=v;
+    });
+    if(!t.topic)t.topic=nextTopic();
+    applyStatusEffects(t,prev,isNew);
+  });
+  const undo=()=>{
+    const now=Date.now();
+    transactions=transactions.filter(t=>{if(added.includes(t.id)){tomb[t.id]=now;return false}return true});
+    transactions=transactions.map(t=>before.has(t.id)?Object.assign(before.get(t.id),{rev:now}):t);
+    persistTx();refresh();toast('تم التراجع عن الاستيراد');
+  };
+  return {add,upd,bad,undo};
+}
+function handleExcelImport(file){
+  if(!file)return;
+  if(!(canAdd()&&P().edit==='all'))return toast(T('viewer'));
+  const isCsv=/\.csv$/i.test(file.name);
+  const rd=new FileReader();
+  rd.onerror=()=>toast('تعذر قراءة الملف');
+  rd.onload=async()=>{
+    try{
+      const rows=isCsv?csvRows(String(rd.result)):await xlsxRows(rd.result);
+      const p=parseImport(rows);
+      if(!p.items.length)return toast('لم أجد صفوفًا معبأة في الملف');
+      const keys=new Set(transactions.map(t=>numKey(t.number)));const exists=o=>keys.has(numKey(o.number));
+      const nNew=p.items.filter(o=>!exists(o)&&o.subject).length,nUpd=p.items.filter(exists).length;
+      if(!nNew&&!nUpd)return toast('الصفوف الجديدة ينقصها الموضوع، فلم يُستورد شيء');
+      if(!confirm('سيتم إضافة '+nNew+' معاملة جديدة وتحديث '+nUpd+' معاملة موجودة بنفس الرقم.'+(p.unknown.length?'\nأعمدة غير معروفة سيتم تجاهلها: '+p.unknown.join('، '):'')+'\nمتابعة؟'))return;
+      const total0=transactions.length;
+      const r=applyImport(p.items);
+      persistTx();persistCfg();
+      toast('تم الاستيراد: '+r.add+' جديدة، '+r.upd+' محدّثة'+((r.bad+p.skipped)?'، وتم تجاهل '+(r.bad+p.skipped)+' صف ناقص (بدون رقم أو موضوع)':'')+(p.repeated?'، ودُمج '+p.repeated+' صف مكرر الرقم داخل الملف':'')+' — الإجمالي '+total0+' ← '+transactions.length,T('btn.undo'),r.undo,20000);
+    }catch(err){console.error(err);toast('تعذر الاستيراد: '+err.message)}
+  };
+  if(isCsv)rd.readAsText(file);else rd.readAsArrayBuffer(file);
+}
+
+/* ======================= الإعدادات ======================= */
+const TABS=[['general','عام'],['pages','الصفحات'],['dashboard','لوحة التحكم'],['fields','الحقول والأقسام'],['lists','الحالات والقوائم'],['texts','النصوص'],['theme','الألوان والمظهر'],['users','المستخدمون'],['export','التصدير'],['sync','الربط والنسخ']];
+const KIND_NAMES={dashboard:'لوحة تحكم',list:'قائمة معاملات',topics:'موضوعات',settings:'إعدادات'};
+const WIDGET_NAMES={stat:'بطاقة إحصاء',recent:'جدول آخر المعاملات',due:'قائمة التذكيرات',bystatus:'توزيع الحالات',byowner:'توزيع الموظفين'};
+const METRICS=[['total','إجمالي المعاملات'],['status','عدد المعاملات في حالات محددة'],['due','التذكيرات المستحقة'],['today','الواردة اليوم'],['mine','المفتوحة للمستخدم الحالي']];
+const FIELD_TYPES=[['text','نص قصير'],['textarea','نص طويل'],['number','رقم'],['date','تاريخ'],['combo','قائمة: اختيار أو كتابة قيمة جديدة تُحفظ'],['select','قائمة: اختيار فقط'],['checkbox','نعم / لا']];
+const isListType=t=>t==='select'||t==='combo';
+const listArr=key=>(key==='types'||key==='priorities')?cfg[key]:((cfg.lists[key]||{}).items||[]);
+const listFieldIds=key=>key==='types'?['type']:key==='priorities'?['priority']:cfg.fields.filter(f=>f.list===key).map(f=>f.id);
+const listUse=(key,x)=>{const fs=listFieldIds(key).map(fieldOf).filter(Boolean);return transactions.filter(t=>fs.some(f=>getVal(t,f)===x)).length};
+const sh=(title,desc,right)=>`<div class="panel-head"><div><h2>${esc(title)}</h2>${desc?`<p>${esc(desc)}</p>`:''}</div>${right||''}</div>`;
+const mb=(act,id,txt,cls,title)=>`<button class="mini ${cls||''}" data-act="${act}" data-id="${esc(id)}"${title?` title="${esc(title)}"`:''}>${txt}</button>`;
+const rowItem=o=>`<div class="rowitem${o.off?' off':''}">${o.lead||''}<div class="grow"><strong>${esc(o.title)}</strong>${o.sub?`<small>${o.sub}</small>`:''}</div>${o.btns||''}</div>`;
+const moveBtns=(p,id)=>mb(p+'-up',id,'↑','','أعلى')+mb(p+'-down',id,'↓','','أسفل');
+function moveItem(arr,id,dir,same){
+  const i=arr.findIndex(x=>x.id===id);if(i<0)return;
+  let j=i+dir;while(j>=0&&j<arr.length&&same&&!same(arr[i],arr[j]))j+=dir;
+  if(j<0||j>=arr.length)return;[arr[i],arr[j]]=[arr[j],arr[i]];
+}
+function setPath(o,path,v){const k=path.split('.');let c=o;for(let i=0;i<k.length-1;i++)c=c[k[i]]=c[k[i]]||{};c[k[k.length-1]]=v}
+const statusOpts=()=>cfg.statuses.map(s=>[s.id,s.name]);
+const usedCount=name=>transactions.filter(t=>t.status===name).length;
+
+function renderSettings(){
+  if(!settingsAllowed()){host().innerHTML=`<div class="panel"><div class="empty">${esc(T('noaccess'))}</div></div>`;return}
+  const tabs=TABS.filter(t=>t[0]!=='users'||isAdmin());if(!tabs.some(t=>t[0]===UI.tab))UI.tab='general';
+  host().innerHTML=`<div class="tabs">${tabs.map(([k,n])=>`<button class="tab${UI.tab===k?' active':''}" data-act="tab" data-tab="${k}">${n}</button>`).join('')}</div><div class="panel" id="tabBody"></div>`;
+  const fn={general:tabGeneral,pages:tabPages,dashboard:tabDashboard,fields:tabFields,lists:tabLists,texts:tabTexts,theme:tabTheme,users:tabUsers,export:tabExport,sync:tabSync}[UI.tab]||tabGeneral;
+  $('#tabBody').innerHTML=fn();
+  if(UI.tab==='sync'){renderSyncUi();renderFileUi()}
+}
+const inp=(path,label,extra)=>`<div class="field"><label>${esc(label)}</label><input data-cfg="${path}" value="${esc(path.split('.').reduce((o,k)=>o&&o[k],cfg))}" ${extra||''}></div>`;
+
+/* ---- عام ---- */
+function tabGeneral(){
+  return sh('الهوية العامة','تظهر في الشريط الجانبي وعنوان التبويب.')+
+  `<div class="form-grid two">${inp('brand.title','عنوان النظام')}${inp('brand.subtitle','العنوان الفرعي')}${inp('brand.mark','حرف الشعار','maxlength="2"')}${inp('brand.org','اسم الجهة / الإدارة الافتراضي','')}</div>
+  <p class="notice" style="margin-top:1rem">اسم الجهة يُستخدم كقيمة افتراضية لحقل "الإدارة" عند إضافة معاملة جديدة.</p>
+  <p class="sync" style="margin-top:.8rem">الإصدار 5.7 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
+  <hr class="sep"><h3 class="sub">إعادة الضبط</h3>
+  <p class="notice warn">إعادة الضبط تُرجع الصفحات والحقول والحالات والنصوص والألوان والمستخدمين للوضع الافتراضي. المعاملات المسجلة لا تُحذف.</p>
+  <div class="form-actions"><button class="btn danger" data-act="reset-cfg">إعادة ضبط كل الإعدادات</button></div>`;
+}
+
+/* ---- الصفحات ---- */
+function tabPages(){
+  let h=sh('الصفحات والقائمة الجانبية','أضف صفحات جديدة (عروض مفلترة للمعاملات)، أو غيّر أسماءها وأعمدتها وترتيبها، أو أخفها واحذفها.',`<div class="row-actions"><button class="btn primary" data-act="pg-add">+ صفحة جديدة</button><button class="btn secondary" data-act="grp-add">+ مجموعة</button></div>`);
+  cfg.navGroups.forEach(g=>{
+    const ps=cfg.pages.filter(p=>p.group===g.id);
+    h+=`<h3 class="sub" style="display:flex;align-items:center;gap:.5rem"><span style="flex:1">${esc(g.title)}</span>${moveBtns('grp',g.id)}${mb('grp-edit',g.id,'✎','','تسمية')}${cfg.navGroups.length>1?mb('grp-del',g.id,'✕','danger','حذف'):''}</h3><div class="rowlist">`+
+    (ps.map(p=>rowItem({off:p.visible===false,lead:`<span style="width:1.4rem;text-align:center">${esc(p.icon||'•')}</span>`,title:p.title,
+      sub:`${esc(KIND_NAMES[p.kind]||p.kind)}${p.kind==='list'?' · '+((p.columns||[]).length)+' أعمدة'+(p.filter&&p.filter.statuses&&p.filter.statuses.length?' · '+esc(statNames(p.filter.statuses).join('، ')):' · كل الحالات'):''}${p.visible===false?' · <b>مخفية</b>':''}`,
+      btns:moveBtns('pg',p.id)+(p.kind==='settings'?'':mb('pg-vis',p.id,p.visible===false?'إظهار':'إخفاء'))+mb('pg-edit',p.id,'تعديل')+((p.kind==='dashboard'||p.kind==='settings')?'':mb('pg-del',p.id,'حذف','danger'))})).join('')||'<small class="empty" style="padding:.6rem">لا صفحات في هذه المجموعة.</small>')+'</div>';
+  });
+  h+=`<div class="form-actions"><button class="btn secondary" data-act="pg-restore">استعادة الصفحات الافتراضية المحذوفة</button></div>`;
+  return h;
+}
+function pageFields(p){
+  const isList=!p||p.kind==='list';
+  const f=[{k:'title',label:'عنوان الصفحة (اسمها في القائمة)',req:true},{k:'desc',label:'الوصف أسفل العنوان',type:'textarea'},{k:'icon',label:'الأيقونة (رمز أو حرف)',type:'icon'},{k:'group',label:'المجموعة في القائمة الجانبية',type:'select',opts:cfg.navGroups.map(g=>[g.id,g.title])}];
+  if(!p||p.kind!=='settings')f.push({k:'addBtn',label:'إظهار زر الإضافة',type:'check'},{k:'addText',label:'نص زر الإضافة',help:'اتركه فارغًا لاستخدام النص الافتراضي.'});
+  if(isList)f.push(
+    {k:'note',label:'ملاحظة تظهر أعلى الجدول',type:'textarea'},
+    {k:'statuses',label:'عرض المعاملات بهذه الحالات فقط (بدون اختيار = كل الحالات)',type:'multi',opts:statusOpts()},
+    {k:'types',label:'الأنواع (بدون اختيار = الكل)',type:'multi',opts:cfg.types.map(x=>[x,x])},
+    {k:'owners',label:'الموظفون (بدون اختيار = الكل)',type:'multi',opts:empList().map(n=>[n,n])},
+    {k:'priorities',label:'الأولويات (بدون اختيار = الكل)',type:'multi',opts:cfg.priorities.map(x=>[x,x])},
+    {k:'dueOnly',label:'التذكيرات المستحقة فقط',type:'check'},
+    {k:'columns',label:'الأعمدة المعروضة في الجدول',type:'multi',opts:allCols(),help:'ترتيب الأعمدة يتبع ترتيب الحقول في تبويب الحقول والأقسام.'},
+    {k:'toolbar',label:'شريط البحث والتصفية',type:'select',opts:[['full','كامل (بحث + حالة + نوع + تواريخ + موظف + إدارة)'],['basic','بسيط (بحث + حالة)'],['none','بدون']]},
+    {k:'exports',label:'إظهار أزرار التصدير (CSV / Excel / Word / PDF)',type:'check'});
+  return f;
+}
+function editPage(id){
+  const p=id?page(id):null;
+  const vals=p?{...p,statuses:(p.filter||{}).statuses||[],types:(p.filter||{}).types||[],owners:(p.filter||{}).owners||[],priorities:(p.filter||{}).priorities||[],dueOnly:!!(p.filter||{}).dueOnly,addBtn:p.addBtn!==false,exports:!!p.exports,toolbar:p.toolbar||'basic',columns:p.columns||[]}
+    :{title:'',desc:'',icon:'●',group:cfg.navGroups[0].id,addBtn:false,addText:'',note:'',statuses:[],types:[],owners:[],priorities:[],dueOnly:false,columns:['number','subject','employee','status'],toolbar:'basic',exports:false};
+  openEditor({title:p?'تعديل الصفحة':'صفحة جديدة',fields:pageFields(p),values:vals,
+    onSave:v=>{
+      const q=p||{id:uid('pg_'),kind:'list',builtin:false,visible:true};
+      Object.assign(q,{title:v.title,desc:v.desc,icon:v.icon||'•',group:v.group});
+      if(q.kind!=='settings'){q.addBtn=v.addBtn;q.addText=v.addText}
+      if(q.kind==='list'){
+        q.note=v.note;q.toolbar=v.toolbar;q.exports=v.exports;
+        q.filter={statuses:v.statuses,types:v.types,owners:v.owners,priorities:v.priorities,dueOnly:v.dueOnly};
+        const order=allCols().map(c=>c[0]);q.columns=order.filter(c=>v.columns.includes(c));
+      }
+      if(!p){cfg.pages.push(q);UI.page=q.id}
+      persistCfg();
+    },
+    onDelete:(p&&p.kind!=='dashboard'&&p.kind!=='settings')?()=>{delPage(p.id)}:null});
+}
+function delPage(id){
+  const p=page(id);if(!p||p.kind==='dashboard'||p.kind==='settings')return false;
+  if(!confirm('حذف صفحة "'+p.title+'"؟ (المعاملات نفسها لن تتأثر)'))return false;
+  cfg.pages=cfg.pages.filter(x=>x.id!==id);
+  cfg.widgets.forEach(w=>{if(w.link===id)w.link=''});
+  if(UI.page===id)UI.page='dashboard';
+  persistCfg();
+}
+
+/* ---- لوحة التحكم ---- */
+function tabDashboard(){
+  const add=Object.keys(WIDGET_NAMES).map(k=>`<button class="btn secondary" data-act="wd-add" data-id="${k}">+ ${WIDGET_NAMES[k]}</button>`).join('');
+  return sh('عناصر لوحة التحكم','أضف بطاقات وجداول وقوائم، أو غيّر نصوصها وألوانها وترتيبها، أو أخفها واحذفها.')+
+  `<div class="form-actions" style="margin:0 0 1rem">${add}</div><div class="rowlist">`+
+  (cfg.widgets.map(w=>rowItem({off:w.visible===false,title:w.title||w.label,sub:esc(WIDGET_NAMES[w.type]||w.type)+(w.type==='stat'?' · '+esc((METRICS.find(m=>m[0]===w.metric)||[])[1]||''):''),lead:w.type==='stat'?`<span class="swatch" style="background:${esc(w.color||cfg.theme.navy)}"></span>`:'',
+    btns:moveBtns('wd',w.id)+mb('wd-vis',w.id,w.visible===false?'إظهار':'إخفاء')+mb('wd-edit',w.id,'تعديل')+mb('wd-del',w.id,'حذف','danger')})).join('')||'<div class="empty">لا توجد عناصر.</div>')+
+  `</div><div class="form-actions"><button class="btn secondary" data-act="wd-restore">استعادة عناصر لوحة التحكم الافتراضية</button></div>`;
+}
+function editWidget(id,newType){
+  const w=id?cfg.widgets.find(x=>x.id===id):null, type=w?w.type:newType;
+  const pageOpts=[['','بدون رابط'],...cfg.pages.filter(p=>p.kind!=='settings'&&p.kind!=='dashboard').map(p=>[p.id,p.title])];
+  let f=[];
+  if(type==='stat')f=[{k:'label',label:'نص البطاقة',req:true},{k:'metric',label:'ما الذي تعدّه البطاقة؟',type:'select',opts:METRICS},{k:'statuses',label:'الحالات (تُستخدم مع "حالات محددة")',type:'multi',opts:statusOpts()},{k:'useColor',label:'لون مخصص للرقم',type:'check'},{k:'color',label:'اللون',type:'color'}];
+  else{
+    f=[{k:'title',label:'العنوان',req:true},{k:'desc',label:'الوصف',type:'textarea'}];
+    if(type==='recent'||type==='due')f.push({k:'limit',label:'عدد الصفوف',type:'number',min:1,max:50});
+    if(type==='recent')f.push({k:'columns',label:'الأعمدة',type:'multi',opts:allCols()});
+    f.push({k:'link',label:'زر "عرض الكل" يفتح صفحة',type:'select',opts:pageOpts},{k:'size',label:'العرض',type:'select',opts:[['half','نصف الصفحة'],['full','عرض كامل']]});
+  }
+  const vals=w?{...w,useColor:!!w.color,color:w.color||cfg.theme.navy}:{label:'بطاقة جديدة',metric:'status',statuses:[],useColor:false,color:cfg.theme.navy,title:WIDGET_NAMES[type],desc:'',limit:6,columns:['number','subject','status','_updated'],link:'',size:'half'};
+  openEditor({title:(w?'تعديل ':'إضافة ')+WIDGET_NAMES[type],fields:f,values:vals,onSave:v=>{
+    const q=w||{id:uid('w_'),type,visible:true};
+    if(type==='stat'){Object.assign(q,{label:v.label,metric:v.metric,statuses:v.statuses,color:v.useColor?v.color:''})}
+    else{Object.assign(q,{title:v.title,desc:v.desc,link:v.link,size:v.size});if(v.limit)q.limit=v.limit;if(v.columns){const o=allCols().map(c=>c[0]);q.columns=o.filter(c=>v.columns.includes(c))}}
+    if(!w)cfg.widgets.push(q);persistCfg();
+  }});
+}
+
+/* ---- الحقول والأقسام ---- */
+function tabFields(){
+  let h=sh('الأقسام','الأقسام تجمع الحقول في نموذج المعاملة تحت عناوين.',`<button class="btn primary" data-act="sec-add">+ قسم جديد</button>`)+'<div class="rowlist">';
+  h+=cfg.sections.map(s=>rowItem({off:s.visible===false,title:s.title,sub:cfg.fields.filter(f=>f.section===s.id).length+' حقل',btns:moveBtns('sec',s.id)+mb('sec-vis',s.id,s.visible===false?'إظهار':'إخفاء')+mb('sec-edit',s.id,'تسمية')+(cfg.sections.length>1?mb('sec-del',s.id,'حذف','danger'):'')})).join('')+'</div>';
+  h+=`<hr class="sep">`+sh('الحقول','تحكم بأسماء الحقول وإظهارها وإلزاميتها وأقسامها. الحقول المخصصة تظهر في النموذج والتفاصيل والتصدير وأعمدة الجداول.',`<button class="btn primary" data-act="fd-add">+ حقل جديد</button>`)+'<div class="rowlist">';
+  h+=cfg.fields.map(f=>{const sec=cfg.sections.find(s=>s.id===f.section);const tags=[(FIELD_TYPES.find(t=>t[0]===f.type)||[0,{type:'قائمة الأنواع',priority:'قائمة الأولويات',status:'قائمة الحالات'}[f.type]||f.type])[1]+(isListType(f.type)&&cfg.lists[f.list]?' ('+cfg.lists[f.list].title+')':''),sec?sec.title:'',f.required?'إلزامي':'',f.builtin?'أساسي':'مخصص'].filter(Boolean);
+    return rowItem({off:f.visible===false,title:f.label,sub:esc(tags.join(' · ')),btns:moveBtns('fd',f.id)+(f.locked?'':mb('fd-vis',f.id,f.visible===false?'إظهار':'إخفاء'))+mb('fd-edit',f.id,'تعديل')+(f.builtin?'':mb('fd-del',f.id,'حذف','danger'))})}).join('')+'</div>';
+  h+=`<div class="form-actions"><button class="btn secondary" data-act="fd-restore">استعادة الحقول الأساسية الناقصة</button></div>`;
+  return h;
+}
+function editField(id){
+  const f=id?fieldOf(id):null;
+  const flex=!!f&&f.builtin&&['party','department','owner','employee','reminderOwner'].includes(f.id);
+  const canType=!f||!f.builtin, hasList=canType||flex;
+  const fl=[{k:'label',label:'اسم الحقل',req:true}];
+  if(canType)fl.push({k:'type',label:'نوع الحقل',type:'select',opts:FIELD_TYPES});
+  else if(flex)fl.push({k:'type',label:'طريقة الإدخال',type:'select',opts:[['combo','اختيار من القائمة أو كتابة قيمة جديدة تُحفظ'],['select','اختيار من القائمة فقط'],['text','كتابة حرة بدون قائمة']]});
+  if(hasList)fl.push({k:'list',label:'القائمة المرتبطة (لحقول القوائم)',type:'select',opts:[['','قائمة جديدة خاصة بهذا الحقل'],...Object.keys(cfg.lists).map(k=>[k,cfg.lists[k].title])]},
+    {k:'options',label:'عناصر القائمة (سطر لكل عنصر)',type:'textarea',help:'تُطبَّق على القائمة المرتبطة الحالية. يمكنك أيضًا تعديل العناصر من تبويب "الحالات والقوائم".'});
+  fl.push({k:'section',label:'القسم',type:'select',opts:cfg.sections.map(s=>[s.id,s.title])});
+  if(!f||!f.locked)fl.push({k:'required',label:'حقل إلزامي',type:'check'},{k:'visible',label:'ظاهر في النموذج',type:'check'});
+  fl.push({k:'full',label:'يأخذ عرض السطر كاملًا',type:'check'},{k:'ph',label:'نص إرشادي داخل الحقل'},{k:'help',label:'ملاحظة صغيرة تحت الحقل'},{k:'showWhen',label:'متى يظهر؟',type:'select',opts:[['','دائمًا'],['reminder','عند اختيار حالة التذكير فقط']]});
+  const curList=(f&&f.list)||'';
+  const vals=f?{...f,list:curList,options:listItems(f).join('\n'),showWhen:f.showWhen||''}:{label:'',type:'text',list:'',options:'',section:cfg.sections[0].id,required:false,visible:true,full:false,ph:'',help:'',showWhen:''};
+  openEditor({title:f?'تعديل الحقل':'حقل جديد',fields:fl,values:vals,onSave:v=>{
+    if(cfg.fields.some(x=>x.id!==(f&&f.id)&&x.label===v.label)){toast('يوجد حقل بنفس الاسم');return false}
+    const q=f||{id:uid('cf_'),builtin:false,visible:true};
+    const type=(canType||flex)?v.type:q.type;
+    if(hasList&&isListType(type)){
+      const items=String(v.options||'').split('\n').map(x=>x.trim()).filter(Boolean);
+      let key=v.list;
+      if(!key){key='l_'+q.id;if(!cfg.lists[key])cfg.lists[key]={title:v.label,items:[]}}
+      /* عناصر الصندوق تخص القائمة التي كانت معروضة؛ إذا بدّل القائمة لأخرى موجودة لا نكتب فوقها */
+      if(key===curList||!v.list)cfg.lists[key].items=[...new Set(items)];
+      if(type==='select'&&!cfg.lists[key].items.length){toast('أضف عنصرًا واحدًا على الأقل للقائمة');return false}
+      q.list=key;
+    }else if(canType||flex)delete q.list;
+    q.type=type;q.label=v.label;q.section=v.section;q.full=!!v.full;q.ph=v.ph;q.help=v.help;q.showWhen=v.showWhen||'';
+    if(!q.locked){q.required=!!v.required;q.visible=v.visible!==false}
+    if(!f)cfg.fields.push(q);persistCfg();
+  },onDelete:(f&&!f.builtin)?()=>delField(f.id):null});
+}
+function delField(id){
+  const f=fieldOf(id);if(!f||f.builtin)return false;
+  if(!confirm('حذف الحقل "'+f.label+'"؟ تبقى القيم المسجلة في المعاملات لكنها لن تظهر.'))return false;
+  cfg.fields=cfg.fields.filter(x=>x.id!==id);
+  cfg.export.columns=cfg.export.columns.filter(c=>c!==id);
+  cfg.pages.forEach(p=>{if(p.columns)p.columns=p.columns.filter(c=>c!==id)});
+  cfg.widgets.forEach(w=>{if(w.columns)w.columns=w.columns.filter(c=>c!==id)});
+  persistCfg();
+}
+
+/* ---- الحالات والقوائم ---- */
+function simpleList(key,title,desc,extra){
+  const arr=listArr(key);
+  const lb=(act,i,txt,cls)=>`<button class="mini ${cls||''}" data-act="${act}" data-list="${esc(key)}" data-i="${i}">${txt}</button>`;
+  return `<h3 class="sub" style="display:flex;align-items:center;gap:.5rem"><span style="flex:1">${esc(title)}</span>${extra||''}</h3><p class="notice" style="margin-bottom:.7rem">${esc(desc)}</p><div class="rowlist">`+
+    (arr.map((x,i)=>rowItem({title:x,sub:listUse(key,x)+' معاملة',btns:lb('ls-up',i,'↑')+lb('ls-down',i,'↓')+lb('ls-edit',i,'تعديل')+lb('ls-del',i,'حذف','danger')})).join('')||'<small class="empty" style="padding:.6rem">القائمة فارغة.</small>')+
+    `</div><div class="form-actions" style="margin-top:0"><button class="btn secondary" data-act="ls-add" data-list="${esc(key)}">+ إضافة</button></div>`;
+}
+function tabLists(){
+  return sh('حالات المعاملة','الحالة "الافتراضية للجديد" تُعطى للمعاملة الجديدة. حالة "تحتاج تذكير" تفعّل تاريخ التذكير. الحالة "المغلقة" تسجل تاريخ الإغلاق.',`<button class="btn primary" data-act="stt-add">+ حالة جديدة</button>`)+
+  `<div class="rowlist">`+cfg.statuses.map(s=>rowItem({lead:`<span class="swatch" style="background:${esc(s.color)}"></span>`,title:s.name,sub:esc(ROLE_NAMES[s.role||''])+' · '+usedCount(s.name)+' معاملة',btns:moveBtns('stt',s.id)+mb('stt-edit',s.id,'تعديل')+(cfg.statuses.length>1?mb('stt-del',s.id,'حذف','danger'):'')})).join('')+`</div><hr class="sep">`+
+  simpleList('types','أنواع المعاملات','تظهر في قائمة "نوع المعاملة" وفي التصفية.')+`<hr class="sep">`+simpleList('priorities','مستويات الأولوية','تظهر في قائمة "الأولوية".')+
+  `<hr class="sep">`+sh('قوائم الخيارات','قوائم تختار منها عند إضافة المعاملة (الإدارات، الموظفون، وأي قائمة تضيفها). ما يُكتب جديدًا في النموذج يُضاف لها تلقائيًا. اربط القائمة بحقل من تبويب "الحقول والأقسام".',`<button class="btn primary" data-act="lst-new">+ قائمة جديدة</button>`)+
+  Object.keys(cfg.lists).map(k=>{const used=cfg.fields.filter(f=>f.list===k).map(f=>f.label);
+    return simpleList(k,cfg.lists[k].title,used.length?'مرتبطة بالحقول: '+used.join('، '):'غير مرتبطة بأي حقل بعد.',mb('lst-rename',k,'تسمية')+(used.length?'':mb('lst-del',k,'حذف القائمة','danger')))}).join('<hr class="sep">');
+}
+function editStatus(id){
+  const s=id?cfg.statuses.find(x=>x.id===id):null;
+  openEditor({title:s?'تعديل الحالة':'حالة جديدة',fields:[{k:'name',label:'اسم الحالة',req:true},{k:'color',label:'اللون',type:'color'},{k:'role',label:'نوع الحالة',type:'select',opts:Object.entries(ROLE_NAMES)}],values:s||{name:'',color:'#2d6ea3',role:''},
+  intro:s?'تغيير الاسم يحدّث كل المعاملات المسجلة بهذه الحالة تلقائيًا.':'',
+  onSave:v=>{
+    if(cfg.statuses.some(x=>x.id!==(s&&s.id)&&x.name===v.name)){toast('اسم الحالة مستخدم');return false}
+    const old=s&&s.name;const q=s||{id:uid('s_')};
+    q.name=v.name;q.color=v.color;q.role=v.role;
+    if(v.role==='new')cfg.statuses.forEach(x=>{if(x!==q&&x.role==='new')x.role=''});
+    if(!s)cfg.statuses.push(q);
+    if(old&&old!==v.name){transactions.forEach(t=>{let ch=false;if(t.status===old){t.status=v.name;ch=true}t.history.forEach(h=>{if(h[1]===old){h[1]=v.name;ch=true}});if(ch)t.rev=Date.now()});persistTx()}
+    persistCfg();
+  }});
+}
+function delStatus(id){
+  const s=cfg.statuses.find(x=>x.id===id);if(!s||cfg.statuses.length<2)return;
+  const n=usedCount(s.name);
+  const finish=target=>{
+    if(target){transactions.forEach(t=>{if(t.status===s.name){t.status=target;t.history.push([today(),target,me().name]);t.rev=Date.now();if(stRole(t)==='closed')t.closed=t.closed||today();else t.closed=null}});persistTx()}
+    cfg.statuses=cfg.statuses.filter(x=>x.id!==id);
+    cfg.pages.forEach(p=>{if(p.filter&&p.filter.statuses)p.filter.statuses=p.filter.statuses.filter(x=>x!==id)});
+    cfg.widgets.forEach(w=>{if(w.statuses)w.statuses=w.statuses.filter(x=>x!==id)});
+    if(!cfg.statuses.some(x=>x.role==='new'))cfg.statuses[0].role='new';
+    persistCfg();
+  };
+  if(!n){if(confirm('حذف الحالة "'+s.name+'"؟'))finish(null);return}
+  openEditor({title:'حذف الحالة "'+s.name+'"',intro:'يوجد '+n+' معاملة بهذه الحالة. اختر الحالة التي ستنتقل إليها.',fields:[{k:'to',label:'نقل المعاملات إلى',type:'select',opts:cfg.statuses.filter(x=>x.id!==id).map(x=>[x.name,x.name])}],values:{},saveText:'نقل وحذف',onSave:v=>{finish(v.to)}});
+}
+function listRename(key,old,nw){
+  const fs=listFieldIds(key).map(fieldOf).filter(Boolean);
+  transactions.forEach(t=>{let ch=false;fs.forEach(f=>{if(getVal(t,f)===old){if(f.builtin)t[f.id]=nw;else t.customFields[f.id]=nw;ch=true}});if(ch)t.rev=Date.now()});
+  cfg.pages.forEach(p=>{const fl=p.filter||{};const k=key==='types'?'types':key==='priorities'?'priorities':key==='employees'?'owners':'';if(k&&Array.isArray(fl[k]))fl[k]=fl[k].map(x=>x===old?nw:x)});
+  cfg.users.forEach(u=>{if(key==='employees'&&u.employee===old)u.employee=nw});
+  persistTx();
+}
+
+/* ---- النصوص ---- */
+function tabTexts(){
+  let h=sh('نصوص الواجهة','غيّر أي نص ثابت في الأزرار والرسائل والبحث. أسماء الصفحات والحقول والحالات تُعدَّل من تبويباتها. اترك الحقل فارغًا لاستعادة النص الافتراضي.',`<button class="btn secondary" data-act="texts-reset">استعادة كل النصوص</button>`)+
+  `<div class="filters"><input type="search" data-tfilter placeholder="ابحث في النصوص..."></div>`;
+  TEXT_GROUPS.forEach(([name,re])=>{
+    const keys=Object.keys(TEXT_DEFAULTS).filter(k=>re.test(k));if(!keys.length)return;
+    h+=`<h3 class="sub">${esc(name)}</h3><div class="form-grid two">`+keys.map(k=>`<div class="field trow" data-search="${esc(TEXT_DEFAULTS[k])} ${esc(T(k))}"><label>${esc(TEXT_DEFAULTS[k])}</label><input data-text="${esc(k)}" value="${esc(cfg.texts[k]??'')}" placeholder="${esc(TEXT_DEFAULTS[k])}"></div>`).join('')+'</div>';
+  });
+  return h;
+}
+
+/* ---- الألوان والمظهر ---- */
+function tabTheme(){
+  const fonts=['Tahoma','Segoe UI','Arial','Verdana','Georgia','Times New Roman','system-ui'];
+  return sh('الألوان والمظهر','التغيير يظهر مباشرة ويُحفظ تلقائيًا.')+
+  `<h3 class="sub">قوالب جاهزة</h3><div class="form-actions" style="margin-top:0">${Object.keys(PRESETS).map(n=>`<button class="btn secondary" data-act="preset" data-id="${esc(n)}"><span class="swatch" style="display:inline-block;vertical-align:middle;background:${PRESETS[n].navy};margin-left:.4rem"></span>${esc(n)}</button>`).join('')}</div>
+  <h3 class="sub">الألوان</h3><div class="colorgrid">${Object.keys(THEME_LABELS).map(k=>`<div class="field"><label>${esc(THEME_LABELS[k])}</label><input type="color" data-cfg="theme.${k}" value="${esc(cfg.theme[k])}"></div>`).join('')}</div>
+  <h3 class="sub">الخط والأحجام</h3><div class="form-grid two">
+   <div class="field"><label>نوع الخط</label><select data-cfg="theme.font">${fonts.map(f=>`<option${cfg.theme.font===f?' selected':''}>${f}</option>`).join('')}</select></div>
+   <div class="field"><label>حجم النص: <span id="fsVal">${cfg.theme.fontScale}</span>%</label><input type="range" min="80" max="140" step="5" data-cfg="theme.fontScale" data-num value="${cfg.theme.fontScale}"></div>
+   <div class="field"><label>استدارة الزوايا: <span id="rdVal">${cfg.theme.radius}</span>px</label><input type="range" min="0" max="28" step="1" data-cfg="theme.radius" data-num value="${cfg.theme.radius}"></div></div>`;
+}
+
+/* ---- المستخدمون ---- */
+const onlyAdmin=u=>u.role==='مدير'&&u.active&&cfg.users.filter(x=>x.active&&x.role==='مدير').length<2;
+function tabUsers(){
+  const adminNoPin=cfg.users.some(u=>u.active&&u.role==='مدير'&&!u.pin);
+  const chk=(u,k,dis)=>`<input type="checkbox" data-up="${esc(u.id)}|${k}"${u.perms[k]?' checked':''}${dis?' disabled':''}>`;
+  const sel=(u,k,opts,dis)=>`<select data-up="${esc(u.id)}|${k}"${dis?' disabled':''}>${opts.map(o=>`<option value="${o[0]}"${u.perms[k]===o[0]?' selected':''}>${o[1]}</option>`).join('')}</select>`;
+  return sh('المستخدمون والصلاحيات','المدير وحده يعدّل هذا الجدول. اختر الدور كقالب ثم عدّل كل صلاحية لكل مستخدم بالتفصيل. التغييرات تُحفظ تلقائيًا.',`<button class="btn primary" data-act="usr-add">+ مستخدم جديد</button>`)+
+  (adminNoPin?`<div class="notice warn">المدير بلا رقم سري: أي شخص يستطيع اختيار اسم المدير والدخول. عيّن رقمًا سريًا للمدير من عمود "الرقم السري".</div>`:'')+
+  `<div class="table-wrap"><table class="ptable"><thead><tr><th>المستخدم</th><th>الدور</th><th>مفعّل</th><th>الرقم السري</th><th>يرى</th><th>إضافة</th><th>تعديل</th><th>تغيير الحالة</th><th>حذف</th><th>تصدير</th><th>الإعدادات</th><th>الصفحات</th><th></th></tr></thead><tbody>`+
+  cfg.users.map(u=>{const adm=u.role==='مدير';const np=(u.perms.pages||[]).length;return `<tr${u.active?'':' style="opacity:.55"'}>
+   <td><strong>${esc(u.name)}</strong></td>
+   <td><select data-up="${esc(u.id)}|role">${['مدير','موظف','مشاهد'].map(r=>`<option${u.role===r?' selected':''}>${r}</option>`).join('')}</select></td>
+   <td><input type="checkbox" data-up="${esc(u.id)}|active"${u.active?' checked':''}></td>
+   <td>${mb('usr-pin',u.id,u.pin?'تغيير ●●●':'تعيين')}</td>
+   <td>${sel(u,'scope',[['all','كل المعاملات'],['own','معاملاته فقط']],adm)}</td>
+   <td>${chk(u,'add',adm)}</td>
+   <td>${sel(u,'edit',[['all','الكل'],['own','معاملاته'],['none','لا']],adm)}</td>
+   <td>${chk(u,'status',adm)}</td><td>${chk(u,'del',adm)}</td><td>${chk(u,'export',adm)}</td><td>${chk(u,'settings',adm)}</td>
+   <td>${adm?'الكل':mb('usr-pages',u.id,np?np+' صفحات':'الكل')}</td>
+   <td><div class="row-actions">${mb('usr-edit',u.id,'تعديل')}${mb('usr-del',u.id,'حذف','danger')}</div></td></tr>`}).join('')+
+  `</tbody></table></div>
+  <p class="notice" style="margin-top:.9rem"><b>شرح الأعمدة:</b> "يرى" يحدد هل يشاهد كل المعاملات أو المسندة له فقط. "تعديل: معاملاته" يسمح له بتعديل المسندة له فقط. المستخدمون حسابات دخول فقط، وقائمة "الموظف المسؤول" مستقلة عنهم؛ "معاملاته" هي التي فيها اسم الموظف المرتبط بالمستخدم (من زر تعديل). "الإعدادات" تفتح له تبويبات الإعدادات عدا هذا الجدول. "الصفحات" تحدد الصفحات الظاهرة له.<br>هذه الحماية تمنع الاستخدام العادي غير المصرح، لكنها ليست تشفيرًا للبيانات: من يملك الملف وخبرة تقنية يستطيع قراءة البيانات المخزنة في المتصفح.</p>`;
+}
+function editUser(id){
+  const u=id?cfg.users.find(x=>x.id===id):null;
+  const empOpts=[['','نفس اسم المستخدم'],...empList().map(n=>[n,n])];
+  const empFld={k:'employee',label:'اسمه في قائمة الموظفين (لصلاحية "معاملاته فقط")',type:'select',opts:empOpts,help:'المستخدم حساب دخول فقط. قائمة "الموظف المسؤول" مستقلة وتُدار من تبويب الحالات والقوائم.'};
+  openEditor({title:u?'تعديل المستخدم':'مستخدم جديد',fields:u?[{k:'name',label:'اسم المستخدم (للدخول)',req:true},empFld]:[{k:'name',label:'اسم المستخدم (للدخول)',req:true},{k:'role',label:'الدور (قالب الصلاحيات)',type:'select',opts:[['موظف','موظف'],['مشاهد','مشاهد'],['مدير','مدير']]},{k:'pin',label:'الرقم السري (اختياري)',help:'يُطلب منه عند الدخول. يمكن تعيينه لاحقًا.'},empFld],values:u?{name:u.name,employee:u.employee||''}:{name:'',role:'موظف',pin:'',employee:''},
+  onSave:v=>{
+    if(cfg.users.some(x=>x.id!==(u&&u.id)&&x.name===v.name)){toast('الاسم مستخدم');return false}
+    if(!u){const q={id:uid('u'),name:v.name,role:v.role,active:true,perms:Object.assign({},ROLE_PERMS[v.role],{pages:[]})};if(v.pin)q.pin=sha256(q.id+':'+v.pin);if(v.employee)q.employee=v.employee;cfg.users.push(q);persistCfg();return}
+    const old=u.name;u.name=v.name;
+    if(v.employee)u.employee=v.employee;else if(old!==v.name&&empList().includes(old))u.employee=old;else delete u.employee;
+    if(old!==v.name){transactions.forEach(t=>{let ch=false;t.history.forEach(h=>{if(h[2]===old){h[2]=v.name;ch=true}});if(ch)t.rev=Date.now()});if(L.user===old){L.user=v.name;saveLocal()}persistTx()}
+    persistCfg();
+  }});
+}
+function editPin(id){
+  const u=cfg.users.find(x=>x.id===id);if(!u)return;
+  openEditor({title:'الرقم السري — '+u.name,intro:'اتركه فارغًا لإزالة الرقم السري (الدخول باسمه بدون رقم).',fields:[{k:'pin',label:'الرقم السري الجديد'},{k:'pin2',label:'تأكيد الرقم السري'}],values:{},
+  onSave:v=>{
+    if(v.pin!==v.pin2){toast('الرقمان غير متطابقين');return false}
+    if(v.pin&&v.pin.length<4){toast('الرقم السري 4 خانات على الأقل');return false}
+    if(v.pin)u.pin=sha256(u.id+':'+v.pin);else delete u.pin;
+    if(u.name===me().name&&v.pin)setUnlocked(u.id);
+    persistCfg();toast(v.pin?'تم حفظ الرقم السري':'تمت إزالة الرقم السري');
+  }});
+}
+function editUserPages(id){
+  const u=cfg.users.find(x=>x.id===id);if(!u)return;
+  openEditor({title:'الصفحات المسموحة — '+u.name,intro:'بدون أي اختيار = يرى كل الصفحات.',fields:[{k:'pages',label:'الصفحات',type:'multi',opts:cfg.pages.filter(p=>p.kind!=='settings').map(p=>[p.id,p.title])}],values:{pages:u.perms.pages||[]},onSave:v=>{u.perms.pages=v.pages;persistCfg()}});
+}
+
+/* ---- التصدير ---- */
+function tabExport(){
+  return sh('التصدير والطباعة','حدد الأعمدة التي تظهر في ملفات CSV وExcel وWord وPDF (يُصدَّر ما تعرضه الصفحة الحالية بعد البحث والتصفية).')+
+  `<div class="form-grid two">${inp('export.title','عنوان التقرير')}${inp('export.file','بداية اسم الملف')}</div><h3 class="sub">الأعمدة</h3><div class="checks">${allCols().map(([k,n])=>`<label><input type="checkbox" data-exp-col="${esc(k)}"${cfg.export.columns.includes(k)?' checked':''}> ${esc(n)}</label>`).join('')}</div>`;
+}
+
+/* ---- الربط والنسخ ---- */
+function tabSync(){
+  const demo=transactions.filter(t=>t.demo).length;
+  return sh('رابط التخزين السحابي','اربط هذا الجهاز برابط Google Apps Script ليرى كل الأجهزة نفس البيانات تلقائيًا (دمج على مستوى كل معاملة).')+
+  (store.ok?'':`<div class="notice warn">هذا المتصفح يمنع الحفظ على الجهاز من داخل هذا الرابط. النظام يعمل والبيانات تُحفظ في السحابة، لكن الرمز السري سيُطلب عند كل فتح. لتفادي ذلك اسمح بملفات تعريف الارتباط للطرف الثالث لموقع googleusercontent.com في إعدادات المتصفح.</div>`)+
+  (HOSTED?`<div class="notice">هذا النظام مفتوح من رابط Google نفسه. ${L.sess?'أنت متصل بالتخزين عبر تسجيل الدخول باسمك، ولا حاجة لرمز التخزين.':'الدخول يكون باسم المستخدم ورقمه السري. رمز التخزين يُطلب مرة واحدة فقط عند أول إعداد.'}</div>`:'')+
+  `<div class="notice warn">استخدم رابط تخزين <b>خاصًا بهذا النظام</b>. إذا كان الرابط يحفظ بيانات نظام آخر (مثل نظام المراجعة والعرض) فلن يسمح لك بالربط حتى لا تُمسح بياناته.</div>
+  <p class="sync"><i class="dot" id="syncDot2"></i><span id="syncText2"></span></p>
+  <div class="form-grid two"><div class="field"><label>رابط التخزين (ينتهي بـ /exec)</label><input id="cloudUrl" dir="ltr" value="${esc(L.url||HOSTED)}" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+  <div class="field"><label>الرمز السري</label><input id="cloudToken" dir="ltr" type="password" value="${esc(L.token)}" autocomplete="off" autocapitalize="off" spellcheck="false"></div></div>
+  <div class="form-actions"><button class="btn primary" data-act="cloud-link">${L.url?'تحديث بيانات الربط':'ربط'}</button>${L.url?`<button class="btn secondary" data-act="cloud-now">مزامنة الآن</button><button class="btn danger" data-act="cloud-unlink">فصل الرابط</button>`:''}</div>
+  <hr class="sep"><h3 class="sub">ملف التخزين المحلي</h3>
+  ${supportsFS?`<p class="sync"><i class="dot" id="fileDot"></i><span id="fileText"></span></p>
+  <p class="notice" style="margin-top:.6rem">اربط ملفًا على جهازك يُكتب فيه تلقائيًا مع كل حفظ ومع كل تحديث يصل من السحابة، فتبقى النسخة المحلية مطابقة للسحابية.</p>
+  <div class="form-actions" style="margin-top:0"><button class="btn secondary" data-act="file-new">إنشاء / اختيار ملف تخزين</button><button class="btn secondary" data-act="file-open">فتح ملف تخزين موجود</button><button class="btn secondary" data-act="file-grant" id="fileGrant" style="display:none">منح إذن الوصول للملف</button><button class="btn danger" data-act="file-unlink" id="fileUnlink" style="display:none">فصل الملف</button></div>`
+  :`<p class="notice">هذا المتصفح لا يدعم الكتابة المباشرة في ملف على الجهاز (مدعوم في Chrome وEdge على الكمبيوتر). البيانات تُحفظ تلقائيًا داخل المتصفح، ويمكنك تنزيل نسخة احتياطية يدويًا.${IN_FRAME?' (ملف التخزين المحلي غير متاح عند فتح النظام من رابط Google؛ افتح نسخة الملف المحفوظة على جهازك لاستخدامه.)':''}</p>`}
+  <hr class="sep"><h3 class="sub">Excel: قالب للتعبئة واستيراد</h3>
+  <p class="notice" style="margin-bottom:.7rem">نزّل قالب Excel بأعمدة النظام وقوائم الاختيار، عبّئه (أو أرسله لزميل يعبّئه)، ثم استورده. المعاملة ذات الرقم الموجود تُحدَّث، والجديدة تُضاف، ولا يُحذف شيء.</p>
+  <div class="form-actions" style="margin-top:0"><button class="btn secondary" data-act="xl-template">تنزيل قالب Excel فارغ</button><button class="btn secondary" data-act="xl-data">تنزيل Excel بالمعاملات الحالية</button><button class="btn primary" data-act="xl-import">استيراد من Excel</button><input type="file" id="excelFile" accept=".xlsx,.csv" hidden></div>
+  <hr class="sep"><h3 class="sub">النسخ الاحتياطي</h3>
+  <div class="form-actions" style="margin-top:0"><button class="btn secondary" data-act="backup">تنزيل نسخة احتياطية (JSON)</button><button class="btn secondary" data-act="restore">استعادة من نسخة</button><input type="file" id="restoreFile" accept="application/json,.json" hidden></div>
+  <p class="notice" style="margin-top:.8rem">النسخة الاحتياطية تشمل المعاملات وكل الإعدادات (الصفحات والحقول والنصوص والألوان). تدعم الاستعادة نسخ النسخة السابقة من هذا النظام.</p>
+  ${demo?`<hr class="sep"><h3 class="sub">البيانات التجريبية</h3><p class="notice warn">يوجد ${demo} معاملات تجريبية. احذفها قبل بدء العمل الفعلي.</p><div class="form-actions" style="margin-top:0"><button class="btn danger" data-act="del-demo">حذف المعاملات التجريبية</button></div>`:''}
+  ${isAdmin()?`<hr class="sep"><h3 class="sub">مسح كل المعاملات</h3><p class="notice warn">يحذف جميع المعاملات المسجلة (${transactions.length}) ويبدأ السجل فارغًا. الإعدادات والمستخدمون والصفحات لا تتغير.${L.url?' النظام مربوط بالسحابة، فالمسح يطبَّق على كل الأجهزة المرتبطة.':''}</p><div class="form-actions" style="margin-top:0"><button class="btn danger" data-act="wipe-tx">مسح كل المعاملات</button></div>`:''}`;
+}
+
+/* ======================= الأوامر ======================= */
+const ACTIONS={
+  'tab':el=>{UI.tab=el.dataset.tab;renderSettings()},
+  'add':()=>openForm(),
+  'clear-filters':()=>{UI.filters[UI.page]={};renderPage()},
+  'adv-toggle':()=>{UI.advOpen=!UI.advOpen;const a=$('.adv');if(a)a.classList.toggle('open',UI.advOpen)},
+  'export':()=>openExport(),
+  'set-status':el=>setStatus(el.dataset.id,$('#detSt').value),
+  'reset-cfg':()=>{if(confirm('إعادة ضبط كل الإعدادات للوضع الافتراضي؟ (المعاملات لن تُحذف)')){const d=defaultCfg();Object.keys(cfg).forEach(k=>delete cfg[k]);Object.assign(cfg,normalizeCfg(d));UI.page='dashboard';persistCfg();toast('تمت إعادة الضبط')}},
+  // الصفحات
+  'pg-add':()=>editPage(null),'pg-edit':el=>editPage(el.dataset.id),'pg-del':el=>delPage(el.dataset.id),
+  'pg-up':el=>{moveItem(cfg.pages,el.dataset.id,-1,(a,b)=>a.group===b.group);persistCfg()},
+  'pg-down':el=>{moveItem(cfg.pages,el.dataset.id,1,(a,b)=>a.group===b.group);persistCfg()},
+  'pg-vis':el=>{const p=page(el.dataset.id);if(p){p.visible=p.visible===false;persistCfg()}},
+  'pg-restore':()=>{let n=0;DEFAULT_PAGES().forEach(p=>{if(!cfg.pages.some(x=>x.id===p.id)){if(!cfg.navGroups.some(g=>g.id===p.group))p.group=cfg.navGroups[0].id;cfg.pages.push(p);n++}});persistCfg();toast(n?'تمت استعادة '+n+' صفحة':'لا توجد صفحات محذوفة')},
+  'grp-add':()=>openEditor({title:'مجموعة جديدة',fields:[{k:'title',label:'اسم المجموعة',req:true}],values:{},onSave:v=>{cfg.navGroups.push({id:uid('g_'),title:v.title});persistCfg()}}),
+  'grp-edit':el=>{const g=cfg.navGroups.find(x=>x.id===el.dataset.id);openEditor({title:'تسمية المجموعة',fields:[{k:'title',label:'اسم المجموعة',req:true}],values:g,onSave:v=>{g.title=v.title;persistCfg()}})},
+  'grp-del':el=>{const g=cfg.navGroups.find(x=>x.id===el.dataset.id);if(cfg.navGroups.length<2||!confirm('حذف المجموعة "'+g.title+'"؟ ستنتقل صفحاتها إلى أول مجموعة.'))return;cfg.navGroups=cfg.navGroups.filter(x=>x!==g);cfg.pages.forEach(p=>{if(p.group===g.id)p.group=cfg.navGroups[0].id});persistCfg()},
+  'grp-up':el=>{moveItem(cfg.navGroups,el.dataset.id,-1);persistCfg()},'grp-down':el=>{moveItem(cfg.navGroups,el.dataset.id,1);persistCfg()},
+  // الودجات
+  'wd-add':el=>editWidget(null,el.dataset.id),'wd-edit':el=>editWidget(el.dataset.id),
+  'wd-del':el=>{const w=cfg.widgets.find(x=>x.id===el.dataset.id);if(w&&confirm('حذف هذا العنصر من لوحة التحكم؟')){cfg.widgets=cfg.widgets.filter(x=>x!==w);persistCfg()}},
+  'wd-up':el=>{moveItem(cfg.widgets,el.dataset.id,-1);persistCfg()},'wd-down':el=>{moveItem(cfg.widgets,el.dataset.id,1);persistCfg()},
+  'wd-vis':el=>{const w=cfg.widgets.find(x=>x.id===el.dataset.id);if(w){w.visible=w.visible===false;persistCfg()}},
+  'wd-restore':()=>{if(confirm('استبدال عناصر لوحة التحكم بالعناصر الافتراضية؟')){cfg.widgets=DEFAULT_WIDGETS();persistCfg()}},
+  // الأقسام والحقول
+  'sec-add':()=>openEditor({title:'قسم جديد',fields:[{k:'title',label:'اسم القسم',req:true}],values:{},onSave:v=>{cfg.sections.push({id:uid('sec_'),title:v.title,visible:true});persistCfg()}}),
+  'sec-edit':el=>{const s=cfg.sections.find(x=>x.id===el.dataset.id);openEditor({title:'تسمية القسم',fields:[{k:'title',label:'اسم القسم',req:true}],values:s,onSave:v=>{s.title=v.title;persistCfg()}})},
+  'sec-del':el=>{const s=cfg.sections.find(x=>x.id===el.dataset.id);if(cfg.sections.length<2||!confirm('حذف القسم "'+s.title+'"؟ ستنتقل حقوله إلى أول قسم.'))return;cfg.sections=cfg.sections.filter(x=>x!==s);cfg.fields.forEach(f=>{if(f.section===s.id)f.section=cfg.sections[0].id});persistCfg()},
+  'sec-up':el=>{moveItem(cfg.sections,el.dataset.id,-1);persistCfg()},'sec-down':el=>{moveItem(cfg.sections,el.dataset.id,1);persistCfg()},
+  'sec-vis':el=>{const s=cfg.sections.find(x=>x.id===el.dataset.id);if(s){s.visible=s.visible===false;persistCfg()}},
+  'fd-add':()=>editField(null),'fd-edit':el=>editField(el.dataset.id),'fd-del':el=>delField(el.dataset.id),
+  'fd-up':el=>{moveItem(cfg.fields,el.dataset.id,-1,(a,b)=>a.section===b.section);persistCfg()},
+  'fd-down':el=>{moveItem(cfg.fields,el.dataset.id,1,(a,b)=>a.section===b.section);persistCfg()},
+  'fd-vis':el=>{const f=fieldOf(el.dataset.id);if(f&&!f.locked){f.visible=f.visible===false;persistCfg()}},
+  'fd-restore':()=>{let n=0;DEFAULT_FIELDS().forEach(f=>{if(!cfg.fields.some(x=>x.id===f.id)){cfg.fields.push(f);n++}});persistCfg();toast(n?'تمت استعادة '+n+' حقل':'كل الحقول الأساسية موجودة')},
+  // الحالات والقوائم
+  'stt-add':()=>editStatus(null),'stt-edit':el=>editStatus(el.dataset.id),'stt-del':el=>delStatus(el.dataset.id),
+  'stt-up':el=>{moveItem(cfg.statuses,el.dataset.id,-1);persistCfg()},'stt-down':el=>{moveItem(cfg.statuses,el.dataset.id,1);persistCfg()},
+  'ls-add':el=>{const key=el.dataset.list;openEditor({title:'إضافة',fields:[{k:'name',label:'الاسم',req:true}],values:{},onSave:v=>{const a=listArr(key);if(a.includes(v.name)){toast('موجود مسبقًا');return false}a.push(v.name);persistCfg()}})},
+  'ls-edit':el=>{const key=el.dataset.list,i=+el.dataset.i,a=listArr(key),old=a[i];openEditor({title:'تعديل',intro:'تغيير الاسم يحدّث المعاملات المسجلة به.',fields:[{k:'name',label:'الاسم',req:true}],values:{name:old},onSave:v=>{if(v.name!==old&&a.includes(v.name)){toast('موجود مسبقًا');return false}a[i]=v.name;if(v.name!==old)listRename(key,old,v.name);persistCfg()}})},
+  'ls-del':el=>{const key=el.dataset.list,i=+el.dataset.i,a=listArr(key);if((key==='types'||key==='priorities')&&a.length<2){toast('يجب أن تبقى قيمة واحدة على الأقل');return}if(confirm('حذف "'+a[i]+'" من القائمة؟ المعاملات المسجلة بها تحتفظ بقيمتها.')){a.splice(i,1);persistCfg()}},
+  'ls-up':el=>{const a=listArr(el.dataset.list),i=+el.dataset.i;if(i>0){[a[i],a[i-1]]=[a[i-1],a[i]];persistCfg()}},
+  'ls-down':el=>{const a=listArr(el.dataset.list),i=+el.dataset.i;if(i<a.length-1){[a[i],a[i+1]]=[a[i+1],a[i]];persistCfg()}},
+  'lst-new':()=>openEditor({title:'قائمة خيارات جديدة',intro:'بعد إنشائها اربطها بحقل: الحقول والأقسام ← حقل جديد ← نوع "قائمة" ← اختر هذه القائمة.',fields:[{k:'title',label:'اسم القائمة',req:true},{k:'items',label:'العناصر (سطر لكل عنصر)',type:'textarea'},{k:'mk',label:'أنشئ حقلًا في نموذج المعاملة مرتبطًا بها الآن',type:'check'}],values:{mk:true},onSave:v=>{
+    if(Object.values(cfg.lists).some(l=>l.title===v.title)){toast('يوجد قائمة بنفس الاسم');return false}
+    const key=uid('l_');cfg.lists[key]={title:v.title,items:[...new Set(String(v.items||'').split('\n').map(x=>x.trim()).filter(Boolean))]};
+    if(v.mk&&!cfg.fields.some(f=>f.label===v.title))cfg.fields.push({id:uid('cf_'),label:v.title,type:'combo',list:key,section:cfg.sections[0].id,builtin:false,visible:true});
+    persistCfg()}}),
+  'lst-rename':el=>{const l=cfg.lists[el.dataset.id];if(!l)return;openEditor({title:'تسمية القائمة',fields:[{k:'title',label:'اسم القائمة',req:true}],values:l,onSave:v=>{l.title=v.title;persistCfg()}})},
+  'lst-del':el=>{const k=el.dataset.id,l=cfg.lists[k];if(!l||cfg.fields.some(f=>f.list===k))return;if(confirm('حذف القائمة "'+l.title+'"؟')){delete cfg.lists[k];persistCfg()}},
+  'texts-reset':()=>{if(confirm('استعادة كل النصوص الافتراضية؟')){cfg.texts={};persistCfg()}},
+  'preset':el=>{Object.assign(cfg.theme,PRESETS[el.dataset.id]);persistCfg()},
+  // المستخدمون
+  'usr-add':()=>{if(isAdmin())editUser(null)},'usr-edit':el=>{if(isAdmin())editUser(el.dataset.id)},
+  'usr-pin':el=>{if(isAdmin())editPin(el.dataset.id)},'usr-pages':el=>{if(isAdmin())editUserPages(el.dataset.id)},
+  'usr-del':el=>{if(!isAdmin())return;const u=cfg.users.find(x=>x.id===el.dataset.id);if(!u)return;if(cfg.users.length<2||onlyAdmin(u)){toast('لا يمكن حذف آخر مدير مفعّل');return}if(confirm('حذف المستخدم "'+u.name+'"؟ المعاملات المسندة له تبقى باسمه.')){cfg.users=cfg.users.filter(x=>x!==u);persistCfg()}},
+  // الربط والنسخ
+  'cloud-link':()=>linkCloud($('#cloudUrl').value,$('#cloudToken').value),
+  'cloud-now':()=>syncNow(true),
+  'cloud-unlink':()=>{if(confirm('فصل هذا الجهاز عن رابط التخزين؟ تبقى البيانات على الجهاز.')){L.url='';L.token='';L.sess='';L.lastVer='';saveLocal();stopPolling();renderSettings();renderSyncUi()}},
+  'backup':()=>download(JSON.stringify({app:APP_TAG,exportedAt:new Date().toISOString(),transactions,tomb,config:cfg},null,1),'نسخة_احتياطية_'+today()+'.json','application/json'),
+  'restore':()=>$('#restoreFile').click(),
+  'xl-template':()=>excelTemplate(false),'xl-data':()=>excelTemplate(true),'xl-import':()=>$('#excelFile').click(),
+  'wipe-tx':()=>{
+    if(!isAdmin())return toast(T('viewer'));
+    if(!transactions.length)return toast('لا توجد معاملات لمسحها');
+    openEditor({title:'مسح كل المعاملات ('+transactions.length+')',saveText:'مسح نهائي',
+      intro:'هذا الإجراء لا يمكن التراجع عنه إلا باستعادة نسخة احتياطية.'+(L.url?' سيُطبَّق على كل الأجهزة المرتبطة بالسحابة.':''),
+      fields:[{k:'backup',label:'تنزيل نسخة احتياطية أولًا (مستحسن)',type:'check'},{k:'cfg',label:'إعادة الإعدادات للوضع الافتراضي أيضًا (الصفحات والحقول والنصوص والألوان — المستخدمون يبقون)',type:'check'},{k:'word',label:'للتأكيد اكتب كلمة: مسح',req:true}],values:{backup:true,cfg:false,word:''},
+      onSave:v=>{
+        if(v.word!=='مسح'){toast('اكتب كلمة "مسح" للتأكيد');return false}
+        if(v.backup)ACTIONS.backup();
+        const now=Date.now(),n=transactions.length;
+        transactions.forEach(t=>{tomb[t.id]=now});transactions=[];
+        persistTx();UI.filters={};
+        if(v.cfg){const users=cfg.users;cfg=normalizeCfg(Object.assign(defaultCfg(),{users}));UI.page='dashboard';UI.tab='general';persistCfg()}else refresh();
+        toast('تم مسح '+n+' معاملة'+(v.cfg?' وإعادة ضبط الإعدادات':''));
+      }});
+  },
+  'file-new':()=>fileNew(),'file-open':()=>fileOpen(),'file-grant':()=>fileGrant(),'file-unlink':()=>fileUnlink(),
+  'del-demo':()=>{if(confirm('حذف المعاملات التجريبية؟')){transactions=transactions.filter(t=>!t.demo);persistTx();refresh();toast('تم حذف البيانات التجريبية')}}
+};
+
+/* ======================= المزامنة السحابية ======================= */
+let dirty=false,syncing=false,again=false,pushTimer=null,pollTimer=null,syncState='off',syncMsg='',pendingRender=false;
+function setSync(state,msg){syncState=state;syncMsg=msg||'';renderSyncUi()}
+/* التعديلات التي لم تصل للسحابة بعد: مقارنة كل سجل بآخر نسخة رُفعت بنجاح (تُحفظ على الجهاز) */
+const KEY_SYNCED='unified_synced_v1';
+let synced=jparse(store.getItem(KEY_SYNCED),null);
+const revMap=()=>{const m={};transactions.forEach(t=>{if(!t.demo)m[t.id]=t.rev||0});return m};
+function pendingCount(){
+  if(!L.url||!synced)return 0;
+  let n=0;const seen=new Set();
+  transactions.forEach(t=>{if(t.demo)return;seen.add(t.id);if(synced[t.id]!==(t.rev||0))n++});
+  Object.keys(synced).forEach(id=>{if(!seen.has(id))n++});
+  return n;
+}
+function markSynced(m){synced=m;try{store.setItem(KEY_SYNCED,JSON.stringify(m))}catch(e){}}
+function renderSyncUi(){
+  const map={off:['',T('sync.off')],ok:['ok',T('sync.ok')],bad:['bad',T('sync.bad')],wait:['wait',T('sync.wait')]};
+  const s=L.url?(syncState==='off'?'wait':syncState):'off';
+  const [cls,txt]=map[s]||map.off;
+  const pn=s==='off'?0:pendingCount();
+  const text=pn?('⏳ '+pn+' '+(pn===1?'تعديل':'تعديلات')+' بانتظار الرفع'):(txt+(syncMsg&&s!=='off'?' — '+syncMsg:''));
+  const tip=pn?(text+' — محفوظة على هذا الجهاز وتُرفع تلقائيًا عند عودة الاتصال'+(s==='bad'&&syncMsg?' ('+syncMsg+')':'')):text;
+  [['#syncDot','#syncText'],['#syncDot2','#syncText2']].forEach(([d,t],i)=>{const de=$(d),te=$(t);if(de)de.className='dot '+(pn?(s==='bad'?'bad':'wait'):cls);if(te){te.textContent=i&&pn?tip:text;te.title=tip}});
+}
+const bundle=()=>({app:APP_TAG,transactions,tomb,config:cfg,savedAt:new Date().toISOString()});
+/* المصادقة: جلسة دخول (من رابط Google) إن وُجدت، وإلا رمز التخزين */
+async function cloudGet(){
+  const sep=L.url.includes('?')?'&':'?';
+  const auth=L.sess?('sess='+encodeURIComponent(L.sess)):('token='+encodeURIComponent(L.token));
+  const r=await fetch(L.url+sep+auth,{cache:'no-store'});
+  if(!r.ok)throw Error('http_'+r.status);
+  const j=await r.json();if(j&&j.error)throw Error(j.error);return j||{};
+}
+async function cloudPost(b){
+  const body=L.sess?{sess:L.sess,data:b}:{token:L.token,data:b};
+  const r=await fetch(L.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
+  if(!r.ok)throw Error('http_'+r.status);
+  const j=await r.json();if(j&&j.error)throw Error(j.error);return j;
+}
+function errMsg(e){
+  const m=(e&&e.message)||'';
+  if(m==='unauthorized')return 'الرمز السري غير صحيح';
+  if(m==='busy')return 'الخدمة مزدحمة لحظيًا، ستُعاد المحاولة';
+  if(m==='foreign')return 'هذا الرابط يحفظ بيانات نظام آخر — أنشئ رابط تخزين خاصًا بهذا النظام';
+  if(m==='http_404')return 'رابط التخزين لم يُعثر عليه (404) — تُعاد المحاولة تلقائيًا. إن استمر: افتح النموذج بحساب قوقل واحد، وتأكد أن آخر نشر تم بالقلم ✏️ ← نسخة جديدة';
+  if(m.indexOf('http_')===0)return 'الخدمة ردّت بخطأ ('+m.slice(5)+') — تأكد أن الرابط من نوع "تطبيق ويب" وينتهي بـ /exec';
+  return navigator.onLine===false?'لا يوجد اتصال بالإنترنت — التعديلات محفوظة وستُرفع عند عودة الاتصال':'انقطاع مؤقت — تُعاد المحاولة تلقائيًا، وتعديلاتك محفوظة';
+}
+const isForeign=r=>!!r&&typeof r==='object'&&((r.app&&r.app!==APP_TAG)||(!r.app&&('incomingItems' in r||'followups' in r||'kpiItems' in r||'fuSettings' in r)));
+const sig=list=>list.map(t=>t.id+':'+(t.rev||0)).sort().join('|');
+function mergeRemote(r){
+  const rT=Array.isArray(r.transactions)?r.transactions.map((t,i)=>normTx(t,i)):[];
+  const rTomb=(r.tomb&&typeof r.tomb==='object')?r.tomb:{};
+  const beforeSig=sig(transactions),beforeTomb=Object.keys(tomb).length;
+  const nt={...tomb};Object.keys(rTomb).forEach(k=>{nt[k]=Math.max(nt[k]||0,rTomb[k])});
+  const limit=Date.now()-120*864e5;Object.keys(nt).forEach(k=>{if(nt[k]<limit)delete nt[k]});
+  const map=new Map();
+  [...transactions,...rT].forEach(t=>{const c=map.get(t.id);if(!c||(t.rev||0)>(c.rev||0))map.set(t.id,t)});
+  const out=[];map.forEach((t,id)=>{if(nt[id]&&nt[id]>=(t.rev||0))return;out.push(t)});
+  const seen=new Map(),drop=new Set();
+  out.forEach(t=>{const k=numKey(t.number);if(!k)return;const o=seen.get(k);if(!o){seen.set(k,t);return}
+    const older=(t.rev||0)>(o.rev||0)?o:t;drop.add(older.id);nt[older.id]=Date.now();if(older===o)seen.set(k,t)});
+  if(drop.size)for(let i=out.length-1;i>=0;i--)if(drop.has(out[i].id))out.splice(i,1);
+  out.sort((a,b)=>(b.created||0)-(a.created||0));
+  let cfgChanged=false;const rRev=(r.config&&r.config.v===2&&r.config.rev)||0;
+  if(r.config&&r.config.v===2&&rRev>(cfg.rev||0)){cfg=normalizeCfg(r.config);cfgChanged=true}
+  transactions=out;tomb=nt;
+  const mv=migrateOwner();
+  return {
+    localChanged:!!mv||cfgChanged||sig(out)!==beforeSig||Object.keys(nt).length!==beforeTomb,
+    needPush:!!mv||!r.app||sig(out)!==sig(rT)||(cfg.rev||0)>rRev||Object.keys(nt).length!==Object.keys(rTomb).length
+  };
+}
+function storeLocal(){try{store.setItem(KEY_TX,JSON.stringify(transactions));store.setItem(KEY_TOMB,JSON.stringify(tomb));store.setItem(KEY_CFG,JSON.stringify(cfg))}catch(e){}applyTheme();scheduleFileWrite()}
+function softRefresh(){
+  const ae=document.activeElement;
+  const typing=ae&&host().contains(ae)&&/INPUT|TEXTAREA|SELECT/.test(ae.tagName);
+  if(anyModal()||typing){pendingRender=true;const p=page(UI.page);if(!anyModal()&&p&&p.kind==='list')fillTable(p);return}
+  refresh();
+}
+async function syncNow(manual){
+  if(!L.url)return;
+  if(syncing){again=true;return}
+  syncing=true;setSync('wait');let snap=null;
+  try{
+    do{
+      again=false;
+      const r=await cloudGet();
+      if(isForeign(r))throw Error('foreign');
+      const res=mergeRemote(r);
+      if(res.localChanged){storeLocal();softRefresh()}
+      snap=revMap();
+      if(res.needPush||dirty){dirty=false;try{await cloudPost(bundle())}catch(e){dirty=true;throw e}}
+    }while(again);
+    setSync('ok','آخر مزامنة '+new Date().toLocaleTimeString('ar-SA-u-nu-latn',{hour:'2-digit',minute:'2-digit'}));
+    if(manual)toast('تمت المزامنة');
+    if(snap)markSynced(snap);renderSyncUi();
+    retryN=0;clearTimeout(retryTimer);
+  }catch(e){
+    setSync('bad',errMsg(e));if(manual)toast(errMsg(e));
+    /* انقطاع مؤقت: إعادة محاولة تلقائية متدرجة (5ث ثم 15ث ثم 30ث) — التعديلات تبقى محفوظة على الجهاز حتى تُرفع */
+    const m=(e&&e.message)||'';
+    if(m!=='unauthorized'&&m!=='foreign'&&retryN<6){clearTimeout(retryTimer);retryTimer=setTimeout(()=>syncNow(false),[5,15,30][Math.min(retryN,2)]*1000);retryN++}
+    /* انتهت جلسة الدخول: نطلب الدخول من جديد */
+    if(L.sess&&e&&e.message==='unauthorized'){L.sess='';saveLocal();stopPolling();if(HOSTED)setTimeout(hostedStart,50)}
+  }
+  finally{syncing=false}
+}
+let retryN=0,retryTimer=null;
+function schedulePush(){dirty=true;if(!L.url)return;clearTimeout(pushTimer);pushTimer=setTimeout(()=>syncNow(false),700)}
+function startPolling(){stopPolling();pollTimer=setInterval(()=>{if(!document.hidden)syncNow(false)},30000)}
+function stopPolling(){if(pollTimer){clearInterval(pollTimer);pollTimer=null}}
+async function linkCloud(url,token){
+  url=normUrl(url);token=(token||'').trim();
+  const i=url.indexOf('#t=');
+  if(i>-1){try{token=decodeURIComponent(url.slice(i+3))}catch(e){token=url.slice(i+3)}url=url.slice(0,i)}
+  if(!url||!token)return toast('أدخل الرابط والرمز السري');
+  if(/\/macros\/library\//.test(url))return toast('هذا رابط "مكتبة" وليس "تطبيق ويب" — استخدم الرابط المنتهي بـ /exec');
+  if(!/^https:\/\//.test(url))return toast('الرابط يجب أن يبدأ بـ https://');
+  const prev={url:L.url,token:L.token};
+  L.url=url;L.token=token;setSync('wait');
+  try{
+    const r=await cloudGet();
+    if(isForeign(r))throw Error('foreign');
+    /* المعاملات التجريبية تُزال من هذا الجهاز فقط — بدون أثر حذف يصل للأجهزة الأخرى */
+    transactions=transactions.filter(t=>!t.demo);
+    saveLocal();storeLocal();dirty=true;
+    await syncNow(false);
+    startPolling();
+    if(UI.page==='settings')renderSettings();
+    toast(syncState==='ok'?'تم الربط والمزامنة بنجاح':'تم حفظ الرابط لكن المزامنة لم تكتمل');
+  }catch(e){L.url=prev.url;L.token=prev.token;setSync(prev.url?'bad':'off',errMsg(e));toast(errMsg(e))}
+}
+
+/* ======================= ملف التخزين المحلي (File System Access) ======================= */
+const supportsFS='showSaveFilePicker' in window&&'showOpenFilePicker' in window&&!IN_FRAME;
+let fileHandle=null,fileState='none',fileMsg='',fileTimer=null;
+function idb(){return new Promise((res,rej)=>{const r=indexedDB.open('unified_tx_fs',1);r.onupgradeneeded=()=>r.result.createObjectStore('h');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+async function idbSet(v){try{const db=await idb();await new Promise((res,rej)=>{const tx=db.transaction('h','readwrite');v==null?tx.objectStore('h').delete('file'):tx.objectStore('h').put(v,'file');tx.oncomplete=res;tx.onerror=()=>rej(tx.error)})}catch(e){}}
+async function idbGet(){try{const db=await idb();return await new Promise((res,rej)=>{const r=db.transaction('h','readonly').objectStore('h').get('file');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}catch(e){return null}}
+function renderFileUi(){
+  const d=$('#fileDot'),t=$('#fileText');if(!d||!t)return;
+  const map={none:['','لم يُربط ملف تخزين محلي — البيانات محفوظة داخل المتصفح.'],ok:['ok','مربوط بالملف: '+(fileHandle?fileHandle.name:'')+' — يُحدَّث تلقائيًا'+(fileMsg?' ('+fileMsg+')':'')],perm:['wait','الملف '+(fileHandle?fileHandle.name:'')+' يحتاج إذنًا — اضغط "منح إذن الوصول للملف".'],err:['bad','تعذرت الكتابة في الملف'+(fileMsg?': '+fileMsg:'')]};
+  const [cls,txt]=map[fileState]||map.none;d.className='dot '+cls;t.textContent=txt;
+  if($('#fileGrant'))$('#fileGrant').style.display=fileState==='perm'?'':'none';
+  if($('#fileUnlink'))$('#fileUnlink').style.display=fileHandle?'':'none';
+}
+async function writeFile(){
+  if(!fileHandle)return;
+  try{
+    if((await fileHandle.queryPermission({mode:'readwrite'}))!=='granted'){fileState='perm';renderFileUi();return}
+    const w=await fileHandle.createWritable();await w.write(JSON.stringify(bundle(),null,1));await w.close();
+    fileState='ok';fileMsg='آخر كتابة '+new Date().toLocaleTimeString('ar-SA-u-nu-latn',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){fileState='err';fileMsg=e.message||''}
+  renderFileUi();
+}
+function scheduleFileWrite(){if(!fileHandle)return;clearTimeout(fileTimer);fileTimer=setTimeout(writeFile,500)}
+/* دمج محتوى ملف (بنفس صيغة النسخة السحابية) مع بيانات الجهاز — الأحدث لكل معاملة */
+async function mergeFromFile(){
+  const text=await (await fileHandle.getFile()).text();
+  if(!text.trim())return;
+  const x=JSON.parse(text);
+  if(isForeign(x))throw Error('هذا الملف يخص نظامًا آخر');
+  if(x&&x.app===APP_TAG){transactions=transactions.filter(t=>!t.demo);const res=mergeRemote(x);if(res.localChanged){storeLocal();refresh();schedulePush()}}
+}
+async function fileNew(){
+  try{
+    const h=await window.showSaveFilePicker({suggestedName:'بيانات_المعاملات.json',types:[{description:'JSON',accept:{'application/json':['.json']}}]});
+    fileHandle=h;await idbSet(h);await writeFile();toast('تم ربط ملف التخزين');
+  }catch(e){if(e.name!=='AbortError')toast('تعذر إنشاء الملف')}
+}
+async function fileOpen(){
+  try{
+    const [h]=await window.showOpenFilePicker({types:[{description:'JSON',accept:{'application/json':['.json']}}]});
+    fileHandle=h;
+    try{await mergeFromFile()}catch(e){fileHandle=null;return toast('تعذر قراءة الملف: '+e.message)}
+    await idbSet(h);
+    if((await h.requestPermission({mode:'readwrite'}))==='granted')await writeFile();else{fileState='perm';renderFileUi()}
+    toast('تم فتح الملف ودمج بياناته');
+  }catch(e){if(e.name!=='AbortError')toast('تعذر فتح الملف')}
+}
+async function fileGrant(){
+  if(!fileHandle)return;
+  try{if((await fileHandle.requestPermission({mode:'readwrite'}))==='granted'){try{await mergeFromFile()}catch(e){}await writeFile()}}catch(e){}
+}
+async function fileUnlink(){if(!confirm('فصل ملف التخزين المحلي؟ يبقى الملف على جهازك دون تحديث.'))return;fileHandle=null;fileState='none';fileMsg='';await idbSet(null);renderFileUi()}
+async function fileReconnect(){
+  if(!supportsFS)return;
+  const h=await idbGet();if(!h||!h.queryPermission)return;
+  fileHandle=h;
+  try{
+    if((await h.queryPermission({mode:'readwrite'}))==='granted'){try{await mergeFromFile()}catch(e){}await writeFile()}
+    else{fileState='perm';renderFileUi()}
+  }catch(e){fileState='perm';renderFileUi()}
+}
+
+/* ======================= الدخول والرقم السري ======================= */
+const SKEY='unified_unlock_v1';
+let memUnlocked='';
+const unlocked=()=>{let v='';try{v=sessionStorage.getItem(SKEY)||''}catch(e){}return v||memUnlocked};
+function setUnlocked(id){memUnlocked=id||'';try{if(id)sessionStorage.setItem(SKEY,id);else sessionStorage.removeItem(SKEY)}catch(e){}}
+const anyPin=()=>cfg.users.some(u=>u.active&&u.pin);
+const pinOk=(u,pin)=>!u.pin||u.pin===sha256(u.id+':'+pin);
+let loginBlocking=false,hostedMode=false,loginList=[];
+function showLogin(blocking,preId){
+  loginBlocking=!!blocking;
+  $('#loginTitle').textContent=T('login.title');$('#loginSub').textContent=T('login.sub');
+  $('#loginUserLbl').textContent=T('login.user');$('#loginPinLbl').textContent=T('login.pin');
+  $('#loginBtn').textContent=T('login.btn');$('#loginCancel').textContent=T('login.cancel');
+  $('#loginCancel').style.display=blocking?'none':'';
+  if(!hostedMode)loginList=activeUsers().map(u=>({id:u.id,name:u.name,pin:!!u.pin}));
+  const cur=preId||(hostedMode?(loginList.find(u=>u.name===L.user)||{}).id:(me()||{}).id);
+  $('#loginUser').innerHTML=loginList.map(u=>`<option value="${esc(u.id)}"${u.id===cur?' selected':''}>${esc(u.name)}</option>`).join('');
+  $('#loginPin').value='';$('#loginErr').textContent='';
+  syncLoginPin();$('#loginModal').classList.add('show');
+  setTimeout(()=>{try{$('#loginPin').focus()}catch(e){}},50);
+}
+function syncLoginPin(){const u=loginList.find(x=>x.id===$('#loginUser').value);$('#loginPinWrap').style.display=(u&&u.pin)?'':'none'}
+function hideLogin(){$('#loginModal').classList.remove('show');loginBlocking=false}
+function doLogin(){
+  if(hostedMode)return hostedSubmit();
+  const u=cfg.users.find(x=>x.id===$('#loginUser').value);if(!u)return;
+  if(!pinOk(u,$('#loginPin').value)){$('#loginErr').textContent=T('login.bad');$('#loginPin').value='';return}
+  L.user=u.name;L.uid=u.id;saveLocal();setUnlocked(u.pin?u.id:'');hideLogin();UI.page=firstAllowed();refresh();
+}
+function checkAuth(){
+  if(hostedMode)return;
+  const u=me();
+  const need=!!(u&&u.pin&&unlocked()!==u.id);
+  if(need){if(!$('#loginModal').classList.contains('show')||!loginBlocking)showLogin(true)}
+  else if(loginBlocking)hideLogin();
+}
+/* ---- الدخول من رابط Google: اسم المستخدم ورقمه السري فقط، والخادم يتحقق ويعطي جلسة ---- */
+const hostedApi=q=>HOSTED+(HOSTED.includes('?')?'&':'?')+q;
+function askToken(){
+  if($('#loginModal').classList.contains('show')||anyModal()){setTimeout(askToken,800);return}
+  openEditor({title:'الإعداد الأول للتخزين',intro:'هذه أول مرة يُفتح فيها النظام من رابط Google. أدخل رمز التخزين مرة واحدة فقط. بعدها يدخل الجميع باسم المستخدم ورقمه السري بدون هذا الرمز.',saveText:'ربط',fields:[{k:'token',label:'رمز التخزين',req:true}],values:{},onSave:v=>{linkCloud(HOSTED,v.token)}});
+}
+async function hostedStart(){
+  hostedMode=true;
+  try{
+    const r=await fetch(hostedApi('action=users'),{cache:'no-store'});
+    const j=await r.json();
+    if(!j||j.setup||!Array.isArray(j.users)||!j.users.length){hostedMode=false;askToken();return}
+    loginList=j.users;showLogin(true);
+  }catch(e){hostedMode=false;askToken()}
+}
+async function hostedSubmit(){
+  const id=$('#loginUser').value,btn=$('#loginBtn');
+  btn.disabled=true;$('#loginErr').textContent='';
+  try{
+    const r=await fetch(HOSTED,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'login',user:id,pin:$('#loginPin').value})});
+    const j=await r.json();
+    if(!j||j.error||!j.sess){$('#loginErr').textContent=(j&&j.error==='locked')?'محاولات خاطئة كثيرة. انتظر 5 دقائق ثم حاول.':T('login.bad');$('#loginPin').value='';return}
+    L.url=HOSTED;L.sess=j.sess;L.token='';L.user=j.name;L.uid=j.id||'';saveLocal();setUnlocked(j.id);
+    hostedMode=false;hideLogin();
+    transactions=transactions.filter(t=>!t.demo);storeLocal();dirty=transactions.length>0;
+    await syncNow(false);startPolling();
+    UI.page=firstAllowed();refresh();
+  }catch(e){$('#loginErr').textContent=errMsg(e)}
+  finally{btn.disabled=false}
+}
+function logout(){
+  setUnlocked('');closeModals();
+  if(HOSTED&&L.sess){L.sess='';saveLocal();stopPolling();hostedStart();return}
+  showLogin(true);
+}
+
+/* ======================= الاستعادة من نسخة ======================= */
+function legacyParts(x){
+  return {tx:Array.isArray(x)?x:(Array.isArray(x&&x.transactions)?x.transactions:[]),
+    inc:Array.isArray(x&&x.incomingItems)?x.incomingItems:[],
+    fu:(Array.isArray(x&&x.followups)?x.followups:[]).filter(t=>t.subject||t.notes)};
+}
+/* تحويل نسخة قديمة (النسخة السابقة من هذا النظام أو نظام المراجعة والعرض) مع الحفاظ على الحالات والحقول الإضافية والموظفين */
+function convertLegacy(x){
+  const {tx:oldTx,inc:oldInc,fu:oldFu}=legacyParts(x);
+  const palette=['#2d6ea3','#6653a5','#a86f18','#c05b20','#28784f','#8a4b7a','#3f7f8c','#7a6a2a'];
+  const syn={'قيد العمل':'قيد المعالجة','تحت الاجراء':'قيد المعالجة','تحت الإجراء':'قيد المعالجة','في ملف العرض':'قيد المراجعة','في العرض':'قيد المراجعة','تم التسليم':'صادرة','تم التصدير':'صادرة','للحفظ':'مكتملة','مغلقة':'مكتملة'};
+  const mapSt=v=>{
+    v=String(v||'').trim();if(!v)return defStatus();
+    if(st(v))return v;
+    if(syn[v]&&st(syn[v]))return syn[v];
+    cfg.statuses.push({id:uid('s_'),name:v,color:palette[cfg.statuses.length%palette.length],role:''});return v;
+  };
+  const extra=[['cf_classification','التصنيف','text','classification'],['cf_start','تاريخ البدء','date','start'],['cf_deliver','تاريخ التسليم','date','deliver'],['cf_referral','جهة الإحالة','text','referral'],['cf_linked','المعاملة المرتبطة','text','linkedTxnId']];
+  const ensureField=(id,label,type)=>{
+    if(fieldOf(id))return;
+    if(!cfg.sections.some(s=>s.id==='sec_legacy'))cfg.sections.splice(Math.max(1,cfg.sections.length-1),0,{id:'sec_legacy',title:'بيانات إضافية',visible:true});
+    cfg.fields.push({id,label,type,section:'sec_legacy',builtin:false,visible:true});
+  };
+  const ensureUser=n=>{n=String(n||'').trim();const l=cfg.lists.employees;if(n&&l&&!l.items.includes(n))l.items.push(n)};
+  const ensureDept=n=>{n=String(n||'').trim();const l=cfg.lists.departments;if(n&&l&&!l.items.includes(n))l.items.push(n)};
+  const make=(t,i,src)=>{
+    const n=String(t.number??t.serial??t.ref??t.id??(i+1));
+    const date=String(t.received||t.date||t.addedAt||today()).slice(0,10);
+    const s=mapSt(t.status);const closedRole=(st(s)||{}).role==='closed';
+    const owner=t.owner||t.employee||'';ensureUser(owner);ensureDept(t.department);
+    const cf=Object.assign({},t.customFields||{});
+    extra.forEach(([id,label,type,key])=>{const v=t[key];if(v!=null&&v!==''){ensureField(id,label,type);cf[id]=String(v)}});
+    return normTx({id:String(src+'-'+(t.id??i)),number:n,type:t.type||cfg.types[0],topic:t.topic||'موضوع-'+date.slice(0,4)+'-'+n,subject:t.subject||t.notes||'بدون موضوع',party:t.party||t.country||'',department:t.department||cfg.brand.org,owner:ownerOn()?(owner||me().name):'',received:date,priority:cfg.priorities.includes(t.priority)?t.priority:cfg.priorities[0],status:s,reminderDate:t.reminderDate||t.dueDate||'',employee:t.employee||(ownerOn()?'':owner),reminderOwner:t.reminderOwner||owner||'',notes:t.notes||'',updated:String(t.updated||t.updatedAt||t.deliver||date).slice(0,10),closed:closedRole?(t.closed||t.deliver||date):null,history:Array.isArray(t.history)&&t.history.length?t.history:[[date,s,owner||me().name]],customFields:cf},i);
+  };
+  const isOwn=!Array.isArray(x)&&x&&!('incomingItems' in x)&&!('followups' in x);
+  const out=oldTx.map((t,i)=>isOwn?normTx(Object.assign({},t,{status:mapSt(t.status)}),i):make(t,i,'txn'));
+  const used=new Set(out.map(t=>String(t.number)));
+  oldInc.forEach((t,i)=>{let n=String(t.id??i+1);if(used.has(n))n='وارد-'+n;used.add(n);out.push(make({...t,number:n,subject:t.subject||t.notes||'معاملة واردة',status:''},i,'incoming'))});
+  oldFu.forEach((t,i)=>{let n='متابعة-'+String(t.id??i+1);out.push(make({...t,number:n,type:cfg.types.includes('تذكير')?'تذكير':cfg.types[0],date:t.addedAt||today()},i,'followup'))});
+  return out;
+}
+function handleRestore(file){
+  if(!file)return;
+  const rd=new FileReader();
+  rd.onerror=()=>toast('تعذر قراءة الملف');
+  rd.onload=()=>{
+    try{
+      const x=JSON.parse(rd.result);
+      const native=x&&x.app===APP_TAG&&Array.isArray(x.transactions);
+      const lp=native?null:legacyParts(x);
+      const count=native?x.transactions.length:(lp.tx.length+lp.inc.length+lp.fu.length);
+      if(!count)return toast('النسخة غير صالحة: لم نجد سجلات قابلة للاستعادة');
+      const kpi=(!native&&Array.isArray(x.kpiItems))?x.kpiItems.length:0;
+      if(!confirm('سيتم استبدال معاملات هذا الجهاز بـ '+count+' سجل من النسخة'+(native&&x.config?' مع الإعدادات':'')+(kpi?'.\n(تنبيه: '+kpi+' من بنود مؤشرات الأداء في النسخة القديمة لا تُنقل لهذا النظام)':'')+'.\nمتابعة؟'))return;
+      if(native&&x.config&&x.config.v===2)cfg=normalizeCfg(x.config);
+      const list=native?x.transactions.map((t,i)=>normTx(t,i)):convertLegacy(x);
+      const now=Date.now(),keep=new Set(list.map(t=>t.id));
+      transactions.forEach(t=>{if(!keep.has(t.id))tomb[t.id]=now});
+      list.forEach((t,i)=>{t.rev=now+i;delete tomb[t.id];delete t.demo});
+      transactions=list.sort((a,b)=>(b.created||0)-(a.created||0));
+      persistTx();persistCfg();toast('تمت استعادة '+list.length+' سجل');
+    }catch(err){console.error(err);toast('تعذر قراءة النسخة: '+err.message)}
+  };
+  rd.readAsText(file);
+}
+
+/* ======================= الأحداث والتشغيل ======================= */
 document.addEventListener('click',e=>{
-  const a=e.target.closest('[data-a]');if(!a)return;
-  if(a.dataset.a==='retry')open();
-  if(a.dataset.a==='setup'){$('url').value=getSaved();show('setup')}
+  const t=e.target;let el;
+  if(t.closest('[data-close]')||(t.classList&&t.classList.contains('modal'))){closeModals();if(pendingRender){pendingRender=false;refresh()}return}
+  if((el=t.closest('[data-act]'))){const fn=ACTIONS[el.dataset.act];if(fn){e.preventDefault();fn(el)}return}
+  if((el=t.closest('[data-nav]'))){goTo(el.dataset.nav);return}
+  if((el=t.closest('[data-go]'))){goTo(el.dataset.go);return}
+  if((el=t.closest('[data-edit]'))){closeModals();openForm(el.dataset.edit);return}
+  if((el=t.closest('[data-del]'))){confirmDelete(el.dataset.del);return}
+  if((el=t.closest('[data-detail]'))){openDetail(el.dataset.detail);return}
+  if((el=t.closest('[data-sort]'))){const p=page(UI.page),c=el.dataset.sort,s=UI.sort[p.id];UI.sort[p.id]=(s&&s.col===c)?(s.dir==='asc'?{col:c,dir:'desc'}:null):{col:c,dir:'asc'};fillTable(p);return}
 });
-window.addEventListener('online',()=>{if(!loaded)open()});
-window.addEventListener('offline',()=>{if(!loaded)show('offline')});
-if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
-open();
+document.addEventListener('input',e=>{
+  const el=e.target,d=el.dataset||{};
+  if(d.flt!=null){const p=page(UI.page);(UI.filters[p.id]=UI.filters[p.id]||{})[d.flt]=el.value;fillTable(p);return}
+  if(d.cfg){
+    let v=el.type==='checkbox'?el.checked:el.value;if(d.num!=null)v=Number(v);
+    setPath(cfg,d.cfg,v);persistCfg(true);
+    if(d.cfg.indexOf('brand.')===0)renderNav();
+    if(d.cfg==='theme.fontScale'&&$('#fsVal'))$('#fsVal').textContent=v;
+    if(d.cfg==='theme.radius'&&$('#rdVal'))$('#rdVal').textContent=v;
+    return;
+  }
+  if(d.up){
+    if(!isAdmin())return;
+    const i=d.up.indexOf('|'),u=cfg.users.find(x=>x.id===d.up.slice(0,i)),key=d.up.slice(i+1);if(!u)return;
+    if(key==='role'){if(onlyAdmin(u)&&el.value!=='مدير'){toast('يجب أن يبقى مدير مفعّل واحد على الأقل');refresh();return}u.role=el.value;u.perms=Object.assign({},ROLE_PERMS[u.role],{pages:u.role==='مدير'?[]:(u.perms.pages||[])});persistCfg();return}
+    if(key==='active'){if(onlyAdmin(u)&&!el.checked){toast('يجب أن يبقى مدير مفعّل واحد على الأقل');refresh();return}u.active=el.checked;persistCfg();return}
+    u.perms[key]=el.type==='checkbox'?el.checked:el.value;persistCfg(true);return;
+  }
+  if(el.id==='loginUser'){syncLoginPin();return}
+  if(d.text!=null){if(el.value==='')delete cfg.texts[d.text];else cfg.texts[d.text]=el.value;persistCfg(true);return}
+  if(d.expCol!=null){cfg.export.columns=allCols().map(c=>c[0]).filter(k=>{const c=$(`[data-exp-col="${k}"]`);return c&&c.checked});persistCfg(true);return}
+  if(d.tfilter!=null){const q=el.value.trim();$$('.trow').forEach(r=>{r.style.display=(!q||r.dataset.search.includes(q))?'':'none'});return}
+  if(el.id==='f_status')syncCond();
+  if(el.type==='date'&&d.f){const h=el.parentElement.querySelector('[data-dh]');if(h)h.textContent=el.value?fmt(el.value):''}
+});
+document.addEventListener('change',e=>{
+  if(e.target.id==='restoreFile'){handleRestore(e.target.files[0]);e.target.value=''}
+  if(e.target.id==='excelFile'){handleExcelImport(e.target.files[0]);e.target.value=''}
+  if(e.target.id==='userSel'){
+    const u=cfg.users.find(x=>x.name===e.target.value);if(!u)return;
+    if(u.pin&&unlocked()!==u.id){e.target.value=L.user;showLogin(false,u.id);return}
+    L.user=u.name;L.uid=u.id;saveLocal();if(!u.pin)setUnlocked('');UI.page=firstAllowed();refresh();
+  }
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&anyModal())closeModals()});
+$('#txForm').addEventListener('submit',e=>{e.preventDefault();saveForm()});
+$('#addBtn').addEventListener('click',()=>openForm());
+$('#loginForm').addEventListener('submit',e=>{e.preventDefault();doLogin()});
+$('#loginCancel').addEventListener('click',()=>{if(!loginBlocking)hideLogin()});
+$('#lockBtn').addEventListener('click',logout);
+$('#menuBtn').addEventListener('click',()=>$('#sidebar').classList.toggle('open'));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&L.url)syncNow(false)});
+window.addEventListener('online',()=>{if(L.url)syncNow(false)});
+window.addEventListener('storage',e=>{
+  if(e.key!==KEY_TX&&e.key!==KEY_CFG)return;
+  transactions=loadTx();cfg=loadCfg();tomb=jparse(store.getItem(KEY_TOMB),{});applyTheme();softRefresh();
+});
+
+if(!store.getItem(KEY_CFG)){try{store.setItem(KEY_CFG,JSON.stringify(cfg))}catch(e){}}
+const firstVisible=cfg.navGroups.map(g=>cfg.pages.find(p=>p.group===g.id&&p.visible!==false)).find(Boolean);
+UI.page=firstVisible?firstVisible.id:'settings';
+if(migrateOwner()){try{store.setItem(KEY_TX,JSON.stringify(transactions))}catch(e){}}
+applyTheme();renderAll();
+if(!store.ok&&!HOSTED)setTimeout(()=>toast('تنبيه: المتصفح يمنع الحفظ على هذا الجهاز. اربط التخزين السحابي حتى لا تضيع البيانات.'),600);
+/* قيم موجودة في المعاملات وليست في القوائم تُعرض كخيارات (في الذاكرة فقط) */
+cfg.fields.filter(f=>f.type==='combo'&&cfg.lists[f.list]).forEach(f=>{const l=cfg.lists[f.list].items;transactions.forEach(t=>{if(t.demo)return;const v=getVal(t,f);if(v&&!l.includes(v))l.push(v)})});
+if(L.url&&(L.token||L.sess)){startPolling();syncNow(false)}
+else if(HOSTED)setTimeout(hostedStart,300);
+fileReconnect();
+})();
 </script>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});</script>
 </body>
 </html>
