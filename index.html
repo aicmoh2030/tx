@@ -61,6 +61,8 @@ button{cursor:pointer}
 .panel-head p{font-size:.75rem;color:var(--muted);margin:.25rem 0 0}
 .dash{display:grid;grid-template-columns:repeat(12,1fr);gap:.8rem;margin-bottom:1.1rem;align-items:stretch}
 .dash>.stat{grid-column:span 2}
+.dash>.stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(var(--n,6),minmax(0,1fr));gap:.8rem}
+@media(max-width:1050px){.dash>.stats{grid-template-columns:repeat(auto-fit,minmax(9rem,1fr))}}
 .dash>.panel{grid-column:span 6;margin:0}
 .dash>.panel.full{grid-column:span 12}
 .stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:.95rem 1rem;box-shadow:var(--shadow)}
@@ -99,6 +101,8 @@ td.wrap{white-space:normal;min-width:10rem}
 .event{position:relative;margin:0 0 1.1rem}
 .event:before{content:"";position:absolute;right:-1.55rem;top:.25rem;width:.55rem;height:.55rem;border-radius:50%;background:var(--gold);border:3px solid var(--paper)}
 .event small{display:block;color:var(--muted);margin-top:.25rem}
+.event .note{display:block;margin-top:.3rem;font-size:.82rem;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:.5rem;padding:.3rem .55rem}
+.m-only{display:none}
 .topic-list{display:grid;gap:.6rem}
 .topic-item{border:1px solid var(--line);border-radius:.65rem;padding:.75rem}
 .topic-item strong{display:block;margin-bottom:.3rem}
@@ -108,7 +112,7 @@ td.wrap{white-space:normal;min-width:10rem}
 .bar-row .track{flex:1;background:var(--line);border-radius:100px;height:.6rem;overflow:hidden}
 .bar-row .fill{height:100%;border-radius:100px}
 .bar-row .ct{width:2.2rem;text-align:left;color:var(--muted);font-weight:700}
-.modal{position:fixed;inset:0;background:rgba(12,25,38,.55);display:none;align-items:center;justify-content:center;padding:1.2rem;z-index:30}
+.modal{position:fixed;inset:0;background:rgba(12,25,38,.55);display:none;align-items:center;justify-content:center;padding:1.2rem;z-index:40}
 .modal.show{display:flex}
 .modal-box{width:min(52rem,100%);max-height:92vh;overflow:auto;background:var(--paper);border-radius:1.1rem;padding:1.4rem;box-shadow:0 25px 70px rgba(0,0,0,.28)}
 .modal-box.sm{width:min(36rem,100%)}
@@ -164,6 +168,7 @@ input[type=date]{direction:ltr;text-align:right;font-variant-numeric:tabular-num
  .topbar{align-items:flex-start;flex-wrap:wrap}
  .topbar h1{font-size:1.2rem}
  .dash>.stat{grid-column:span 6}
+ .dash>.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
  .grid2,.form-grid,.form-grid.two{grid-template-columns:1fr}
  .field.full{grid-column:auto}
  .panel{padding:.95rem}
@@ -191,7 +196,10 @@ input[type=date]{direction:ltr;text-align:right;font-variant-numeric:tabular-num
  .cards-m td.acts-cell .icon{flex:1;min-height:2.5rem}
  .cards-m td.empty{display:block;text-align:center}
  .modal{padding:0;align-items:stretch}
- .modal-box,.modal-box.sm{width:100%;max-height:100dvh;border-radius:0;padding:1rem}
+ .modal-box,.modal-box.sm{width:100%;max-height:100dvh;border-radius:0;padding:0 1rem calc(1rem + env(safe-area-inset-bottom))}
+ .modal-head{position:sticky;top:0;z-index:3;background:var(--paper);margin:0 -1rem .9rem;padding:calc(.7rem + env(safe-area-inset-top)) 1rem .7rem;border-bottom:1px solid var(--line)}
+ .modal-head .close{width:auto;height:2.6rem;border-radius:.7rem;padding:0 1rem;font-size:.95rem;font-weight:700;color:var(--ink);background:var(--surface);border:1px solid var(--line)}
+ .m-only{display:inline}.d-only{display:none}
  .form-actions .btn{flex:1 1 8rem}
  .top-actions{width:100%}
  .top-actions #addBtn{flex:1}
@@ -209,12 +217,12 @@ input[type=date]{direction:ltr;text-align:right;font-variant-numeric:tabular-num
       <div style="display:flex;gap:.7rem;align-items:flex-start"><button class="mobile-menu" id="menuBtn" aria-label="القائمة">☰</button><div><h1 id="pageTitle"></h1><p id="pageDesc"></p></div></div>
       <div class="top-actions"><span class="sync"><i class="dot" id="syncDot"></i><span id="syncText"></span></span><select class="inp" id="userSel" title="المستخدم الحالي"></select><button class="btn secondary" id="lockBtn" style="display:none"></button><button class="btn primary" id="addBtn"></button></div>
     </header>
-    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 5.8)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
+    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 6.0)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
   </main>
 </div>
-<div class="modal" id="formModal"><div class="modal-box"><div class="modal-head"><h2 id="formTitle"></h2><button class="close" data-close aria-label="إغلاق">×</button></div><form id="txForm" novalidate></form></div></div>
-<div class="modal" id="detailModal"><div class="modal-box"><div class="modal-head"><h2 id="detailTitle"></h2><button class="close" data-close aria-label="إغلاق">×</button></div><div id="detailBody"></div></div></div>
-<div class="modal" id="editorModal"><div class="modal-box sm"><div class="modal-head"><h2 id="edTitle"></h2><button class="close" data-close aria-label="إغلاق">×</button></div><form id="edForm"></form></div></div>
+<div class="modal" id="formModal"><div class="modal-box"><div class="modal-head"><h2 id="formTitle"></h2><button class="close" data-close aria-label="رجوع"><span class="m-only">→ رجوع</span><span class="d-only">×</span></button></div><form id="txForm" novalidate></form></div></div>
+<div class="modal" id="detailModal"><div class="modal-box"><div class="modal-head"><h2 id="detailTitle"></h2><button class="close" data-close aria-label="رجوع"><span class="m-only">→ رجوع</span><span class="d-only">×</span></button></div><div id="detailBody"></div></div></div>
+<div class="modal" id="editorModal"><div class="modal-box sm"><div class="modal-head"><h2 id="edTitle"></h2><button class="close" data-close aria-label="رجوع"><span class="m-only">→ رجوع</span><span class="d-only">×</span></button></div><form id="edForm"></form></div></div>
 <div class="login" id="loginModal"><form class="box" id="loginForm"><h2 id="loginTitle"></h2><p id="loginSub" style="margin:0 0 1rem;color:var(--muted);font-size:.8rem"></p>
 <div class="field" style="margin-bottom:.8rem"><label id="loginUserLbl"></label><select id="loginUser"></select></div>
 <div class="field" id="loginPinWrap"><label id="loginPinLbl"></label><input id="loginPin" type="password" inputmode="numeric" autocomplete="off" dir="ltr"></div>
@@ -295,10 +303,10 @@ const TEXT_DEFAULTS={
  'btn.changeStatus':'تطبيق الحالة','btn.clear':'مسح البحث','btn.viewAll':'عرض الكل','btn.undo':'تراجع','btn.open':'فتح',
  'search.ph':'بحث شامل بالرقم أو الموضوع أو الجهة...','filter.allStatuses':'كل الحالات','filter.allTypes':'كل الأنواع','filter.allOwners':'كل الموظفين','filter.allDepts':'كل الإدارات',
  'filter.date':'تاريخ محدد','filter.from':'من تاريخ','filter.to':'إلى تاريخ','filter.count':'عدد النتائج',
- 'empty.rows':'لا توجد بيانات.','empty.match':'لا توجد معاملات مطابقة.','empty.topics':'لا توجد موضوعات.','empty.due':'لا توجد تذكيرات.',
+ 'empty.rows':'لا توجد بيانات.','empty.match':'لا توجد معاملات مطابقة.','empty.topics':'لا توجد موضوعات.','empty.due':'لا توجد معاملات عليها متابعة.',
  'form.addTitle':'إضافة معاملة جديدة','form.editTitle':'تعديل المعاملة','detail.title':'تفاصيل المعاملة','detail.timeline':'الخط الزمني','detail.status':'تغيير الحالة',
  'msg.saved':'تم حفظ المعاملة','msg.deleted':'تم حذف المعاملة','msg.dupNumber':'رقم المعاملة موجود مسبقًا','msg.confirmDelete':'حذف هذه المعاملة نهائيًا؟','msg.statusChanged':'تم تحديث حالة المعاملة إلى ',
- 'due.now':'مستحق الآن','due.soon':'موعد التذكير: ','due.badgeDue':'مستحق','due.badgeSoon':'قادم',
+ 'due.now':'متأخرة — تجاوزت الموعد','due.soon':'الموعد النهائي: ','due.badgeDue':'متأخرة','due.badgeSoon':'ضمن الموعد',
  'topic.count':'معاملة مرتبطة','side.foot':'تُحفظ البيانات على هذا الجهاز، وعند ربط رابط التخزين تتزامن بين كل الأجهزة.','side.credit':'تصميم وتطوير: بندر الجش','side.email':'bahaalmutairi@moh.gov.sa',
  'export.csv':'CSV','export.excel':'Excel','export.word':'Word','export.pdf':'PDF / طباعة','export.title':'تقرير المعاملات',
  'sync.off':'غير مربوط بالسحابة — محفوظ على هذا الجهاز','sync.ok':'متصل بالسحابة','sync.bad':'تعذر الاتصال بالسحابة','sync.wait':'جاري المزامنة…',
@@ -310,9 +318,9 @@ const TEXT_DEFAULTS={
 const TEXT_GROUPS=[['الأزرار',/^btn\./],['البحث والتصفية',/^(search|filter|adv)\./],['الرسائل الفارغة',/^empty\./],['النموذج والتفاصيل',/^(form|detail)\./],['الرسائل',/^msg\./],['التذكيرات والمواضيع',/^(due|topic)\./],['التصدير',/^export\./],['المزامنة والتنبيهات',/^(sync|noaccess|viewer|side)/],['تسجيل الدخول',/^login\./]];
 
 /* ======================= الإعدادات الافتراضية ======================= */
-const VIRTUAL={_due:'حالة التذكير',_updated:'آخر تحديث',_closed:'تاريخ الإغلاق',_created:'تاريخ الإنشاء'};
+const VIRTUAL={_due:'حالة الموعد',_updated:'آخر تحديث',_closed:'تاريخ الإغلاق',_created:'تاريخ الإنشاء'};
 const ICONS=['⌂','▤','⇩','⇧','◌','◷','✓','◎','⚙','★','⚑','✉','☰','✎','☎','⚠','♦','●','▣','◆','☑','⌖','⇄','✦'];
-const ROLE_NAMES={'':'عادية',new:'الحالة الافتراضية للجديد',reminder:'تحتاج تذكير',closed:'مغلقة/مكتملة'};
+const ROLE_NAMES={'':'عادية',new:'الحالة الافتراضية للجديد',reminder:'متابعة (تُعامل كعليها متابعة)',closed:'مغلقة/مكتملة'};
 const THEME_LABELS={navy:'لون الشريط والعناوين',gold:'لون الأزرار المميز',bg:'خلفية الصفحة',paper:'خلفية البطاقات',ink:'لون النص',muted:'النص الثانوي',line:'لون الحدود',blue:'أزرق',green:'أخضر (النجاح)',red:'أحمر (التنبيه)',amber:'كهرماني',orange:'برتقالي'};
 const PRESETS={
  'الكلاسيكي':{navy:'#17324d',gold:'#b78324',bg:'#f5f7fa',paper:'#ffffff',ink:'#17212b',muted:'#6b7785',line:'#e3e8ee',blue:'#2d6ea3',green:'#28784f',red:'#b34239',amber:'#a86f18',orange:'#c05b20'},
@@ -338,17 +346,19 @@ const DEFAULT_FIELDS=()=>[
  {id:'received',label:'تاريخ الورود',type:'date',section:'sec_main',builtin:true,locked:true,required:true,visible:true},
  {id:'priority',label:'الأولوية',type:'priority',section:'sec_main',builtin:true,visible:true},
  {id:'status',label:'الحالة',type:'status',section:'sec_main',builtin:true,locked:true,required:true,visible:true},
- {id:'reminderDate',label:'تاريخ التذكير',type:'date',section:'sec_rem',builtin:true,visible:true,showWhen:'reminder',help:'يظهر عند اختيار حالة "تحتاج تذكير".'},
- {id:'reminderOwner',label:'مسؤول التذكير',type:'combo',list:'employees',section:'sec_rem',builtin:true,visible:true,showWhen:'reminder'},
+ {id:'followup',label:'تصنيف المتابعة',type:'follow',section:'sec_rem',builtin:true,visible:true,help:'«عليها متابعة»: محددة بموعد نهائي ويجب أن تصل إلى «مكتملة».'},
+ {id:'reminderDate',label:'الموعد النهائي للإنجاز',type:'date',section:'sec_rem',builtin:true,visible:true,showWhen:'follow',help:'تظهر المعاملة «متأخرة» إذا تجاوزت هذا الموعد ولم تكتمل.'},
+ {id:'reminderOwner',label:'مسؤول المتابعة',type:'combo',list:'employees',section:'sec_rem',builtin:true,visible:true,showWhen:'follow'},
  {id:'notes',label:'ملاحظات مختصرة',type:'textarea',section:'sec_notes',builtin:true,visible:true,full:true,ph:'اختياري'}
 ];
 const DEFAULT_PAGES=()=>[
  {id:'dashboard',kind:'dashboard',builtin:true,title:'لوحة التحكم',desc:'نظرة سريعة على دورة المعاملات من الوارد إلى الإغلاق.',icon:'⌂',group:'g_home',visible:true,addBtn:true},
  {id:'all',kind:'list',builtin:true,title:'كل المعاملات',desc:'سجل موحد لجميع المعاملات — كل معاملة تُسجل مرة واحدة والأقسام الأخرى عروض حسب الحالة.',icon:'▤',group:'g_tx',visible:true,toolbar:'full',exports:true,addBtn:true,addText:'+ إضافة معاملة',filter:{},columns:['number','topic','subject','type','department','employee','status','reminderDate']},
  {id:'incoming',kind:'list',builtin:true,title:'الوارد / الجديدة',desc:'تظهر هنا تلقائيًا المعاملات التي لم تبدأ مراجعتها.',icon:'⇩',group:'g_tx',visible:true,toolbar:'basic',addBtn:true,addText:'+ تسجيل وارد',note:'غيّر الحالة من تفاصيل المعاملة، ولن تحتاج إلى إدخالها مرة أخرى في شاشة المراجعة أو الصادر.',filter:{statuses:['s_new']},columns:['number','subject','party','received','priority','status']},
- {id:'review',kind:'list',builtin:true,title:'قيد المراجعة',desc:'عرض تلقائي للمعاملات التي تحتاج إجراءً.',icon:'◌',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_review','s_work']},columns:['number','subject','department','employee','received','status']},
- {id:'outgoing',kind:'list',builtin:true,title:'الصادر',desc:'المعاملات التي تم إصدارها، مع خيار التذكير أو الإغلاق.',icon:'⇧',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_out','s_rem']},columns:['number','subject','_updated','reminderDate','status']},
- {id:'reminders',kind:'list',builtin:true,title:'التذكيرات',desc:'المعاملات التي تحتاج متابعة بعد الإصدار.',icon:'◷',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_rem']},columns:['number','subject','reminderDate','reminderOwner','_due']},
+ {id:'work',kind:'list',builtin:true,title:'جاري العمل',desc:'المعاملات لدى الإدارات المختصة (المتعددة، الثنائية…).',icon:'◔',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_work']},columns:['number','subject','department','employee','received','status']},
+ {id:'review',kind:'list',builtin:true,title:'المراجعة والعرض',desc:'المعاملات في إدارة المراجعة والعرض وقسم العرض.',icon:'◌',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_review','s_show']},columns:['number','subject','department','employee','received','status']},
+ {id:'outgoing',kind:'list',builtin:true,title:'الصادر',desc:'المعاملات التي تم إصدارها، مع خيار التذكير أو الإغلاق.',icon:'⇧',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_out']},columns:['number','subject','_updated','reminderDate','status']},
+ {id:'reminders',kind:'list',builtin:true,title:'المتابعة',desc:'المعاملات المحددة بموعد نهائي ولم تكتمل بعد — الأقرب موعدًا أولًا.',icon:'◷',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{followOnly:true},columns:['number','subject','status','department','reminderDate','_due']},
  {id:'closed',kind:'list',builtin:true,title:'المكتملة',desc:'سجل المعاملات التي أُغلقت بعد انتهاء الإجراء والتذكير.',icon:'✓',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_done']},columns:['number','subject','topic','_closed','employee']},
  {id:'topics',kind:'topics',builtin:true,title:'الموضوعات المرتبطة',desc:'يجمع الموضوع الأصلي والتذكيرات أو الردود ذات الأرقام المختلفة.',icon:'◎',group:'g_org',visible:true,addBtn:false},
  {id:'settings',kind:'settings',builtin:true,title:'الإعدادات',desc:'تحكم كامل بالصفحات والنصوص والألوان والحقول والمستخدمين.',icon:'⚙',group:'g_org',visible:true,addBtn:false}
@@ -356,12 +366,13 @@ const DEFAULT_PAGES=()=>[
 const DEFAULT_WIDGETS=()=>[
  {id:'w_total',type:'stat',label:'إجمالي المعاملات',metric:'total',visible:true},
  {id:'w_new',type:'stat',label:'جديدة',metric:'status',statuses:['s_new'],visible:true},
- {id:'w_prog',type:'stat',label:'قيد المراجعة',metric:'status',statuses:['s_review','s_work'],visible:true},
- {id:'w_out',type:'stat',label:'صادرة',metric:'status',statuses:['s_out'],visible:true},
- {id:'w_due',type:'stat',label:'تذكيرات مستحقة',metric:'due',color:'#b34239',visible:true},
+ {id:'w_prog',type:'stat',label:'قيد الإجراء',metric:'status',statuses:['s_work','s_review','s_show'],visible:true},
+ {id:'w_out',type:'stat',label:'الصادر',metric:'status',statuses:['s_out'],visible:true},
+ {id:'w_follow',type:'stat',label:'عليها متابعة',metric:'follow',color:'#a86f18',visible:true},
+ {id:'w_due',type:'stat',label:'متابعات متأخرة',metric:'due',color:'#b34239',visible:true},
  {id:'w_done',type:'stat',label:'مكتملة',metric:'status',statuses:['s_done'],color:'#28784f',visible:true},
  {id:'w_recent',type:'recent',title:'آخر المعاملات تحديثًا',desc:'اضغط على أي معاملة لعرض التفاصيل والحركة.',limit:6,columns:['number','subject','status','_updated'],link:'all',size:'half',visible:true},
- {id:'w_duelist',type:'due',title:'التذكيرات',desc:'الأقرب استحقاقًا أولًا.',limit:5,link:'reminders',size:'half',visible:true}
+ {id:'w_duelist',type:'due',title:'المتابعات',desc:'الأقرب موعدًا أولًا.',limit:5,link:'reminders',size:'half',visible:true}
 ];
 const defaultCfg=()=>({
  v:2,rev:0,
@@ -370,17 +381,17 @@ const defaultCfg=()=>({
  texts:{},
  statuses:[
   {id:'s_new',name:'جديدة',color:'#2d6ea3',role:'new'},
-  {id:'s_review',name:'قيد المراجعة',color:'#6653a5',role:''},
-  {id:'s_work',name:'قيد المعالجة',color:'#a86f18',role:''},
-  {id:'s_out',name:'صادرة',color:'#c05b20',role:''},
-  {id:'s_rem',name:'تحتاج تذكير',color:'#ae6712',role:'reminder'},
+  {id:'s_work',name:'جاري العمل',color:'#a86f18',role:''},
+  {id:'s_review',name:'المراجعة',color:'#6653a5',role:'',dept:'إدارة المراجعة والعرض'},
+  {id:'s_show',name:'العرض',color:'#2f7f86',role:'',dept:'قسم العرض'},
+  {id:'s_out',name:'الصادر',color:'#c05b20',role:''},
   {id:'s_done',name:'مكتملة',color:'#28784f',role:'closed'}],
  types:['أصلية','تذكير','رد'],
  priorities:['عادي','مهم','عاجل'],
  users:[{id:'u1',name:'سعد',role:'مدير',active:true},{id:'u2',name:'بندر',role:'موظف',active:true},{id:'u3',name:'محمد',role:'موظف',active:true},{id:'u4',name:'عمر',role:'موظف',active:true},{id:'u5',name:'سلمان',role:'موظف',active:true}],
  /* قوائم الخيارات: يعدّلها المدير من الإعدادات، وتُضاف لها القيم الجديدة المكتوبة في النموذج تلقائيًا */
- lists:{departments:{title:'الإدارات',items:['إدارة المعاملات']},employees:{title:'الموظفون',items:['سعد','بندر','محمد','عمر','سلمان']}},
- sections:[{id:'sec_main',title:'البيانات الأساسية',visible:true},{id:'sec_rem',title:'التذكير',visible:true},{id:'sec_notes',title:'ملاحظات',visible:true}],
+ lists:{departments:{title:'الإدارات',items:['إدارة المعاملات','إدارة المراجعة والعرض','قسم العرض']},employees:{title:'الموظفون',items:['سعد','بندر','محمد','عمر','سلمان']}},
+ sections:[{id:'sec_main',title:'البيانات الأساسية',visible:true},{id:'sec_rem',title:'المتابعة والموعد النهائي',visible:true},{id:'sec_notes',title:'ملاحظات',visible:true}],
  fields:DEFAULT_FIELDS(),
  navGroups:[{id:'g_home',title:'الرئيسية'},{id:'g_tx',title:'المعاملات'},{id:'g_org',title:'التنظيم'}],
  pages:DEFAULT_PAGES(),
@@ -412,6 +423,42 @@ function normalizeCfg(c){
     if(c.export)after(c.export.columns);
   }
   DEFAULT_FIELDS().forEach(f=>{if(!c.fields.some(x=>x.id===f.id))c.fields.push(f)});
+  /* 6.0: مراحل المعاملة الجديدة + تصنيف «عليها متابعة» بموعد نهائي (مرة واحدة؛ يحترم أي تسمية غيّرها المستخدم) */
+  if(!c.mig60){
+    c.mig60=true;const map={};
+    const S=id=>c.statuses.find(x=>x.id===id);
+    const ren=(id,oldN,newN,extra)=>{const s=S(id);if(s&&s.name===oldN&&!c.statuses.some(x=>x.name===newN)){map[oldN]=newN;s.name=newN}if(s&&extra&&s.name===newN)Object.assign(s,extra)};
+    ren('s_work','قيد المعالجة','جاري العمل');
+    ren('s_review','قيد المراجعة','المراجعة',{dept:'إدارة المراجعة والعرض'});
+    ren('s_out','صادرة','الصادر');
+    if(!S('s_show')&&!c.statuses.some(x=>x.name==='العرض'))c.statuses.push({id:'s_show',name:'العرض',color:'#2f7f86',role:'',dept:'قسم العرض'});
+    const rem=S('s_rem');
+    if(rem&&rem.name==='تحتاج تذكير'&&rem.role==='reminder'){const out=S('s_out');if(out){map['تحتاج تذكير']=out.name;c.statuses=c.statuses.filter(x=>x!==rem)}}
+    const order=['s_new','s_work','s_review','s_show','s_out'];
+    c.statuses.sort((a,b)=>{const ra=a.role==='closed'?99:(order.indexOf(a.id)<0?50:order.indexOf(a.id)),rb=b.role==='closed'?99:(order.indexOf(b.id)<0?50:order.indexOf(b.id));return ra-rb});
+    c.mig60map=map;
+    /* الحقول: تصنيف المتابعة + الموعد النهائي */
+    const fr=c.fields.find(x=>x.id==='reminderDate'),fo=c.fields.find(x=>x.id==='reminderOwner');
+    {let nf=c.fields.find(x=>x.id==='followup');if(nf)c.fields.splice(c.fields.indexOf(nf),1);else nf=DEFAULT_FIELDS().find(x=>x.id==='followup');const i=c.fields.indexOf(fr);if(fr)nf.section=fr.section;if(i>-1)c.fields.splice(i,0,nf);else c.fields.push(nf)}
+    if(fr){if(fr.label==='تاريخ التذكير')fr.label='الموعد النهائي للإنجاز';if(fr.showWhen==='reminder')fr.showWhen='follow';fr.help='تظهر المعاملة «متأخرة» إذا تجاوزت هذا الموعد ولم تكتمل.'}
+    if(fo){if(fo.label==='مسؤول التذكير')fo.label='مسؤول المتابعة';if(fo.showWhen==='reminder')fo.showWhen='follow'}
+    const sr=c.sections.find(x=>x.id==='sec_rem');if(sr&&sr.title==='التذكير')sr.title='المتابعة والموعد النهائي';
+    /* الصفحات واللوحة */
+    const P=id=>(c.pages||[]).find(p=>p.id===id);
+    const rv=P('review');if(rv&&rv.title==='قيد المراجعة'){rv.title='المراجعة والعرض';rv.desc='المعاملات في إدارة المراجعة والعرض وقسم العرض.';rv.filter=Object.assign({},rv.filter,{statuses:['s_review','s_show']})}
+    if(!P('work')){const wp=DEFAULT_PAGES().find(p=>p.id==='work');const i=(c.pages||[]).findIndex(p=>p.id==='incoming');c.pages.splice(i>-1?i+1:c.pages.length,0,wp)}
+    const og=P('outgoing');if(og&&og.filter&&Array.isArray(og.filter.statuses))og.filter.statuses=og.filter.statuses.filter(x=>x!=='s_rem');
+    const rp=P('reminders');if(rp&&rp.title==='التذكيرات'){const d=DEFAULT_PAGES().find(p=>p.id==='reminders');rp.title=d.title;rp.desc=d.desc;rp.filter=d.filter;rp.columns=d.columns}
+    const W=id=>(c.widgets||[]).find(w=>w.id===id);
+    const wp=W('w_prog');if(wp&&wp.label==='قيد المراجعة'){wp.label='قيد الإجراء';wp.statuses=['s_work','s_review','s_show']}
+    const wo=W('w_out');if(wo&&wo.label==='صادرة')wo.label='الصادر';
+    const wd=W('w_due');if(wd&&wd.label==='تذكيرات مستحقة')wd.label='متابعات متأخرة';
+    if(!W('w_follow')){const i=(c.widgets||[]).findIndex(w=>w.id==='w_due');c.widgets.splice(i>-1?i:c.widgets.length,0,DEFAULT_WIDGETS().find(w=>w.id==='w_follow'))}
+    const wl=W('w_duelist');if(wl&&wl.title==='التذكيرات'){wl.title='المتابعات';wl.desc='الأقرب موعدًا أولًا.'}
+    (c.widgets||[]).forEach(w=>{if(Array.isArray(w.statuses))w.statuses=w.statuses.filter(x=>x!=='s_rem')});
+    (c.pages||[]).forEach(p=>{if(p.filter&&Array.isArray(p.filter.statuses))p.filter.statuses=p.filter.statuses.filter(x=>c.statuses.some(s=>s.id===x))});
+    /* الإدارات المرتبطة بالمراحل في القائمة */
+  }
   /* 5.2: الاكتفاء بحقل «الموظف» — إخفاء «الموظف المسؤول» مرة واحدة (يمكن إعادته من الإعدادات) */
   if(!c.mig52){
     c.mig52=true;
@@ -426,6 +473,7 @@ function normalizeCfg(c){
   /* القوائم: ترحيل الإعدادات القديمة (الإدارة كانت نصًا، والموظف كان من مستخدمي الدخول) */
   if(!c.lists||typeof c.lists!=='object'||Array.isArray(c.lists))c.lists={};
   if(!c.lists.departments)c.lists.departments={title:'الإدارات',items:[c.brand.org].filter(Boolean)};
+  if(!c.mig60d){c.mig60d=true;c.statuses.forEach(x=>{if(x.dept&&!c.lists.departments.items.includes(x.dept))c.lists.departments.items.push(x.dept)})}
   if(!c.lists.employees)c.lists.employees={title:'الموظفون',items:c.users.filter(u=>u&&u.active!==false).map(u=>u.name)};
   c.fields.forEach(f=>{
     if(f.id==='department'&&f.type==='text'){f.type='combo';f.list='departments'}
@@ -474,10 +522,10 @@ function migrateV3(old){
 }
 const SEED_NOW=Date.now();
 const seed=()=>[
- {id:'t1',number:'1450',topic:'موضوع-2026-0087',type:'أصلية',subject:'طلب التعاون مع الجهة س',party:'الجهة س',department:'إدارة المعاملات',owner:'',employee:'سعد',received:'2026-10-01',priority:'مهم',status:'تحتاج تذكير',reminderDate:'2026-10-12',reminderOwner:'سعد',notes:'بانتظار الرد النهائي',updated:'2026-10-06',closed:null,history:[['2026-10-01','جديدة','سعد'],['2026-10-02','قيد المراجعة','سعد'],['2026-10-04','صادرة','سعد'],['2026-10-06','تحتاج تذكير','سعد']]},
- {id:'t2',number:'1458',topic:'موضوع-2026-0091',type:'أصلية',subject:'خطاب تنسيق زيارة رسمية',party:'دولة الكويت',department:'إدارة المعاملات',owner:'',employee:'بندر',received:'2026-10-03',priority:'عادي',status:'قيد المعالجة',reminderDate:'',reminderOwner:'',notes:'',updated:'2026-10-05',closed:null,history:[['2026-10-03','جديدة','بندر'],['2026-10-04','قيد المراجعة','بندر'],['2026-10-05','قيد المعالجة','بندر']]},
+ {id:'t1',number:'1450',topic:'موضوع-2026-0087',type:'أصلية',subject:'طلب التعاون مع الجهة س',party:'الجهة س',department:'إدارة المعاملات',owner:'',employee:'سعد',received:'2026-10-01',priority:'مهم',status:'الصادر',followup:'عليها متابعة',reminderDate:'2026-10-12',reminderOwner:'سعد',notes:'بانتظار الرد النهائي',updated:'2026-10-06',closed:null,history:[['2026-10-01','جديدة','سعد'],['2026-10-02','جاري العمل','سعد'],['2026-10-04','المراجعة','سعد'],['2026-10-05','العرض','سعد'],['2026-10-06','الصادر','سعد']]},
+ {id:'t2',number:'1458',topic:'موضوع-2026-0091',type:'أصلية',subject:'خطاب تنسيق زيارة رسمية',party:'دولة الكويت',department:'إدارة المعاملات',owner:'',employee:'بندر',received:'2026-10-03',priority:'عادي',status:'جاري العمل',reminderDate:'',reminderOwner:'',notes:'',updated:'2026-10-05',closed:null,history:[['2026-10-03','جديدة','بندر'],['2026-10-05','جاري العمل','بندر']]},
  {id:'t3',number:'1682',topic:'موضوع-2026-0087',type:'تذكير',subject:'تذكير بطلب التعاون مع الجهة س',party:'الجهة س',department:'إدارة المعاملات',owner:'',employee:'محمد',received:'2026-10-06',priority:'عاجل',status:'جديدة',reminderDate:'',reminderOwner:'',notes:'مرتبط بالمعاملة 1450',updated:'2026-10-06',closed:null,history:[['2026-10-06','جديدة','محمد']]},
- {id:'t4',number:'1432',topic:'موضوع-2026-0074',type:'أصلية',subject:'اعتماد محضر الاجتماع',party:'الجهة ص',department:'إدارة المعاملات',owner:'',employee:'عمر',received:'2026-09-27',priority:'عادي',status:'مكتملة',reminderDate:'',reminderOwner:'',notes:'تم الإغلاق',updated:'2026-10-03',closed:'2026-10-03',history:[['2026-09-27','جديدة','عمر'],['2026-09-29','قيد المراجعة','عمر'],['2026-10-01','صادرة','عمر'],['2026-10-03','مكتملة','عمر']]}
+ {id:'t4',number:'1432',topic:'موضوع-2026-0074',type:'أصلية',subject:'اعتماد محضر الاجتماع',party:'الجهة ص',department:'إدارة المعاملات',owner:'',employee:'عمر',received:'2026-09-27',priority:'عادي',status:'مكتملة',reminderDate:'',reminderOwner:'',notes:'تم الإغلاق',updated:'2026-10-03',closed:'2026-10-03',history:[['2026-09-27','جديدة','عمر'],['2026-09-29','المراجعة','عمر'],['2026-10-01','الصادر','عمر'],['2026-10-03','مكتملة','عمر']]}
 ].map((t,i)=>({...t,demo:true,created:4-i,rev:1,customFields:{}}));  /* rev=1: المعاملة التجريبية لا تغلب أبدًا بيانات حقيقية عند الدمج */
 function loadTx(){
   const raw=jparse(store.getItem(KEY_TX),null);
@@ -510,7 +558,12 @@ const T=k=>(cfg.texts&&cfg.texts[k]!=null&&cfg.texts[k]!=='')?cfg.texts[k]:(TEXT
 /* ======================= اختصارات منطقية ======================= */
 const st=n=>cfg.statuses.find(s=>s.name===n);
 const stRole=t=>(st(t.status)||{}).role||'';
-const isDue=t=>stRole(t)==='reminder'&&t.reminderDate&&t.reminderDate<=today();
+const FOLLOW_OPTS=['عادية','عليها متابعة'];
+const isFollow=t=>t.followup==='عليها متابعة'||stRole(t)==='reminder';
+const isOpen=t=>stRole(t)!=='closed';
+/* «متأخرة»: عليها متابعة، لم تكتمل، وتجاوزت الموعد النهائي (حتى لو كانت صادرة) */
+const isDue=t=>isFollow(t)&&isOpen(t)&&!!t.reminderDate&&t.reminderDate<today();
+const daysLeft=d=>{const n=Math.round((new Date(d+'T00:00:00')-new Date(today()+'T00:00:00'))/864e5);return n===0?'اليوم':n===1?'باقي يوم':n===2?'باقي يومان':n<=10?'باقي '+n+' أيام':'باقي '+n+' يومًا'};
 const defStatus=()=>(cfg.statuses.find(s=>s.role==='new')||cfg.statuses[0]).name;
 const activeUsers=()=>cfg.users.filter(u=>u.active);
 /* المستخدم الحالي يُحدَّد بمعرّفه (ثابت حتى لو تغيّر الاسم)، ثم بالاسم للتوافق مع النسخ السابقة */
@@ -523,8 +576,22 @@ const ownerOn=()=>{const f=(cfg.fields||[]).find(x=>x.id==='owner');return !!(f&
 const empOf=t=>t.employee||t.owner||'';
 const ownKey=t=>ownerOn()?(t.owner||''):empOf(t);
 /* عند إخفاء «الموظف المسؤول»: يُنقل اسمه إلى «الموظف» إن كان فارغًا (مرة واحدة لكل سجل) */
+/* 6.0: نقل المعاملات للمراحل الجديدة + تحديد «عليها متابعة» للمعاملات التي لها موعد أو كانت تذكيرًا/متابعة */
+function migrateStages(){
+  const map=cfg.mig60map||{};const ok=Object.keys(map).filter(o=>!cfg.statuses.some(s=>s.name===o)&&cfg.statuses.some(s=>s.name===map[o]));
+  let n=0;
+  transactions.forEach(t=>{
+    if(!t)return;let ch=false;
+    if(t.followup===undefined){t.followup=(t.reminderDate||t.status==='تحتاج تذكير'||/^متابعة-/.test(String(t.number||'')))?'عليها متابعة':'عادية';ch=true}
+    if(ok.includes(t.status)){t.status=map[t.status];ch=true}
+    (t.history||[]).forEach(h=>{if(ok.includes(h[1])){h[1]=map[h[1]];ch=true}});
+    if(ch&&!t.demo){t.rev=Date.now();n++}
+  });
+  return n;
+}
 function migrateOwner(){
-  if(ownerOn())return 0;let n=0;
+  const ms=migrateStages();
+  if(ownerOn())return ms;let n=ms;
   transactions.forEach(t=>{if(t&&!t.demo&&t.owner&&!t.employee){t.employee=t.owner;t.owner='';t.rev=Date.now();n++}else if(t&&t.demo&&t.owner&&!t.employee){t.employee=t.owner;t.owner=''}});
   return n;
 }
@@ -545,7 +612,7 @@ const fieldLabel=id=>VIRTUAL[id]||(fieldOf(id)||{}).label||id;
 function badge(name){const s=st(name);const c=s?s.color:'#6b7785';return `<span class="badge" style="background:${rgba(c,.14)};color:${c}">${esc(name)}</span>`}
 function getVal(t,f){return f.builtin?t[f.id]:(t.customFields||{})[f.id]}
 function plain(t,f){
-  if(f==='_due')return isDue(t)?T('due.badgeDue'):(stRole(t)==='reminder'?T('due.badgeSoon'):'');
+  if(f==='_due')return isDue(t)?T('due.badgeDue'):(isFollow(t)&&isOpen(t)?T('due.badgeSoon'):'');
   if(f==='_updated')return t.updated||'';
   if(f==='_closed')return t.closed||'';
   if(f==='_created')return t.created?new Date(t.created).toISOString().slice(0,10):'';
@@ -555,7 +622,7 @@ function plain(t,f){
   return String(v);
 }
 function cell(t,col){
-  if(col==='_due')return isDue(t)?`<span class="badge" style="background:var(--red-bg);color:var(--red)">${esc(T('due.badgeDue'))}</span>`:(stRole(t)==='reminder'?`<span class="badge" style="background:${rgba(cfg.theme.amber,.14)};color:var(--amber)">${esc(T('due.badgeSoon'))}</span>`:'—');
+  if(col==='_due')return isDue(t)?`<span class="badge" style="background:var(--red-bg);color:var(--red)">${esc(T('due.badgeDue'))}</span>`:(isFollow(t)&&isOpen(t)?`<span class="badge" style="background:${rgba(cfg.theme.amber,.14)};color:var(--amber)">${esc(T('due.badgeSoon'))}${t.reminderDate?' · '+daysLeft(t.reminderDate):''}</span>`:'—');
   if(col==='_updated')return fmt(t.updated);
   if(col==='_closed')return fmt(t.closed);
   if(col==='_created')return fmt(t.created?new Date(t.created).toISOString().slice(0,10):'');
@@ -703,6 +770,7 @@ function metricCount(w){
     case 'total':return visTx().length;
     case 'status':{const n=statNames(w.statuses);return visTx().filter(t=>n.includes(t.status)).length}
     case 'due':return visTx().filter(isDue).length;
+    case 'follow':return visTx().filter(t=>isFollow(t)&&isOpen(t)).length;
     case 'today':return visTx().filter(t=>t.received===today()).length;
     case 'mine':return visTx().filter(t=>ownKey(t)===myEmp()&&stRole(t)!=='closed').length;
   }
@@ -723,8 +791,8 @@ function renderWidget(w){
       const cols=(w.columns&&w.columns.length?w.columns:['number','subject','status','_updated']).filter(c=>VIRTUAL[c]||fieldOf(c));
       return `<div class="${cls}">${panelHead(w,w.title,w.desc)}${miniTable([...visTx()].sort(byRecent).slice(0,w.limit||6),cols)}</div>`}
     case 'due':{
-      const rows=visTx().filter(t=>stRole(t)==='reminder').sort((a,b)=>(a.reminderDate||'9999').localeCompare(b.reminderDate||'9999')).slice(0,w.limit||5);
-      return `<div class="${cls}">${panelHead(w,w.title,w.desc)}<div class="topic-list">${rows.map(t=>`<div class="topic-item" data-detail="${esc(t.id)}" style="cursor:pointer"><strong>${esc(t.number)} — ${esc(t.subject)}</strong><small>${isDue(t)?esc(T('due.now')):esc(T('due.soon'))+fmt(t.reminderDate)} · ${esc(t.reminderOwner||ownKey(t))}</small></div>`).join('')||`<div class="empty">${esc(T('empty.due'))}</div>`}</div></div>`}
+      const rows=visTx().filter(t=>isFollow(t)&&isOpen(t)).sort((a,b)=>(a.reminderDate||'9999').localeCompare(b.reminderDate||'9999')).slice(0,w.limit||5);
+      return `<div class="${cls}">${panelHead(w,w.title,w.desc)}<div class="topic-list">${rows.map(t=>`<div class="topic-item" data-detail="${esc(t.id)}" style="cursor:pointer"><strong>${esc(t.number)} — ${esc(t.subject)}</strong><small>${isDue(t)?`<span style="color:var(--red);font-weight:700">${esc(T('due.now'))}</span> · `+fmt(t.reminderDate):(t.reminderDate?esc(T('due.soon'))+fmt(t.reminderDate)+' · '+daysLeft(t.reminderDate):'بدون موعد')} · ${esc(t.status)}</small></div>`).join('')||`<div class="empty">${esc(T('empty.due'))}</div>`}</div></div>`}
     case 'bystatus':{
       const max=Math.max(1,...cfg.statuses.map(s=>visTx().filter(t=>t.status===s.name).length));
       return `<div class="${cls}">${panelHead(w,w.title,w.desc)}${cfg.statuses.map(s=>{const n=visTx().filter(t=>t.status===s.name).length;return `<div class="bar-row"><span class="nm">${esc(s.name)}</span><span class="track"><span class="fill" style="display:block;width:${n/max*100}%;background:${s.color}"></span></span><span class="ct">${n}</span></div>`}).join('')}</div>`}
@@ -738,7 +806,7 @@ function renderWidget(w){
 }
 function renderDashboard(p){
   const ws=cfg.widgets.filter(w=>w.visible!==false);
-  host().innerHTML=ws.length?`<div class="dash">${ws.map(renderWidget).join('')}</div>`:`<div class="panel"><div class="empty">لا توجد عناصر في لوحة التحكم. أضفها من الإعدادات ← لوحة التحكم.</div></div>`;
+  host().innerHTML=ws.length?`<div class="dash">${(()=>{let h='',run='',k=0;const fl=()=>{if(run)h+=`<div class="stats" style="--n:${Math.min(k,8)}">${run}</div>`;run='';k=0};ws.forEach(w=>{if(w.type==='stat'){run+=renderWidget(w);k++;return}fl();h+=renderWidget(w)});fl();return h})()}</div>`:`<div class="panel"><div class="empty">لا توجد عناصر في لوحة التحكم. أضفها من الإعدادات ← لوحة التحكم.</div></div>`;
 }
 
 /* ======================= صفحات القوائم ======================= */
@@ -752,7 +820,8 @@ function pageRows(p){
     (!(fl.types||[]).length||fl.types.includes(t.type))&&
     (!(fl.owners||[]).length||fl.owners.includes(ownKey(t)))&&
     (!(fl.priorities||[]).length||fl.priorities.includes(t.priority))&&
-    (!fl.dueOnly||isDue(t)));
+    (!fl.dueOnly||isDue(t))&&
+    (!fl.followOnly||(isFollow(t)&&isOpen(t))));
   const f=UI.filters[p.id]||{};
   const terms=norm(f.q||'').split(/\s+/).filter(Boolean), party=norm(f.party||''), df=f.df||'received';
   rows=rows.filter(t=>{
@@ -769,6 +838,7 @@ function pageRows(p){
   });
   const s=UI.sort[p.id];
   if(s)rows=rows.sort((a,b)=>String(plain(a,s.col)).localeCompare(String(plain(b,s.col)),'ar',{numeric:true})*(s.dir==='desc'?-1:1));
+  else if(fl.followOnly)rows=rows.sort((a,b)=>(a.reminderDate||'9999').localeCompare(b.reminderDate||'9999'));
   else rows=rows.sort((a,b)=>(b.created||0)-(a.created||0));
   return rows;
 }
@@ -855,27 +925,29 @@ function fieldInput(f,val){
     case 'type':return selectHtml(a,cfg.types,val,false);
     case 'priority':return selectHtml(a,cfg.priorities,val,false);
     case 'status':return selectHtml(a,cfg.statuses.map(s=>s.name),val,false);
+    case 'follow':return selectHtml(a,FOLLOW_OPTS,val||FOLLOW_OPTS[0],false);
     default:return `<input ${a}${ph} value="${esc(val)}">`;
   }
 }
 function syncCond(){
   const sel=$('#f_status');const role=sel?((st(sel.value)||{}).role||''):'';
-  $$('#txForm [data-when]').forEach(el=>{el.style.display=(role==='reminder')?'':'none'});
+  const fu=$('#f_followup');const on=role==='reminder'||(fu&&fu.value==='عليها متابعة');
+  $$('#txForm [data-when]').forEach(el=>{el.style.display=on?'':'none'});
 }
 function openForm(id){
   const t=id?transactions.find(x=>x.id===id):null;
   if(t?!canEditTx(t):!canAdd())return toast(T('viewer'));
   $('#formTitle').textContent=t?T('form.editTitle'):T('form.addTitle');
-  const defs={department:cfg.brand.org,owner:ownerOn()?myEmp():'',employee:empList().includes(myEmp())?myEmp():'',reminderOwner:myEmp(),received:today(),status:defStatus(),type:cfg.types[0]||'',priority:cfg.priorities[0]||''};
+  const defs={department:cfg.brand.org,owner:ownerOn()?myEmp():'',employee:empList().includes(myEmp())?myEmp():'',reminderOwner:myEmp(),followup:FOLLOW_OPTS[0],received:today(),status:defStatus(),type:cfg.types[0]||'',priority:cfg.priorities[0]||''};
   let html=`<input type="hidden" id="editId" value="${esc(t?t.id:'')}"><div class="form-grid">`;
   cfg.sections.forEach(sec=>{
     if(sec.visible===false)return;
     const fs=cfg.fields.filter(f=>f.section===sec.id&&f.visible!==false);
     if(!fs.length)return;
-    html+=`<div class="sec-title"${fs.every(f=>f.showWhen==='reminder')?' data-when="reminder"':''}>${esc(sec.title)}</div>`;
+    html+=`<div class="sec-title"${fs.every(f=>f.showWhen==='reminder'||f.showWhen==='follow')?' data-when="follow"':''}>${esc(sec.title)}</div>`;
     fs.forEach(f=>{
       const val=t?getVal(t,f):(f.builtin?defs[f.id]:'');
-      html+=`<div class="field${(f.full||f.type==='textarea')?' full':''}"${f.showWhen==='reminder'?' data-when="reminder"':''}><label for="f_${esc(f.id)}">${esc(f.label)}${f.required?' *':''}</label>${fieldInput(f,val??'')}${f.help?`<small>${esc(f.help)}</small>`:''}</div>`;
+      html+=`<div class="field${(f.full||f.type==='textarea')?' full':''}"${(f.showWhen==='reminder'||f.showWhen==='follow')?' data-when="follow"':''}><label for="f_${esc(f.id)}">${esc(f.label)}${f.required?' *':''}</label>${fieldInput(f,val??'')}${f.help?`<small>${esc(f.help)}</small>`:''}</div>`;
     });
   });
   html+=`</div><div class="form-actions"><button class="btn primary" type="submit">${esc(T('btn.save'))}</button><button class="btn secondary" type="button" data-close>${esc(T('btn.cancel'))}</button></div>`;
@@ -886,8 +958,25 @@ function nextTopic(){
   let max=0;transactions.forEach(t=>{const m=re.exec(t.topic||'');if(m)max=Math.max(max,+m[1])});
   return 'موضوع-'+y+'-'+String(max+1).padStart(4,'0');
 }
+/* الخط الزمني: الإدارة والموظف عند الإنشاء، وكل تحويل أو إسناد أو تغيير متابعة لاحقًا — في نفس سطر تغيير الحالة إن وُجد */
+function logChanges(t,o){
+  const fv=k=>{const f=cfg.fields.find(x=>x.id===k);return !!(f&&f.visible!==false)};
+  const n=[];
+  if(o.isNew){
+    if(fv('department')&&t.department)n.push(fieldLabel('department')+': '+t.department);
+    if(fv('employee')&&t.employee)n.push(fieldLabel('employee')+': '+t.employee);
+    if(t.followup==='عليها متابعة')n.push('عليها متابعة'+(t.reminderDate?' — '+fieldLabel('reminderDate')+': '+fmt(t.reminderDate):''));
+  }else{
+    if(fv('department')&&(t.department||'')!==o.dept)n.push('تحويل '+fieldLabel('department')+': '+(o.dept||'—')+' ← '+(t.department||'—'));
+    if(fv('employee')&&(t.employee||'')!==o.emp)n.push('إسناد '+fieldLabel('employee')+': '+(o.emp||'—')+' ← '+(t.employee||'—'));
+    if((t.followup||'')!==o.follow&&o.follow!=='')n.push(fieldLabel('followup')+': '+(t.followup||'—'));
+    else if(t.followup==='عليها متابعة'&&(t.reminderDate||'')!==o.deadline)n.push(fieldLabel('reminderDate')+': '+(t.reminderDate?fmt(t.reminderDate):'—'));
+  }
+  if(!n.length)return;
+  if(t.history.length>o.hl)t.history[t.history.length-1][3]=n.join(' · ');else t.history.push([today(),t.status,me().name,n.join(' · ')]);
+}
 function applyStatusEffects(t,prev,isNew){
-  if(isNew||prev!==t.status)t.history.push([today(),t.status,me().name]);
+  if(isNew||prev!==t.status){t.history.push([today(),t.status,me().name]);const d=(st(t.status)||{}).dept;if(d)t.department=d}
   if(stRole(t)==='closed')t.closed=t.closed||today();else t.closed=null;
   t.updated=today();t.rev=Date.now();delete t.demo;
 }
@@ -902,11 +991,12 @@ function saveForm(){
     if(f.required&&f.type!=='checkbox'&&!hiddenCond&&v===''){toast('أكمل الحقل: '+f.label);el.focus();return}
     vals[f.id]=v;
   }
+  if(vals.followup==='عليها متابعة'&&('reminderDate' in vals)&&!vals.reminderDate){toast('حدّد '+fieldLabel('reminderDate')+' للمعاملة التي عليها متابعة');const e=$('#f_reminderDate');if(e)e.focus();return}
   const num=numKey(vals.number);
   if(transactions.some(x=>x.id!==(t&&t.id)&&numKey(x.number)===num))return toast(T('msg.dupNumber'));
   const isNew=!t;
   if(isNew){t={id:uid('t'),created:Date.now(),history:[],customFields:{},type:cfg.types[0]||'',department:cfg.brand.org,owner:ownerOn()?myEmp():'',priority:cfg.priorities[0]||'',status:defStatus(),received:today(),reminderOwner:myEmp()};transactions.unshift(t)}
-  const prev=t.status;
+  const prev=t.status,prevDept=t.department||'',prevEmp=t.employee||'',prevFollow=t.followup||'',prevDeadline=t.reminderDate||'';
   let listsChanged=false;
   cfg.fields.forEach(f=>{
     if(!(f.id in vals))return;
@@ -915,28 +1005,31 @@ function saveForm(){
     if(f.type==='combo'&&vals[f.id]&&cfg.lists[f.list]&&!cfg.lists[f.list].items.includes(vals[f.id])){cfg.lists[f.list].items.push(vals[f.id]);listsChanged=true}
   });
   if(!t.topic)t.topic=nextTopic();
+  const hl=(t.history||[]).length;
   applyStatusEffects(t,prev,isNew);
+  logChanges(t,{dept:prevDept,emp:prevEmp,hl,isNew,follow:prevFollow,deadline:prevDeadline});
   persistTx();if(listsChanged)persistCfg(true);closeModals();refresh();toast(T('msg.saved'));
 }
 function openDetail(id){
   const t=transactions.find(x=>x.id===id);if(!t)return;
   $('#detailTitle').textContent=T('detail.title');
-  const rem=stRole(t)==='reminder';
-  const rows=cfg.fields.filter(f=>f.visible!==false&&f.id!=='status'&&f.id!=='number'&&f.id!=='type'&&f.id!=='topic'&&(f.showWhen!=='reminder'||rem)).map(f=>{
+  const rem=isFollow(t);
+  const rows=cfg.fields.filter(f=>f.visible!==false&&f.id!=='status'&&f.id!=='number'&&f.id!=='type'&&f.id!=='topic'&&((f.showWhen!=='reminder'&&f.showWhen!=='follow')||rem)).map(f=>{
     const v=getVal(t,f);
     const shown=(v===''||v==null)?'—':(f.type==='date'?fmt(v):f.type==='checkbox'?(v?'نعم':'لا'):esc(v));
     return `<p style="margin:.5rem 0"><strong>${esc(f.label)}:</strong> ${shown}</p>`;
   }).join('');
   const stSel=canStatusTx(t)?`<div class="field" style="margin-top:1rem"><label>${esc(T('detail.status'))}</label><div style="display:flex;gap:.5rem;flex-wrap:wrap"><select class="inp" id="detSt">${cfg.statuses.map(s=>`<option${s.name===t.status?' selected':''}>${esc(s.name)}</option>`).join('')}</select><button class="btn secondary" data-act="set-status" data-id="${esc(t.id)}">${esc(T('btn.changeStatus'))}</button></div></div>`:'';
   $('#detailBody').innerHTML=`<div class="notice"><strong>${esc(t.number)}</strong> · ${esc(t.type)} · ${esc(fieldLabel('topic'))}: <strong>${esc(t.topic)}</strong> · ${badge(t.status)}</div>
-  <div class="grid2"><div>${rows}${stSel}</div><div><h3 class="sub" style="margin-top:0">${esc(T('detail.timeline'))}</h3><div class="timeline">${(t.history||[]).map(h=>`<div class="event"><strong>${badge(h[1])}</strong><small>${fmt(h[0])} · ${esc(h[2])}</small></div>`).join('')||'<small>—</small>'}</div></div></div>
-  <div class="form-actions">${canEditTx(t)?`<button class="btn primary" data-edit="${esc(t.id)}">${esc(T('btn.edit'))}</button>`:''}${canDeleteTx(t)?`<button class="btn danger" data-del="${esc(t.id)}">${esc(T('btn.delete'))}</button>`:''}</div>`;
+  <div class="grid2"><div>${rows}${stSel}</div><div><h3 class="sub" style="margin-top:0">${esc(T('detail.timeline'))}</h3><div class="timeline">${(t.history||[]).map(h=>`<div class="event"><strong>${badge(h[1])}</strong><small>${fmt(h[0])} · ${esc(h[2])}</small>${h[3]?`<span class="note">${esc(h[3])}</span>`:''}</div>`).join('')||'<small>—</small>'}</div></div></div>
+  <div class="form-actions"><button class="btn secondary" type="button" data-close>→ رجوع</button>${canEditTx(t)?`<button class="btn primary" data-edit="${esc(t.id)}">${esc(T('btn.edit'))}</button>`:''}${canDeleteTx(t)?`<button class="btn danger" data-del="${esc(t.id)}">${esc(T('btn.delete'))}</button>`:''}</div>`;
   openModal('detailModal');
 }
 function setStatus(id,name){
   const t=transactions.find(x=>x.id===id);if(!t||!st(name)||t.status===name)return;
   if(!canStatusTx(t))return toast(T('viewer'));
-  const prev=t.status;t.status=name;applyStatusEffects(t,prev,false);
+  const prev=t.status,pd=t.department||'',pe=t.employee||'',hl=(t.history||[]).length;t.status=name;applyStatusEffects(t,prev,false);
+  logChanges(t,{dept:pd,emp:pe,hl,isNew:false,follow:t.followup||'',deadline:t.reminderDate||''});
   persistTx();closeModals();refresh();toast(T('msg.statusChanged')+name);
 }
 function deleteTx(id){
@@ -995,7 +1088,7 @@ function doExport(fmtName,opt){
   const detail=opt.mode==='detail';
   const title=opt.title||cfg.export.title||T('export.title');
   const cols=(detail?[...cfg.fields.filter(f=>f.visible!==false).map(f=>f.id),'_updated','_closed']:cfg.export.columns).filter(c=>fieldOf(c)||VIRTUAL[c]);
-  const hist=t=>(t.history||[]).map(h=>h[0]+' '+h[1]+' ('+h[2]+')').join(' ← ');
+  const hist=t=>(t.history||[]).map(h=>h[0]+' '+h[1]+' ('+h[2]+')'+(h[3]?' — '+h[3]:'')).join(' ← ');
   const crit=criteriaText(p);
   if(fmtName==='csv'||fmtName==='excel'){
     const headers=cols.map(fieldLabel),data=rows.map(t=>cols.map(c=>plain(t,c)));
@@ -1011,7 +1104,7 @@ function doExport(fmtName,opt){
   if(detail){
     body=rows.map((t,i)=>'<div class="tx"><h3>'+(i+1)+'. '+esc(fieldLabel('number'))+' '+esc(t.number)+' — '+esc(t.subject)+'</h3><table class="kv">'+
       cols.filter(c=>c!=='number'&&c!=='subject').map(c=>'<tr><th>'+esc(fieldLabel(c))+'</th><td>'+(esc(disp(t,c))||'—')+'</td></tr>').join('')+'</table>'+
-      (opt.timeline&&(t.history||[]).length?'<p class="tl"><b>'+esc(T('detail.timeline'))+':</b></p><table class="grid"><tr><th>التاريخ</th><th>'+esc(fieldLabel('status'))+'</th><th>بواسطة</th></tr>'+t.history.map(h=>'<tr><td>'+fmt(h[0])+'</td><td>'+esc(h[1])+'</td><td>'+esc(h[2])+'</td></tr>').join('')+'</table>':'')+'</div>').join('');
+      (opt.timeline&&(t.history||[]).length?'<p class="tl"><b>'+esc(T('detail.timeline'))+':</b></p><table class="grid"><tr><th>التاريخ</th><th>'+esc(fieldLabel('status'))+'</th><th>بواسطة</th><th>التحويل / الإسناد</th></tr>'+t.history.map(h=>'<tr><td>'+fmt(h[0])+'</td><td>'+esc(h[1])+'</td><td>'+esc(h[2])+'</td><td>'+esc(h[3]||'')+'</td></tr>').join('')+'</table>':'')+'</div>').join('');
   }else{
     body='<table class="grid"><tr><th>#</th>'+cols.map(c=>'<th>'+esc(fieldLabel(c))+'</th>').join('')+'</tr>'+rows.map((t,i)=>'<tr><td>'+(i+1)+'</td>'+cols.map(c=>'<td>'+esc(disp(t,c))+'</td>').join('')+'</tr>').join('')+'</table>';
   }
@@ -1091,6 +1184,7 @@ function fieldList(f){
   if(f.type==='status')return cfg.statuses.map(s=>s.name);
   if(f.type==='type')return cfg.types;
   if(f.type==='priority')return cfg.priorities;
+  if(f.type==='follow')return FOLLOW_OPTS;
   if(f.type==='select'||f.type==='combo')return listItems(f);
   if(f.type==='checkbox')return ['نعم','لا'];
   return null;
@@ -1269,7 +1363,7 @@ function handleExcelImport(file){
 const TABS=[['general','عام'],['pages','الصفحات'],['dashboard','لوحة التحكم'],['fields','الحقول والأقسام'],['lists','الحالات والقوائم'],['texts','النصوص'],['theme','الألوان والمظهر'],['users','المستخدمون'],['export','التصدير'],['sync','الربط والنسخ']];
 const KIND_NAMES={dashboard:'لوحة تحكم',list:'قائمة معاملات',topics:'موضوعات',settings:'إعدادات'};
 const WIDGET_NAMES={stat:'بطاقة إحصاء',recent:'جدول آخر المعاملات',due:'قائمة التذكيرات',bystatus:'توزيع الحالات',byowner:'توزيع الموظفين'};
-const METRICS=[['total','إجمالي المعاملات'],['status','عدد المعاملات في حالات محددة'],['due','التذكيرات المستحقة'],['today','الواردة اليوم'],['mine','المفتوحة للمستخدم الحالي']];
+const METRICS=[['total','إجمالي المعاملات'],['status','عدد المعاملات في حالات محددة'],['due','المتابعات المتأخرة'],['follow','عليها متابعة ولم تكتمل'],['today','الواردة اليوم'],['mine','المفتوحة للمستخدم الحالي']];
 const FIELD_TYPES=[['text','نص قصير'],['textarea','نص طويل'],['number','رقم'],['date','تاريخ'],['combo','قائمة: اختيار أو كتابة قيمة جديدة تُحفظ'],['select','قائمة: اختيار فقط'],['checkbox','نعم / لا']];
 const isListType=t=>t==='select'||t==='combo';
 const listArr=key=>(key==='types'||key==='priorities')?cfg[key]:((cfg.lists[key]||{}).items||[]);
@@ -1303,7 +1397,7 @@ function tabGeneral(){
   return sh('الهوية العامة','تظهر في الشريط الجانبي وعنوان التبويب.')+
   `<div class="form-grid two">${inp('brand.title','عنوان النظام')}${inp('brand.subtitle','العنوان الفرعي')}${inp('brand.mark','حرف الشعار','maxlength="2"')}${inp('brand.org','اسم الجهة / الإدارة الافتراضي','')}</div>
   <p class="notice" style="margin-top:1rem">اسم الجهة يُستخدم كقيمة افتراضية لحقل "الإدارة" عند إضافة معاملة جديدة.</p>
-  <p class="sync" style="margin-top:.8rem">الإصدار 5.8 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
+  <p class="sync" style="margin-top:.8rem">الإصدار 6.0 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
   <hr class="sep"><h3 class="sub">إعادة الضبط</h3>
   <p class="notice warn">إعادة الضبط تُرجع الصفحات والحقول والحالات والنصوص والألوان والمستخدمين للوضع الافتراضي. المعاملات المسجلة لا تُحذف.</p>
   <div class="form-actions"><button class="btn danger" data-act="reset-cfg">إعادة ضبط كل الإعدادات</button></div>`;
@@ -1332,7 +1426,8 @@ function pageFields(p){
     {k:'types',label:'الأنواع (بدون اختيار = الكل)',type:'multi',opts:cfg.types.map(x=>[x,x])},
     {k:'owners',label:'الموظفون (بدون اختيار = الكل)',type:'multi',opts:empList().map(n=>[n,n])},
     {k:'priorities',label:'الأولويات (بدون اختيار = الكل)',type:'multi',opts:cfg.priorities.map(x=>[x,x])},
-    {k:'dueOnly',label:'التذكيرات المستحقة فقط',type:'check'},
+    {k:'dueOnly',label:'المتأخرة فقط',type:'check'},
+    {k:'followOnly',label:'عليها متابعة ولم تكتمل فقط',type:'check'},
     {k:'columns',label:'الأعمدة المعروضة في الجدول',type:'multi',opts:allCols(),help:'ترتيب الأعمدة يتبع ترتيب الحقول في تبويب الحقول والأقسام.'},
     {k:'toolbar',label:'شريط البحث والتصفية',type:'select',opts:[['full','كامل (بحث + حالة + نوع + تواريخ + موظف + إدارة)'],['basic','بسيط (بحث + حالة)'],['none','بدون']]},
     {k:'exports',label:'إظهار أزرار التصدير (CSV / Excel / Word / PDF)',type:'check'});
@@ -1340,8 +1435,8 @@ function pageFields(p){
 }
 function editPage(id){
   const p=id?page(id):null;
-  const vals=p?{...p,statuses:(p.filter||{}).statuses||[],types:(p.filter||{}).types||[],owners:(p.filter||{}).owners||[],priorities:(p.filter||{}).priorities||[],dueOnly:!!(p.filter||{}).dueOnly,addBtn:p.addBtn!==false,exports:!!p.exports,toolbar:p.toolbar||'basic',columns:p.columns||[]}
-    :{title:'',desc:'',icon:'●',group:cfg.navGroups[0].id,addBtn:false,addText:'',note:'',statuses:[],types:[],owners:[],priorities:[],dueOnly:false,columns:['number','subject','employee','status'],toolbar:'basic',exports:false};
+  const vals=p?{...p,statuses:(p.filter||{}).statuses||[],types:(p.filter||{}).types||[],owners:(p.filter||{}).owners||[],priorities:(p.filter||{}).priorities||[],dueOnly:!!(p.filter||{}).dueOnly,followOnly:!!(p.filter||{}).followOnly,addBtn:p.addBtn!==false,exports:!!p.exports,toolbar:p.toolbar||'basic',columns:p.columns||[]}
+    :{title:'',desc:'',icon:'●',group:cfg.navGroups[0].id,addBtn:false,addText:'',note:'',statuses:[],types:[],owners:[],priorities:[],dueOnly:false,followOnly:false,columns:['number','subject','employee','status'],toolbar:'basic',exports:false};
   openEditor({title:p?'تعديل الصفحة':'صفحة جديدة',fields:pageFields(p),values:vals,
     onSave:v=>{
       const q=p||{id:uid('pg_'),kind:'list',builtin:false,visible:true};
@@ -1349,7 +1444,7 @@ function editPage(id){
       if(q.kind!=='settings'){q.addBtn=v.addBtn;q.addText=v.addText}
       if(q.kind==='list'){
         q.note=v.note;q.toolbar=v.toolbar;q.exports=v.exports;
-        q.filter={statuses:v.statuses,types:v.types,owners:v.owners,priorities:v.priorities,dueOnly:v.dueOnly};
+        q.filter={statuses:v.statuses,types:v.types,owners:v.owners,priorities:v.priorities,dueOnly:v.dueOnly,followOnly:v.followOnly};
         const order=allCols().map(c=>c[0]);q.columns=order.filter(c=>v.columns.includes(c));
       }
       if(!p){cfg.pages.push(q);UI.page=q.id}
@@ -1465,12 +1560,12 @@ function tabLists(){
 }
 function editStatus(id){
   const s=id?cfg.statuses.find(x=>x.id===id):null;
-  openEditor({title:s?'تعديل الحالة':'حالة جديدة',fields:[{k:'name',label:'اسم الحالة',req:true},{k:'color',label:'اللون',type:'color'},{k:'role',label:'نوع الحالة',type:'select',opts:Object.entries(ROLE_NAMES)}],values:s||{name:'',color:'#2d6ea3',role:''},
+  openEditor({title:s?'تعديل الحالة':'حالة جديدة',fields:[{k:'name',label:'اسم الحالة',req:true},{k:'color',label:'اللون',type:'color'},{k:'role',label:'نوع الحالة',type:'select',opts:Object.entries(ROLE_NAMES)},{k:'dept',label:'تحويل تلقائي إلى إدارة (اختياري)',type:'select',opts:[['','— بدون —']].concat(((cfg.lists.departments||{}).items||[]).map(d=>[d,d]))}],values:s?{...s,dept:s.dept||''}:{name:'',color:'#2d6ea3',role:'',dept:''},
   intro:s?'تغيير الاسم يحدّث كل المعاملات المسجلة بهذه الحالة تلقائيًا.':'',
   onSave:v=>{
     if(cfg.statuses.some(x=>x.id!==(s&&s.id)&&x.name===v.name)){toast('اسم الحالة مستخدم');return false}
     const old=s&&s.name;const q=s||{id:uid('s_')};
-    q.name=v.name;q.color=v.color;q.role=v.role;
+    q.name=v.name;q.color=v.color;q.role=v.role;if(v.dept)q.dept=v.dept;else delete q.dept;
     if(v.role==='new')cfg.statuses.forEach(x=>{if(x!==q&&x.role==='new')x.role=''});
     if(!s)cfg.statuses.push(q);
     if(old&&old!==v.name){transactions.forEach(t=>{let ch=false;if(t.status===old){t.status=v.name;ch=true}t.history.forEach(h=>{if(h[1]===old){h[1]=v.name;ch=true}});if(ch)t.rev=Date.now()});persistTx()}
@@ -1969,7 +2064,7 @@ function legacyParts(x){
 function convertLegacy(x){
   const {tx:oldTx,inc:oldInc,fu:oldFu}=legacyParts(x);
   const palette=['#2d6ea3','#6653a5','#a86f18','#c05b20','#28784f','#8a4b7a','#3f7f8c','#7a6a2a'];
-  const syn={'قيد العمل':'قيد المعالجة','تحت الاجراء':'قيد المعالجة','تحت الإجراء':'قيد المعالجة','في ملف العرض':'قيد المراجعة','في العرض':'قيد المراجعة','تم التسليم':'صادرة','تم التصدير':'صادرة','للحفظ':'مكتملة','مغلقة':'مكتملة'};
+  const syn={'قيد العمل':'جاري العمل','تحت الاجراء':'جاري العمل','تحت الإجراء':'جاري العمل','قيد المعالجة':'جاري العمل','قيد المراجعة':'المراجعة','في ملف العرض':'العرض','في العرض':'العرض','تم التسليم':'الصادر','تم التصدير':'الصادر','صادرة':'الصادر','صادر':'الصادر','تحتاج تذكير':'الصادر','للحفظ':'مكتملة','مغلقة':'مكتملة','مكتمل':'مكتملة'};
   const mapSt=v=>{
     v=String(v||'').trim();if(!v)return defStatus();
     if(st(v))return v;
@@ -1994,7 +2089,7 @@ function convertLegacy(x){
     return normTx({id:String(src+'-'+(t.id??i)),number:n,type:t.type||cfg.types[0],topic:t.topic||'موضوع-'+date.slice(0,4)+'-'+n,subject:t.subject||t.notes||'بدون موضوع',party:t.party||t.country||'',department:t.department||cfg.brand.org,owner:ownerOn()?(owner||me().name):'',received:date,priority:cfg.priorities.includes(t.priority)?t.priority:cfg.priorities[0],status:s,reminderDate:t.reminderDate||t.dueDate||'',employee:t.employee||(ownerOn()?'':owner),reminderOwner:t.reminderOwner||owner||'',notes:t.notes||'',updated:String(t.updated||t.updatedAt||t.deliver||date).slice(0,10),closed:closedRole?(t.closed||t.deliver||date):null,history:Array.isArray(t.history)&&t.history.length?t.history:[[date,s,owner||me().name]],customFields:cf},i);
   };
   const isOwn=!Array.isArray(x)&&x&&!('incomingItems' in x)&&!('followups' in x);
-  const out=oldTx.map((t,i)=>isOwn?normTx(Object.assign({},t,{status:mapSt(t.status)}),i):make(t,i,'txn'));
+  const out=oldTx.map((t,i)=>isOwn?normTx(Object.assign({},t,{status:mapSt(t.status)},(t.followup===undefined&&(t.status==='تحتاج تذكير'||t.reminderDate))?{followup:'عليها متابعة'}:{}),i):make(t,i,'txn'));
   const used=new Set(out.map(t=>String(t.number)));
   oldInc.forEach((t,i)=>{let n=String(t.id??i+1);if(used.has(n))n='وارد-'+n;used.add(n);out.push(make({...t,number:n,subject:t.subject||t.notes||'معاملة واردة',status:''},i,'incoming'))});
   oldFu.forEach((t,i)=>{let n='متابعة-'+String(t.id??i+1);out.push(make({...t,number:n,type:cfg.types.includes('تذكير')?'تذكير':cfg.types[0],date:t.addedAt||today()},i,'followup'))});
@@ -2059,7 +2154,7 @@ document.addEventListener('input',e=>{
   if(d.text!=null){if(el.value==='')delete cfg.texts[d.text];else cfg.texts[d.text]=el.value;persistCfg(true);return}
   if(d.expCol!=null){cfg.export.columns=allCols().map(c=>c[0]).filter(k=>{const c=$(`[data-exp-col="${k}"]`);return c&&c.checked});persistCfg(true);return}
   if(d.tfilter!=null){const q=el.value.trim();$$('.trow').forEach(r=>{r.style.display=(!q||r.dataset.search.includes(q))?'':'none'});return}
-  if(el.id==='f_status')syncCond();
+  if(el.id==='f_status'||el.id==='f_followup')syncCond();
   if(el.type==='date'&&d.f){const h=el.parentElement.querySelector('[data-dh]');if(h)h.textContent=el.value?fmt(el.value):''}
 });
 document.addEventListener('change',e=>{
