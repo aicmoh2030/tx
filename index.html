@@ -69,7 +69,11 @@ button{cursor:pointer}
 .prog i{display:block;height:100%;border-radius:99px}
 .prog-l{margin-inline-start:.35rem;color:var(--muted);font-size:.7rem}
 .chip{display:inline-block;font-size:.7rem;font-weight:700;padding:.12rem .5rem;border-radius:99px;margin:.15rem 0 0 .25rem;white-space:nowrap}
-.c-late{background:var(--red-bg);color:var(--red)}.c-soon{background:rgba(201,138,30,.16);color:var(--amber)}.c-ok{background:var(--green-bg);color:var(--green)}.c-age{background:rgba(192,91,32,.13);color:var(--orange)}.c-pri{background:var(--line);color:var(--head)}
+.c-late{background:var(--red-bg);color:var(--red)}.c-soon{background:rgba(201,138,30,.16);color:var(--amber)}.c-ok{background:var(--green-bg);color:var(--green)}.c-age{background:rgba(192,91,32,.13);color:var(--orange)}.c-pri{background:var(--line);color:var(--head)}.c-quick{background:rgba(102,83,165,.14);color:#6653a5}
+.c-cls{background:color-mix(in srgb,var(--cc) 15%,transparent);color:var(--cc);margin-inline-start:.2rem}
+.fu-pick{display:flex;flex-wrap:wrap;gap:.45rem}.fu-opt{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .75rem;border:1.5px solid var(--line);border-radius:999px;cursor:pointer;font-weight:600;font-size:.9rem;background:var(--card)}
+.fu-opt input{width:1.05rem;height:1.05rem;min-height:0;margin:0;accent-color:var(--cc,var(--navy))}.fu-opt:has(input:checked){border-color:var(--cc,var(--navy));background:color-mix(in srgb,var(--cc,var(--navy)) 12%,transparent);color:var(--cc,var(--head))}.fu-opt small{font-weight:400;opacity:.8}.fu-hint{display:block;margin-top:.3rem}
+.chk-list{display:grid;gap:.55rem;margin:.3rem 0 .9rem}.chk-row{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer}.chk-row input{width:1.15rem;height:1.15rem;min-height:0;margin-top:.15rem}.chk-row small{display:block;color:var(--muted);font-weight:400;margin-top:.1rem}
 tr.row-late td{background:rgba(179,66,57,.06)}tr.row-soon td{background:rgba(201,138,30,.07)}
 .trend{display:flex;gap:.8rem;align-items:flex-end;height:11rem;padding:1.2rem .2rem 0}
 .tm{flex:1;display:flex;flex-direction:column;align-items:center;gap:.3rem;height:100%}
@@ -98,6 +102,13 @@ tr.row-late td{background:rgba(179,66,57,.06)}tr.row-soon td{background:rgba(201
 .steps{display:flex;gap:.25rem;margin:.7rem 0 0;flex-wrap:wrap}.steps span{flex:1;min-width:4.2rem;text-align:center;font-size:.7rem;padding:.28rem .2rem;border-radius:.4rem;background:var(--line);color:var(--muted)}.steps span.on{color:#fff}.steps span.cur{font-weight:800;outline:2px solid var(--head);outline-offset:1px}
 #themeBtn{min-width:2.6rem;padding-inline:.6rem}
 @media(max-width:720px){.board{grid-auto-columns:82vw}.bcards{max-height:none}.dash-tools .btn{flex:1}}
+.ftabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:.2rem 0 .8rem;border-bottom:1px solid var(--line);padding-bottom:.6rem}
+.ftab{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;padding:.45rem .95rem;font:inherit;font-size:.85rem;cursor:pointer}
+.ftab b{display:inline-block;min-width:1.4rem;margin-inline-start:.3rem;padding:0 .35rem;border-radius:99px;background:var(--line);font-size:.75rem}
+.ftab.on{background:var(--navy);color:var(--navy-fg);border-color:var(--navy)}.ftab.on b{background:rgba(255,255,255,.2)}
+.fsec{display:flex;align-items:center;gap:.5rem;margin:1.1rem 0 .5rem}.fsec .cnt{font-size:.75rem;background:var(--line);color:var(--ink);border-radius:99px;padding:0 .5rem}
+.row-actions .icon.on{background:var(--navy);color:var(--navy-fg)}.fl-table .prog{width:3.5rem}
+.fl-table table{min-width:0}.fl-table .row-actions{flex-wrap:nowrap;gap:.3rem}.fl-table .acts-cell{white-space:nowrap}
 @media(max-width:1050px){.dash>.stats{grid-template-columns:repeat(auto-fit,minmax(9rem,1fr))}}
 .dash>.panel{grid-column:span 6;margin:0}
 .dash>.panel.full{grid-column:span 12}
@@ -253,7 +264,7 @@ input[type=date]{direction:ltr;text-align:right;font-variant-numeric:tabular-num
       <div style="display:flex;gap:.7rem;align-items:flex-start"><button class="mobile-menu" id="menuBtn" aria-label="القائمة">☰</button><div><h1 id="pageTitle"></h1><p id="pageDesc"></p></div></div>
       <div class="top-actions"><span class="sync"><i class="dot" id="syncDot"></i><span id="syncText"></span></span><select class="inp" id="userSel" title="المستخدم الحالي"></select><button class="btn secondary" id="themeBtn" data-act="theme-toggle" title="الوضع الليلي" aria-label="الوضع الليلي">🌙</button><button class="btn secondary" id="lockBtn" style="display:none"></button><button class="btn primary" id="addBtn"></button></div>
     </header>
-    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 6.2)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
+    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 6.6)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
   </main>
 </div>
 <div class="modal" id="formModal"><div class="modal-box"><div class="modal-head"><h2 id="formTitle"></h2><button class="close" data-close aria-label="رجوع"><span class="m-only">→ رجوع</span><span class="d-only">×</span></button></div><form id="txForm" novalidate></form></div></div>
@@ -382,7 +393,7 @@ const DEFAULT_FIELDS=()=>[
  {id:'received',label:'تاريخ الورود',type:'date',section:'sec_main',builtin:true,locked:true,required:true,visible:true},
  {id:'priority',label:'الأولوية',type:'priority',section:'sec_main',builtin:true,visible:true},
  {id:'status',label:'الحالة',type:'status',section:'sec_main',builtin:true,locked:true,required:true,visible:true},
- {id:'followup',label:'تصنيف المتابعة',type:'follow',section:'sec_rem',builtin:true,visible:true,help:'«عليها متابعة»: محددة بموعد نهائي ويجب أن تصل إلى «مكتملة».'},
+ {id:'followup',label:'تصنيف المعاملة',type:'follow',section:'sec_rem',builtin:true,visible:true,help:'يمكن اختيار أكثر من تصنيف معًا. بدون اختيار = عادية. تُدار من الإعدادات ← المتابعة والتصنيف.'},
  {id:'reminderDate',label:'الموعد النهائي للإنجاز',type:'date',section:'sec_rem',builtin:true,visible:true,showWhen:'follow',help:'تظهر المعاملة «متأخرة» إذا تجاوزت هذا الموعد ولم تكتمل.'},
  {id:'reminderOwner',label:'مسؤول المتابعة',type:'combo',list:'employees',section:'sec_rem',builtin:true,visible:true,showWhen:'follow'},
  {id:'notes',label:'ملاحظات مختصرة',type:'textarea',section:'sec_notes',builtin:true,visible:true,full:true,ph:'اختياري'}
@@ -395,7 +406,7 @@ const DEFAULT_PAGES=()=>[
  {id:'work',kind:'list',builtin:true,title:'جاري العمل',desc:'المعاملات لدى الإدارات المختصة (المتعددة، الثنائية…).',icon:'◔',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_work']},columns:['number','subject','department','employee','received','status']},
  {id:'review',kind:'list',builtin:true,title:'المراجعة والعرض',desc:'المعاملات في إدارة المراجعة والعرض وقسم العرض.',icon:'◌',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_review','s_show']},columns:['number','subject','department','employee','received','status']},
  {id:'outgoing',kind:'list',builtin:true,title:'الصادر',desc:'المعاملات التي تم إصدارها، مع خيار التذكير أو الإغلاق.',icon:'⇧',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_out']},columns:['number','subject','_updated','reminderDate','status']},
- {id:'reminders',kind:'list',builtin:true,title:'المتابعة',desc:'المعاملات المحددة بموعد نهائي ولم تكتمل بعد — الأقرب موعدًا أولًا.',icon:'◷',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{followOnly:true},columns:['number','subject','status','department','reminderDate','_due']},
+ {id:'reminders',kind:'list',builtin:true,title:'المتابعة',desc:'كل معاملة «عليها متابعة» تبقى هنا وهي تتنقل بين المراحل — ثبّت أو أزل ما تريد، والمكتملة تُنظَّف تلقائيًا مع بداية كل أسبوع.',icon:'◷',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{followOnly:true},exports:true,columns:['number','subject','status','department','reminderDate','_due']},
  {id:'closed',kind:'list',builtin:true,title:'المكتملة',desc:'سجل المعاملات التي أُغلقت بعد انتهاء الإجراء والتذكير.',icon:'✓',group:'g_tx',visible:true,toolbar:'basic',addBtn:false,filter:{statuses:['s_done']},columns:['number','subject','topic','_closed','employee']},
  {id:'topics',kind:'topics',builtin:true,title:'الموضوعات المرتبطة',desc:'يجمع الموضوع الأصلي والتذكيرات أو الردود ذات الأرقام المختلفة.',icon:'◎',group:'g_org',visible:true,addBtn:false},
  {id:'audit',kind:'audit',builtin:true,adminOnly:true,title:'سجل النشاط',desc:'حركة المستخدمين: الدخول، والإضافة، والتعديل، والحذف، والصفحات التي زاروها — للمدير فقط.',icon:'☷',group:'g_org',visible:true,addBtn:false},
@@ -406,7 +417,7 @@ const DEFAULT_WIDGETS=()=>[
  {id:'w_new',type:'stat',label:'جديدة',metric:'status',statuses:['s_new'],visible:true},
  {id:'w_prog',type:'stat',label:'قيد الإجراء',metric:'status',statuses:['s_work','s_review','s_show'],visible:true},
  {id:'w_out',type:'stat',label:'الصادر',metric:'status',statuses:['s_out'],visible:true},
- {id:'w_follow',type:'stat',label:'عليها متابعة',metric:'follow',color:'#a86f18',visible:true},
+ {id:'w_follow',type:'stat',label:'تحت المتابعة',metric:'follow',color:'#a86f18',visible:true},
  {id:'w_due',type:'stat',label:'متابعات متأخرة',metric:'due',color:'#b34239',visible:true},
  {id:'w_done',type:'stat',label:'مكتملة',metric:'status',statuses:['s_done'],color:'#28784f',visible:true},
  {id:'w_ontime',type:'stat',label:'الإنجاز في الموعد',metric:'ontime',color:'#28784f',visible:true},
@@ -440,8 +451,16 @@ const defaultCfg=()=>({
  navGroups:[{id:'g_home',title:'الرئيسية'},{id:'g_tx',title:'المعاملات'},{id:'g_org',title:'التنظيم'}],
  pages:DEFAULT_PAGES(),
  widgets:DEFAULT_WIDGETS(),
- export:{columns:['number','topic','subject','type','party','department','employee','status','received','reminderDate','notes'],title:'تقرير المعاملات',file:'معاملات'}
+ export:{columns:['number','topic','subject','type','party','department','employee','status','received','reminderDate','notes'],title:'تقرير المعاملات',file:'معاملات'},
+ follow:FOLLOW_DEF(),search:SEARCH_DEF(),security:SECURITY_DEF()
 });
+/* إعدادات المتابعة والتصنيف */
+function FOLLOW_DEF(){return {normal:'عادية',classes:[{id:'fc_follow',name:'عليها متابعة',days:0,color:'#a86f18',icon:'🔔'},{id:'fc_quick',name:'إنجاز سريع',days:3,color:'#6653a5',icon:'⚡'}],multi:true,requireDate:true,soonDays:3,weekDays:7,weekStart:0,autoClean:true,agingDays:30}}
+/* إعدادات البحث والتصفية */
+const SEARCH_FILTERS=[['qf','البحث داخل حقل محدد'],['status','الحالة'],['type','النوع'],['priority','الأولوية'],['owner','الموظف المسؤول'],['emp','الموظف'],['dept','الإدارة'],['fu','تصنيف المعاملة'],['fdone','حالة الإنجاز'],['party','الجهة'],['dates','التواريخ (من / إلى)']];
+function SEARCH_DEF(){const f={};SEARCH_FILTERS.forEach(([k])=>f[k]=true);return {fields:[],filters:f,advOpen:false}}
+/* إعدادات الأمان */
+function SECURITY_DEF(){return {pinMin:4,idleMin:0}}
 
 function loadCfg(){
   const raw=jparse(store.getItem(KEY_CFG),null);
@@ -457,6 +476,13 @@ function normalizeCfg(c){
   c.theme=Object.assign({},d.theme,c.theme);
   c.export=Object.assign({},d.export,c.export);
   c.texts=c.texts||{};
+  {const F=FOLLOW_DEF();c.follow=Object.assign({},F,c.follow);if(!Array.isArray(c.follow.classes)||!c.follow.classes.length)c.follow.classes=F.classes;
+   c.follow.classes=c.follow.classes.filter(x=>x&&x.name).map((x,i)=>Object.assign({id:'fc_'+i,days:0,color:'#a86f18',icon:''},x));
+   const S=SEARCH_DEF();c.search=Object.assign({},S,c.search);c.search.filters=Object.assign({},S.filters,c.search.filters);if(!Array.isArray(c.search.fields))c.search.fields=[];
+   c.security=Object.assign({},SECURITY_DEF(),c.security);
+   const cl=(o,k,lo,hi,d)=>{const v=Math.round(+o[k]);o[k]=isFinite(v)?Math.min(hi,Math.max(lo,v)):d};
+   cl(c.follow,'soonDays',0,60,3);cl(c.follow,'weekDays',1,60,7);cl(c.follow,'weekStart',0,6,0);cl(c.follow,'agingDays',1,365,30);cl(c.security,'pinMin',4,12,4);cl(c.security,'idleMin',0,480,0);
+   c.follow.classes.forEach(x=>{x.days=Math.min(365,Math.max(0,Math.round(+x.days||0)));if(!/^#[0-9a-f]{6}$/i.test(x.color||''))x.color='#a86f18'})}
   ['statuses','types','priorities','users','sections','fields','navGroups','pages','widgets'].forEach(k=>{if(!Array.isArray(c[k])||!c[k].length)c[k]=d[k]});
   // ضمان وجود الحقول والصفحات الأساسية
   if(!c.fields.some(x=>x.id==='employee')){
@@ -503,6 +529,11 @@ function normalizeCfg(c){
     (c.pages||[]).forEach(p=>{if(p.filter&&Array.isArray(p.filter.statuses))p.filter.statuses=p.filter.statuses.filter(x=>c.statuses.some(s=>s.id===x))});
     /* الإدارات المرتبطة بالمراحل في القائمة */
   }
+  /* 6.3: صفحة المتابعة قابلة للتصدير */
+  if(!c.mig63){c.mig63=true;const rp=(c.pages||[]).find(p=>p.id==='reminders');if(rp&&rp.filter&&rp.filter.followOnly)rp.exports=true}
+  if(!c.mig66){c.mig66=true;(c.widgets||[]).forEach(w=>{if(w.type==='stat'&&w.metric==='quick'){w.metric='cls';w.cls=QUICK}});const ff=(c.fields||[]).find(f=>f.id==='followup');if(ff&&/^«عليها متابعة» أو «إنجاز سريع»/.test(ff.help||''))ff.help=DEFAULT_FIELDS().find(f=>f.id==='followup').help}
+  if(!c.mig65){c.mig65=true;const ff=(c.fields||[]).find(f=>f.id==='followup');if(ff&&ff.label==='تصنيف المتابعة'){ff.label='تصنيف المعاملة';ff.help=DEFAULT_FIELDS().find(f=>f.id==='followup').help}const wf=(c.widgets||[]).find(w=>w.id==='w_follow');if(wf&&wf.label==='عليها متابعة')wf.label='تحت المتابعة'}
+  if(!c.mig64){c.mig64=true;const rp=(c.pages||[]).find(p=>p.id==='reminders');if(rp&&rp.desc==='المعاملات المحددة بموعد نهائي ولم تكتمل بعد — الأقرب موعدًا أولًا.')rp.desc=DEFAULT_PAGES().find(p=>p.id==='reminders').desc}
   /* 6.2: مؤشرات الأداء + لوحة المراحل + عمود التقدم (تُضاف مرة واحدة ويمكن إخفاؤها من الإعدادات) */
   if(!c.mig62){
     c.mig62=true;const DW=DEFAULT_WIDGETS(),DP=DEFAULT_PAGES();
@@ -612,13 +643,30 @@ const T=k=>(cfg.texts&&cfg.texts[k]!=null&&cfg.texts[k]!=='')?cfg.texts[k]:(TEXT
 /* ======================= اختصارات منطقية ======================= */
 const st=n=>cfg.statuses.find(s=>s.name===n);
 const stRole=t=>(st(t.status)||{}).role||'';
-const FOLLOW_OPTS=['عادية','عليها متابعة'];
-const isFollow=t=>t.followup==='عليها متابعة'||stRole(t)==='reminder';
+/* تصنيف المعاملة: «عادية» بدون موعد، و«عليها متابعة» و«إنجاز سريع» لهما موعد نهائي وتدخلان قائمة المتابعة والمؤشر */
+/* التصنيفات تُدار من الإعدادات (cfg.follow.classes)، ويمكن أن تحمل المعاملة أكثر من تصنيف معًا: «عليها متابعة + إنجاز سريع» */
+const FSEP=' + ',QUICK='إنجاز سريع';
+const FC=()=>(cfg.follow&&cfg.follow.classes)||[];
+const fuNormal=()=>(cfg.follow&&cfg.follow.normal)||'عادية';
+const fcByName=n=>FC().find(c=>c.name===n);
+const fuTags=v=>{const out=[];String(v||'').split(/\s*[+،,]\s*/).forEach(x=>{x=x.trim();if(x&&fcByName(x)&&!out.includes(x))out.push(x)});return FC().map(c=>c.name).filter(n=>out.includes(n))};
+const fuJoin=arr=>arr&&arr.length?arr.join(FSEP):fuNormal();
+const fuNorm=v=>fuJoin(fuTags(v));
+const FOLLOW_OPTS_FN=()=>[fuNormal(),...FC().map(c=>c.name)];
+const isFollowVal=v=>fuTags(v).length>0;
+const isFollow=t=>isFollowVal(t.followup)||stRole(t)==='reminder';
+const hasCls=(t,n)=>fuTags(t.followup).includes(n);
+const isQuick=t=>hasCls(t,QUICK);
+/* الموعد الافتراضي: أقصر مدة بين التصنيفات المختارة (0 = بدون موعد تلقائي) */
+const fuDays=v=>{const d=fuTags(v).map(n=>+(fcByName(n)||{}).days||0).filter(x=>x>0);return d.length?Math.min(...d):0};
+const clsChips=t=>fuTags(t.followup).map(n=>{const c=fcByName(n)||{};return `<span class="chip c-cls" style="--cc:${esc(c.color||'#6b7785')}">${esc((c.icon?c.icon+' ':'')+n)}</span>`}).join(' ');
+const clsIcons=t=>fuTags(t.followup).map(n=>(fcByName(n)||{}).icon||'').join('');
+const FCFG=k=>{const f=cfg.follow||{};const d=FOLLOW_DEF()[k];const v=f[k];return (typeof d==='number')?(isFinite(+v)&&v!==''&&v!=null?+v:d):(v==null?d:v)};
 const isOpen=t=>stRole(t)!=='closed';
 /* «متأخرة»: عليها متابعة، لم تكتمل، وتجاوزت الموعد النهائي (حتى لو كانت صادرة) */
 const isDue=t=>isFollow(t)&&isOpen(t)&&!!t.reminderDate&&t.reminderDate<today();
 /* ======================= مؤشرات الأداء ======================= */
-const DAY=864e5,AGE_DAYS=30;
+const DAY=864e5;const AGE_DAYS_FN=()=>Math.max(1,FCFG('agingDays'));
 const ymd=v=>String(v||'').slice(0,10);
 const dDiff=(a,b)=>Math.round((new Date(ymd(b)+'T00:00:00')-new Date(ymd(a)+'T00:00:00'))/DAY);
 const openStages=()=>cfg.statuses.filter(s=>s.role!=='closed');
@@ -632,10 +680,10 @@ function progressOf(t){
 /* مستوى الموعد: متأخرة / قريبة (3 أيام أو أقل) / ضمن الموعد */
 function dueLevel(t){
   if(!isFollow(t)||!isOpen(t)||!t.reminderDate)return '';
-  const d=dDiff(today(),t.reminderDate);return d<0?'late':d<=3?'soon':'ok';
+  const d=dDiff(today(),t.reminderDate);return d<0?'late':d<=FCFG('soonDays')?'soon':'ok';
 }
 const ageOf=t=>dDiff(ymd(t.received)||today(),today());
-const isAged=t=>isOpen(t)&&!!t.received&&ageOf(t)>AGE_DAYS;
+const isAged=t=>isOpen(t)&&!!t.received&&ageOf(t)>AGE_DAYS_FN();
 /* الإنجاز في الموعد: من المعاملات التي عليها متابعة واكتملت، كم منها أُغلق قبل أو في الموعد */
 function onTime(list){
   const done=list.filter(t=>isFollow(t)&&!isOpen(t)&&t.reminderDate);
@@ -673,7 +721,41 @@ function progressBar(t,showLabel){
   const p=progressOf(t),c=(st(t.status)||{}).color||cfg.theme.navy;
   return `<span class="prog" title="${esc(t.status)} — ${p.i} من ${p.n}"><i style="width:${p.pct}%;background:${esc(c)}"></i></span>${showLabel?`<small class="prog-l">${p.i}/${p.n}</small>`:''}`;
 }
+/* نتيجة المعاملة التي عليها متابعة: في الموعد / متأخرة / مفتوحة ضمن الموعد / مفتوحة متأخرة / بدون موعد */
+function followResult(t){
+  if(!isFollow(t))return '';
+  if(!t.reminderDate)return 'nodate';
+  if(!isOpen(t))return ymd(t.closed||t.updated)<=t.reminderDate?'ontime':'late';
+  return isDue(t)?'open-late':'open';
+}
+const FOLLOW_RESULT={ontime:'اكتملت في الموعد',late:'اكتملت بعد الموعد',open:'مفتوحة — ضمن الموعد','open-late':'مفتوحة — متأخرة',nodate:'بدون موعد'};
+/* ===== قائمة المتابعة الأسبوعية =====
+   كل معاملة «عليها متابعة» تبقى في القائمة مهما تغيّرت مرحلتها، إلى أن:
+   - تُزال يدويًا (fhide)، أو
+   - تكتمل قبل بداية الأسبوع الحالي (تنظيف تلقائي كل أحد) — إلا المثبّتة (fpin). */
+const weekStart=()=>{const d=new Date();d.setDate(d.getDate()-((d.getDay()-FCFG('weekStart')+7)%7));return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+function autoHidden(t){
+  if(isOpen(t)||t.fpin||!FCFG('autoClean'))return false;
+  const ws=weekStart();
+  return ymd(t.closed||t.updated)<ws&&!(t.fkeep&&t.fkeep>=ws);
+}
+const inFollowList=t=>isFollow(t)&&(!!t.fpin||(!t.fhide&&!autoHidden(t)));
+function followSection(t){
+  if(t.fpin)return 'pin';
+  if(!isOpen(t))return 'done';
+  if(isDue(t))return 'late';
+  if(t.reminderDate&&dDiff(today(),t.reminderDate)<=FCFG('weekDays'))return 'week';
+  return 'open';
+}
+const FL_SECTIONS=[['pin','📌 المثبّتة','#17324d'],['late','🔴 متأخرة','#b34239'],['week','🟡 موعدها قريب','#a86f18'],['open','⚪ باقي المفتوحة','#6b7785'],['done','✅ أُنجزت هذا الأسبوع','#28784f']];
+function followScopeOk(t,sc){
+  if(sc==='all')return true;
+  if(sc==='done')return !isOpen(t);
+  if(sc==='late'){const r=followResult(t);return r==='late'||r==='open-late'}
+  return isOpen(t);
+}
 function dueChip(t){
+  if(isFollow(t)&&!isOpen(t)){const r=followResult(t);if(r==='ontime')return `<span class="chip c-ok">✓ اكتملت في الموعد</span>`;if(r==='late'){const n=dDiff(t.reminderDate,ymd(t.closed||t.updated));return `<span class="chip c-late">اكتملت بعد الموعد بـ ${n} ${n===1?'يوم':'أيام'}</span>`}return `<span class="chip c-pri">مكتملة · بدون موعد</span>`}
   const lv=dueLevel(t);if(!lv)return isFollow(t)&&isOpen(t)?`<span class="chip c-ok">عليها متابعة · بدون موعد</span>`:'';
   const d=dDiff(today(),t.reminderDate);
   return lv==='late'?`<span class="chip c-late">متأخرة ${-d} ${-d===1?'يوم':'أيام'}</span>`:`<span class="chip ${lv==='soon'?'c-soon':'c-ok'}">${esc(daysLeft(t.reminderDate))}</span>`;
@@ -727,7 +809,7 @@ const fieldLabel=id=>VIRTUAL[id]||(fieldOf(id)||{}).label||id;
 function badge(name){const s=st(name);const c=s?s.color:'#6b7785';return `<span class="badge" style="background:${rgba(c,.14)};color:${c}">${esc(name)}</span>`}
 function getVal(t,f){return f.builtin?t[f.id]:(t.customFields||{})[f.id]}
 function plain(t,f){
-  if(f==='_due')return isDue(t)?T('due.badgeDue'):(isFollow(t)&&isOpen(t)?T('due.badgeSoon'):'');
+  if(f==='_due'){const r=followResult(t);return r?FOLLOW_RESULT[r]:''}
   if(f==='_progress'){const p=progressOf(t);return p.i+'/'+p.n}
   if(f==='_updated')return t.updated||'';
   if(f==='_closed')return t.closed||'';
@@ -735,6 +817,7 @@ function plain(t,f){
   const fd=typeof f==='string'?fieldOf(f):f; if(!fd)return '';
   let v=getVal(t,fd); if(v==null)return '';
   if(fd.type==='checkbox')return v?'نعم':'لا';
+  if(fd.type==='follow')return fuNorm(v);
   return String(v);
 }
 function cell(t,col){
@@ -748,6 +831,7 @@ function cell(t,col){
   const v=getVal(t,f);
   if(f.type==='status')return badge(t.status);
   if(f.type==='date')return v?fmt(v):'—';
+  if(f.type==='follow')return fuTags(v).length?clsChips(t):esc(fuNormal());
   if(f.id==='number')return `<strong>${esc(v)}</strong>`;
   if(f.type==='checkbox')return v?'نعم':'لا';
   if(f.type==='textarea'){const s=String(v||'');return esc(s.length>60?s.slice(0,60)+'…':s)||'—'}
@@ -794,6 +878,7 @@ function edField(fl,vals){
   const k=`data-k="${fl.k}"`;
   switch(fl.type){
     case 'textarea':return `<div class="field" style="margin-bottom:.8rem">${lab}<textarea ${k}>${esc(v)}</textarea>${help}</div>`;
+    case 'date':return `<div class="field" style="margin-bottom:.8rem">${lab}<input type="date" ${k} value="${esc(v)}">${help}</div>`;
     case 'number':return `<div class="field" style="margin-bottom:.8rem">${lab}<input type="number" ${k} value="${esc(v)}" ${fl.min!=null?`min="${fl.min}"`:''} ${fl.max!=null?`max="${fl.max}"`:''}>${help}</div>`;
     case 'color':return `<div class="field" style="margin-bottom:.8rem">${lab}<input type="color" ${k} value="${esc(v||'#888888')}" style="height:2.6rem;padding:.15rem">${help}</div>`;
     case 'check':return `<div class="field" style="margin-bottom:.8rem"><label style="display:flex;gap:.5rem;align-items:center;font-weight:700"><input type="checkbox" ${k} ${v?'checked':''}> ${esc(fl.label)}</label>${help}</div>`;
@@ -877,7 +962,7 @@ function renderPage(){
   const ab=$('#addBtn');ab.textContent=p.addText&&p.kind!=='dashboard'?p.addText:T('btn.add');
   ab.style.display=(p.addBtn!==false&&canAdd()&&p.kind!=='settings')?'':'none';
   if(p.kind==='dashboard')renderDashboard(p);
-  else if(p.kind==='list')renderListPage(p);
+  else if(p.kind==='list')(p.filter&&p.filter.followOnly?renderFollowPage(p):renderListPage(p));
   else if(p.kind==='topics')renderTopics(p);
   else if(p.kind==='settings')renderSettings(p);
   else if(p.kind==='audit')renderAudit(p);
@@ -897,6 +982,8 @@ function metricCount(w){
     case 'mine':return visTx().filter(t=>ownKey(t)===myEmp()&&stRole(t)!=='closed').length;
     case 'ontime':{const o=onTime(visTx());return o.pct==null?'—':o.pct+'٪'}
     case 'aging':return visTx().filter(isAged).length;
+    case 'quick':return visTx().filter(t=>isQuick(t)&&isOpen(t)).length;
+    case 'cls':return visTx().filter(t=>hasCls(t,w.cls||'')&&isOpen(t)).length;
   }
   return 0;
 }
@@ -928,11 +1015,11 @@ function renderWidget(w){
       const rows=workload(visTx()).slice(0,w.limit||12);
       return `<div class="${cls}">${panelHead(w,w.title,w.desc)}<div class="table-wrap cards-m"><table style="min-width:0"><thead><tr><th>الموظف</th><th>مفتوحة</th><th>عليها متابعة</th><th>متأخرة</th><th>أكثر من 30 يومًا</th></tr></thead><tbody>${rows.map(r=>`<tr><td data-label="الموظف"><strong>${esc(r.name)}</strong></td><td data-label="مفتوحة">${r.open}</td><td data-label="عليها متابعة">${r.follow}</td><td data-label="متأخرة"${r.late?' style="color:var(--red);font-weight:800"':''}>${r.late}</td><td data-label="أكثر من 30 يومًا"${r.aged?' style="color:var(--orange);font-weight:700"':''}>${r.aged}</td></tr>`).join('')||'<tr><td colspan="5" class="empty">لا توجد معاملات مفتوحة.</td></tr>'}</tbody></table></div></div>`}
     case 'trend':{
-      const m=monthlyTrend(visTx(),6),max=Math.max(1,...m.map(x=>Math.max(x.inc,x.done)));
+      const m=monthlyTrend(visTx(),Math.min(24,Math.max(3,+w.months||6))),max=Math.max(1,...m.map(x=>Math.max(x.inc,x.done)));
       return `<div class="${cls}">${panelHead(w,w.title,w.desc)}<div class="trend">${m.map(x=>`<div class="tm"><div class="tb"><span class="b inc" style="height:${x.inc/max*100}%" title="وارد: ${x.inc}"><em>${x.inc||''}</em></span><span class="b done" style="height:${x.done/max*100}%" title="مكتمل: ${x.done}"><em>${x.done||''}</em></span></div><small>${esc(x.label)}</small></div>`).join('')}</div><div class="legend"><span><i class="inc"></i>الوارد</span><span><i class="done"></i>المكتمل</span></div></div>`}
     case 'aging':{
       const rows=visTx().filter(isAged).sort((a,b)=>ymd(a.received).localeCompare(ymd(b.received))).slice(0,w.limit||6);
-      return `<div class="${cls}">${panelHead(w,w.title,w.desc)}<div class="topic-list">${rows.map(t=>`<div class="topic-item" data-detail="${esc(t.id)}" style="cursor:pointer"><strong>${esc(t.number)} — ${esc(t.subject)}</strong><small><span style="color:var(--orange);font-weight:700">منذ ${ageOf(t)} يومًا</span> · ${esc(t.status)}${t.department?' · '+esc(t.department):''}${ownKey(t)?' · '+esc(ownKey(t)):''}</small></div>`).join('')||'<div class="empty">لا توجد معاملات مفتوحة منذ أكثر من 30 يومًا 👍</div>'}</div></div>`}
+      return `<div class="${cls}">${panelHead(w,w.title,w.desc)}<div class="topic-list">${rows.map(t=>`<div class="topic-item" data-detail="${esc(t.id)}" style="cursor:pointer"><strong>${esc(t.number)} — ${esc(t.subject)}</strong><small><span style="color:var(--orange);font-weight:700">منذ ${ageOf(t)} يومًا</span> · ${esc(t.status)}${t.department?' · '+esc(t.department):''}${ownKey(t)?' · '+esc(ownKey(t)):''}</small></div>`).join('')||'<div class="empty">لا توجد معاملات مفتوحة منذ أكثر من '+AGE_DAYS_FN()+' يومًا 👍</div>'}</div></div>`}
     case 'byowner':{
       const names=[...new Set([...empList(),...visTx().map(ownKey).filter(Boolean)])];
       const cnt=names.map(n=>[n,visTx().filter(t=>ownKey(t)===n&&stRole(t)!=='closed').length]);
@@ -943,11 +1030,13 @@ function renderWidget(w){
 }
 function renderDashboard(p){
   const ws=cfg.widgets.filter(w=>w.visible!==false);
-  host().innerHTML=`<div class="dash-tools"><button class="btn secondary" data-act="weekly">🗒 التقرير الأسبوعي (PDF)</button><button class="btn secondary" data-act="weekly-doc">Word</button></div>`+(ws.length?`<div class="dash">${(()=>{let h='',run='',k=0;const fl=()=>{if(run)h+=`<div class="stats" style="--n:${Math.min(k,9)}">${run}</div>`;run='';k=0};ws.forEach(w=>{if(w.type==='stat'){run+=renderWidget(w);k++;return}fl();h+=renderWidget(w)});fl();return h})()}</div>`:`<div class="panel"><div class="empty">لا توجد عناصر في لوحة التحكم. أضفها من الإعدادات ← لوحة التحكم.</div></div>`);
+  host().innerHTML=`<div class="dash-tools"><button class="btn secondary" data-act="weekly">🗒 التقرير الأسبوعي (PDF)</button><button class="btn secondary" data-act="weekly-doc">Word</button>${canExport()?'<button class="btn secondary" data-act="follow-report">📊 تقرير مؤشر المتابعة</button>':''}</div>`+(ws.length?`<div class="dash">${(()=>{let h='',run='',k=0;const fl=()=>{if(run)h+=`<div class="stats" style="--n:${Math.min(k,9)}">${run}</div>`;run='';k=0};ws.forEach(w=>{if(w.type==='stat'){run+=renderWidget(w);k++;return}fl();h+=renderWidget(w)});fl();return h})()}</div>`:`<div class="panel"><div class="empty">لا توجد عناصر في لوحة التحكم. أضفها من الإعدادات ← لوحة التحكم.</div></div>`);
 }
 
 /* ======================= صفحات القوائم ======================= */
-function searchText(t){return norm(cfg.fields.map(f=>plain(t,f)).join(' '))}
+/* حقول البحث السريع تُحدَّد من الإعدادات ← البحث والتصفية (بدون اختيار = كل الحقول) */
+const SF=k=>!cfg.search||!cfg.search.filters||cfg.search.filters[k]!==false;
+function searchText(t,which){const ids=(cfg.search&&cfg.search[which||'fields'])||[];const fs=ids.length?cfg.fields.filter(f=>ids.includes(f.id)):cfg.fields;return norm(fs.map(f=>plain(t,f)).join(' '))}
 const DATE_COLS=()=>[['received',fieldLabel('received')],['_updated',VIRTUAL._updated],['reminderDate',fieldLabel('reminderDate')],['_closed',VIRTUAL._closed],['_created',VIRTUAL._created],...cfg.fields.filter(f=>!f.builtin&&f.type==='date').map(f=>[f.id,f.label])];
 function pageRows(p){
   const fl=p.filter||{};
@@ -958,7 +1047,7 @@ function pageRows(p){
     (!(fl.owners||[]).length||fl.owners.includes(ownKey(t)))&&
     (!(fl.priorities||[]).length||fl.priorities.includes(t.priority))&&
     (!fl.dueOnly||isDue(t))&&
-    (!fl.followOnly||(isFollow(t)&&isOpen(t))));
+    (!fl.followOnly||(isFollow(t)&&followScopeOk(t,(UI.filters[p.id]||{}).fscope))));
   const f=UI.filters[p.id]||{};
   const terms=norm(f.q||'').split(/\s+/).filter(Boolean), party=norm(f.party||''), df=f.df||'received';
   rows=rows.filter(t=>{
@@ -969,6 +1058,10 @@ function pageRows(p){
     if(f.owner&&ownerOn()&&t.owner!==f.owner)return false;
     if(f.emp&&t.employee!==f.emp)return false;
     if(f.dept&&t.department!==f.dept)return false;
+    if(f.fu&&(f.fu==='_any'?!isFollow(t):f.fu===fuNormal()?isFollow(t):!hasCls(t,f.fu)))return false;
+    if(f.fdone==='open'&&!isOpen(t))return false;
+    if(f.fdone==='done'&&isOpen(t))return false;
+    if(f.fdone==='late'&&!(isDue(t)||followResult(t)==='late'))return false;
     if(party&&!norm(t.party).includes(party))return false;
     if(f.from||f.to){const d=String(plain(t,df)||'').slice(0,10);if(!d)return false;if(f.from&&d<f.from)return false;if(f.to&&d>f.to)return false}
     return true;
@@ -990,26 +1083,30 @@ function toolbarHtml(p){
     const owners=[...new Set([...empList(),...visTx().map(t=>t.owner).filter(Boolean)])];
     const depts=[...new Set([...(((cfg.lists.departments||{}).items)||[]),...visTx().map(t=>t.department).filter(Boolean)])];
     const anyF=Object.keys(f).some(k=>k!=='q'&&k!=='df'&&f[k]);
-    return `<div class="adv${(UI.advOpen||anyF)?' open':''}">`+
+    return `<div class="adv${(UI.advOpen||anyF||(UI.advOpen==null&&cfg.search.advOpen))?' open':''}">`+
       fld(T('adv.q'),`<input type="search" data-flt="q" value="${esc(f.q||'')}" placeholder="${esc(T('search.ph'))}">`)+
-      fld(T('adv.in'),`<select data-flt="qf">${opt(cfg.fields.map(x=>[x.id,x.label]),f.qf,T('adv.inAll'))}</select>`)+
-      fld(T('adv.status'),`<select data-flt="status">${opt(stNamesAll,f.status,T('filter.allStatuses'))}</select>`)+
-      fld(T('adv.type'),`<select data-flt="type">${opt(cfg.types,f.type,T('filter.allTypes'))}</select>`)+
-      fld(T('adv.priority'),`<select data-flt="priority">${opt(cfg.priorities,f.priority,T('filter.allPriorities'))}</select>`)+
-      (ownerOn()?fld(T('adv.owner'),`<select data-flt="owner">${opt(owners,f.owner,T('filter.allOwners'))}</select>`):'')+
-      (fieldOf('employee')&&fieldOf('employee').visible!==false?fld(T('adv.employee'),`<select data-flt="emp">${opt([...new Set([...listItems(fieldOf('employee')),...visTx().map(t=>t.employee).filter(Boolean)])],f.emp,T('filter.allEmployees'))}</select>`):'')+
-      fld(T('adv.dept'),`<select data-flt="dept">${opt(depts,f.dept,T('filter.allDepts'))}</select>`)+
-      fld(T('adv.party'),`<input data-flt="party" value="${esc(f.party||'')}">`)+
-      fld(T('adv.dateField'),`<select data-flt="df">${DATE_COLS().map(([v,n])=>`<option value="${esc(v)}"${(f.df||'received')===v?' selected':''}>${esc(n)}</option>`).join('')}</select>`)+
+      (SF('qf')?fld(T('adv.in'),`<select data-flt="qf">${opt(cfg.fields.map(x=>[x.id,x.label]),f.qf,T('adv.inAll'))}</select>`):'')+
+      (SF('status')?fld(T('adv.status'),`<select data-flt="status">${opt(stNamesAll,f.status,T('filter.allStatuses'))}</select>`):'')+
+      (SF('type')?fld(T('adv.type'),`<select data-flt="type">${opt(cfg.types,f.type,T('filter.allTypes'))}</select>`):'')+
+      (SF('priority')?fld(T('adv.priority'),`<select data-flt="priority">${opt(cfg.priorities,f.priority,T('filter.allPriorities'))}</select>`):'')+
+      (SF('owner')&&ownerOn()?fld(T('adv.owner'),`<select data-flt="owner">${opt(owners,f.owner,T('filter.allOwners'))}</select>`):'')+
+      (SF('emp')&&fieldOf('employee')&&fieldOf('employee').visible!==false?fld(T('adv.employee'),`<select data-flt="emp">${opt([...new Set([...listItems(fieldOf('employee')),...visTx().map(t=>t.employee).filter(Boolean)])],f.emp,T('filter.allEmployees'))}</select>`):'')+
+      (SF('dept')?fld(T('adv.dept'),`<select data-flt="dept">${opt(depts,f.dept,T('filter.allDepts'))}</select>`):'')+
+      (SF('fu')&&fieldOf('followup')&&fieldOf('followup').visible!==false?fld(fieldLabel('followup'),`<select data-flt="fu">${opt([['_any','تحت المتابعة (كل التصنيفات)'],[fuNormal(),fuNormal()],...FC().map(c=>[c.name,(c.icon?c.icon+' ':'')+c.name])],f.fu,'الكل')}</select>`):'')+
+      (SF('fdone')?fld('حالة الإنجاز',`<select data-flt="fdone">${opt([['open','المفتوحة فقط'],['done','المكتملة فقط'],['late','المتأخرة (المفتوحة والمكتملة بعد موعدها)']],f.fdone,'الكل')}</select>`):'')+
+      (SF('party')?fld(T('adv.party'),`<input data-flt="party" value="${esc(f.party||'')}">`):'')+
+      (SF('dates')?fld(T('adv.dateField'),`<select data-flt="df">${DATE_COLS().map(([v,n])=>`<option value="${esc(v)}"${(f.df||'received')===v?' selected':''}>${esc(n)}</option>`).join('')}</select>`)+
       fld(T('adv.from'),`<input type="date" data-flt="from" value="${esc(f.from||'')}">`)+
-      fld(T('adv.to'),`<input type="date" data-flt="to" value="${esc(f.to||'')}">`)+
+      fld(T('adv.to'),`<input type="date" data-flt="to" value="${esc(f.to||'')}">`):'')+
       `<div class="acts"><button class="btn secondary adv-toggle" data-act="adv-toggle">خيارات البحث المتقدم</button>${clearBtn}${expBtn}<strong id="tCount2" style="margin-inline-start:auto;color:var(--head)"></strong></div></div>`;
   }
   let h='';
   if(tb!=='none')h+=`<input type="search" data-flt="q" value="${esc(f.q||'')}" placeholder="${esc(T('search.ph'))}">`;
   if(tb!=='none'&&stNamesAll.length>1)h+=`<select data-flt="status">${opt(stNamesAll,f.status,T('filter.allStatuses'))}</select>`;
+  if(p.filter&&p.filter.followOnly)h+=`<select data-flt="fscope"><option value="">المفتوحة فقط</option>${[['all','الكل (بما فيها المكتملة)'],['done','المكتملة فقط'],['late','المتأخرة فقط']].map(([v,n])=>`<option value="${v}"${f.fscope===v?' selected':''}>${n}</option>`).join('')}</select>`;
   if(tb!=='none')h+=clearBtn;
   h+=expBtn;
+  if(p.filter&&p.filter.followOnly&&canExport())h+=`<button class="btn primary" data-act="follow-report">📊 تقرير مؤشر المتابعة</button>`;
   return h?`<div class="filters">${h}</div>`:'';
 }
 function renderListPage(p){
@@ -1120,7 +1217,7 @@ UI.board=UI.board||{q:'',follow:false};
 function renderBoard(p){
   const B=UI.board;
   host().innerHTML=`<div class="panel"><div class="panel-head"><div><h2>${esc(p.title)}</h2><p>${esc(p.desc||'')}</p></div></div>
-  <div class="board-tools"><input class="inp" type="search" data-bd="q" value="${esc(B.q)}" placeholder="بحث برقم أو موضوع أو موظف…"><label class="chk"><input type="checkbox" data-bd="follow"${B.follow?' checked':''}> عليها متابعة فقط</label><span class="legend-due"><span class="chip c-late">متأخرة</span><span class="chip c-soon">3 أيام أو أقل</span><span class="chip c-ok">ضمن الموعد</span></span></div>
+  <div class="board-tools"><input class="inp" type="search" data-bd="q" value="${esc(B.q)}" placeholder="بحث برقم أو موضوع أو موظف…"><label class="chk"><input type="checkbox" data-bd="follow"${B.follow?' checked':''}> تحت المتابعة فقط</label><span class="legend-due"><span class="chip c-late">متأخرة</span><span class="chip c-soon">${FCFG('soonDays')} أيام أو أقل</span><span class="chip c-ok">ضمن الموعد</span></span></div>
   <div class="board" id="boardCols"></div></div>`;
   fillBoard();
 }
@@ -1137,11 +1234,55 @@ function fillBoard(){
       ${s.dept?`<div class="bdept">${esc(s.dept)}</div>`:''}
       <div class="bcards">${list.map(t=>{const lv=dueLevel(t);return `<div class="bcard${lv?' lv-'+lv:''}" data-detail="${esc(t.id)}"${canStatusTx(t)?` draggable="true" data-drag="${esc(t.id)}"`:''}>
         <div class="bnum">${esc(t.number)}${t.priority&&t.priority!==cfg.priorities[0]?` <span class="chip c-pri">${esc(t.priority)}</span>`:''}</div>
-        <div class="bsub">${esc(t.subject)}</div>
+        <div class="bsub">${esc(t.subject)}</div>${clsChips(t)}
         <div class="bmeta">${esc([t.department,ownKey(t)].filter(Boolean).join(' · '))}</div>
         ${dueChip(t)}${isAged(t)?`<span class="chip c-age">منذ ${ageOf(t)} يومًا</span>`:''}
         <div class="bprog">${progressBar(t,false)}</div></div>`}).join('')||'<div class="bempty">—</div>'}${closed&&total>15?`<div class="bempty">آخر 15 من ${total}</div>`:''}</div></div>`;
   }).join('');
+}
+
+/* ======================= قائمة المتابعة الأسبوعية ======================= */
+UI.ftab=UI.ftab||'week';
+function flActs(t,mode){
+  if(!canEditTx(t))return '';
+  if(mode==='hidden')return `<button class="icon" data-act="fl-restore" data-id="${esc(t.id)}" title="إرجاع إلى القائمة">↩ إرجاع</button>`;
+  return `<button class="icon${t.fpin?' on':''}" data-act="fl-pin" data-id="${esc(t.id)}" title="${t.fpin?'إلغاء التثبيت':'تثبيت في القائمة'}" aria-label="${t.fpin?'إلغاء التثبيت':'تثبيت'}">📌</button><button class="icon" data-act="fl-hide" data-id="${esc(t.id)}" title="إزالة من القائمة (لا تُحذف المعاملة)" aria-label="إزالة من القائمة">✖</button>`;
+}
+function flTable(list,mode){
+  return `<div class="table-wrap cards-m fl-table"><table><thead><tr><th>${esc(fieldLabel('number'))}</th><th>${esc(fieldLabel('subject'))}</th><th>المرحلة</th><th>الإدارة / الموظف</th><th>${esc(fieldLabel('reminderDate'))}</th><th>الموعد</th><th>التقدم</th>${mode==='hidden'?'<th>سبب الإخفاء</th>':''}<th></th></tr></thead><tbody>
+  ${list.map(t=>`<tr${(lv=>lv==='late'?' class="row-late"':lv==='soon'?' class="row-soon"':'')(dueLevel(t))}><td data-label="${esc(fieldLabel('number'))}"><strong>${esc(t.number)}</strong></td><td data-label="${esc(fieldLabel('subject'))}" class="wrap">${esc(t.subject)} ${clsChips(t)}</td><td data-label="المرحلة">${badge(t.status)}</td><td data-label="الإدارة / الموظف">${esc([t.department,ownKey(t)].filter(Boolean).join(' · ')||'—')}</td><td data-label="${esc(fieldLabel('reminderDate'))}">${t.reminderDate?fmt(t.reminderDate):'—'}</td><td data-label="الموعد">${dueChip(t)||'—'}</td><td data-label="التقدم">${progressBar(t,true)}</td>${mode==='hidden'?`<td data-label="سبب الإخفاء"><small>${t.fhide?'أُزيلت يدويًا · '+esc(tsFmt(t.fhide)):'تنظيف تلقائي — اكتملت قبل هذا الأسبوع'}</small></td>`:''}<td class="acts-cell"><div class="row-actions"><button class="icon" data-detail="${esc(t.id)}">${esc(T('btn.view'))}</button>${flActs(t,mode)}</div></td></tr>`).join('')}
+  </tbody></table></div>`;
+}
+const flTitle=(k,title)=>k==='week'?'🟡 موعدها خلال '+FCFG('weekDays')+' أيام':title;
+function renderFollowPage(p){
+  const cls=UI.fcls||'';const all=visTx().filter(t=>isFollow(t)&&(!cls||hasCls(t,cls))),inList=all.filter(inFollowList),hidden=all.filter(t=>!inFollowList(t));
+  const tab=UI.ftab;
+  const tabs=`<div class="ftabs"><button class="ftab${tab==='week'?' on':''}" data-act="fl-tab" data-id="week">القائمة الأسبوعية <b>${inList.length}</b></button><button class="ftab${tab==='all'?' on':''}" data-act="fl-tab" data-id="all">كل المتابعات <b>${all.length}</b></button><button class="ftab${tab==='hidden'?' on':''}" data-act="fl-tab" data-id="hidden">المُزالة <b>${hidden.length}</b></button></div>`;
+  if(tab==='all'){renderListPage(p);const ph=host().querySelector('.panel-head');if(ph)ph.insertAdjacentHTML('afterend',tabs);return}
+  const tools=`<div class="filters"><select data-fcls>${[['','كل التصنيفات'],...FC().map(c=>[c.name,(c.icon?c.icon+' ':'')+c.name])].map(([v,n])=>`<option value="${esc(v)}"${cls===v?' selected':''}>${esc(n)}</option>`).join('')}</select>${canExport()?`<button class="btn primary" data-act="fl-print">🖨 طباعة القائمة الأسبوعية</button><button class="btn secondary" data-act="fl-print-doc">Word</button><button class="btn secondary" data-act="follow-report">📊 تقرير مؤشر المتابعة</button>`:''}</div>`;
+  let body='';
+  if(tab==='hidden'){
+    body=hidden.length?`<p class="hint" style="margin:0 0 .6rem">المعاملات هنا ما زالت تحت المتابعة ومحسوبة في المؤشر — أُخفيت من القائمة الأسبوعية فقط.</p>`+flTable(hidden.sort((a,b)=>(b.fhide||0)-(a.fhide||0)||ymd(b.closed||b.updated).localeCompare(ymd(a.closed||a.updated))),'hidden'):'<div class="empty">لا توجد معاملات مُزالة.</div>';
+  }else{
+    const ws=weekStart();
+    body=`<p class="hint" style="margin:0 0 .8rem">الأسبوع من ${fmt(ws)} — المعاملة تبقى هنا وهي تتنقل بين المراحل حتى لو صارت «${esc((cfg.statuses.find(s=>s.id==='s_out')||{}).name||'الصادر')}». ${FCFG('autoClean')?'المكتملة تبقى حتى نهاية الأسبوع ثم تُنقل تلقائيًا إلى «المُزالة» (إلا المثبّتة).':'التنظيف التلقائي متوقف من الإعدادات: المكتملة تبقى حتى تُزال يدويًا.'}</p>`+
+      FL_SECTIONS.map(([k,title,color])=>{const list=inList.filter(t=>followSection(t)===k).sort((a,b)=>(a.reminderDate||'9999').localeCompare(b.reminderDate||'9999'));
+        return list.length?`<h3 class="sub fsec" style="color:${color}">${flTitle(k,title)} <span class="cnt">${list.length}</span></h3>`+flTable(list,'week'):''}).join('')||'<div class="empty">القائمة فارغة — لا توجد معاملات عليها متابعة هذا الأسبوع.</div>';
+  }
+  host().innerHTML=`<div class="panel"><div class="panel-head"><div><h2>${esc(p.title)}</h2><p>${esc(p.desc||'')}</p></div>${p.addBtn!==false&&canAdd()?`<button class="btn primary" data-act="add">${esc(p.addText||T('btn.addIn'))}</button>`:''}</div>${tabs}${tools}${body}</div>`;
+}
+function flUpdate(id,fn,msg){
+  const t=transactions.find(x=>x.id===id);if(!t)return;
+  if(!canEditTx(t))return toast(T('viewer'));
+  fn(t);t.rev=Date.now();persistTx();refresh();toast(msg);
+}
+function followWeekHtml(){
+  const inList=visTx().filter(inFollowList),navy=cfg.theme.navy,fg=readable(navy);
+  const sec=FL_SECTIONS.map(([k,title])=>{const list=inList.filter(t=>followSection(t)===k).sort((a,b)=>(a.reminderDate||'9999').localeCompare(b.reminderDate||'9999'));
+    if(!list.length)return '';
+    return '<h3>'+esc(flTitle(k,title))+' ('+list.length+')</h3><table class="grid"><tr><th>#</th><th>رقم المعاملة</th><th>الموضوع</th><th>المرحلة</th><th>الإدارة</th><th>الموظف</th><th>الموعد النهائي</th><th>الحالة</th></tr>'+
+      list.map((t,i)=>'<tr><td>'+(i+1)+'</td><td>'+esc(t.number)+'</td><td>'+esc(t.subject)+(fuTags(t.followup).length?' ['+esc(fuTags(t.followup).join(FSEP))+']':'')+'</td><td>'+esc(t.status)+'</td><td>'+esc(t.department||'')+'</td><td>'+esc(ownKey(t)||'')+'</td><td>'+(t.reminderDate?fmt(t.reminderDate):'—')+'</td><td>'+esc(FOLLOW_RESULT[followResult(t)]||'')+'</td></tr>').join('')+'</table>'}).join('');
+  return '<'+'html dir="rtl" lang="ar"><'+'head><'+'meta charset="utf-8"><'+'title>قائمة المتابعة الأسبوعية</'+'title><'+'style>body{font-family:Tahoma,Arial,sans-serif;padding:18px;font-size:12px;color:#111}h2{margin:0 0 4px}h3{margin:16px 0 6px;font-size:13px}.meta{color:#555;font-size:11px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #999;padding:5px 7px;text-align:right;vertical-align:top}.grid th{background:'+navy+';color:'+fg+'}</'+'style></'+'head><'+'body><h2>قائمة المتابعة الأسبوعية — '+esc(cfg.brand.title||'')+'</h2><p class="meta">'+esc(cfg.brand.org||'')+' — الأسبوع من '+fmt(weekStart())+' — تاريخ الطباعة: '+fmt(today())+' — العدد: '+inList.length+' — أعدّه: '+esc(me().name)+'</p>'+(sec||'<p>القائمة فارغة.</p>')+'</'+'body></'+'html>';
 }
 
 /* ======================= الحفظ ======================= */
@@ -1172,20 +1313,33 @@ function fieldInput(f,val){
     case 'type':return selectHtml(a,cfg.types,val,false);
     case 'priority':return selectHtml(a,cfg.priorities,val,false);
     case 'status':return selectHtml(a,cfg.statuses.map(s=>s.name),val,false);
-    case 'follow':return selectHtml(a,FOLLOW_OPTS,val||FOLLOW_OPTS[0],false);
+    case 'follow':{const tags=fuTags(val),multi=FCFG('multi');
+      return `<input type="hidden" ${a} value="${esc(fuJoin(tags))}"><div class="fu-pick">`+
+        (multi?'':`<label class="fu-opt"><input type="radio" name="fu_pick" data-fuc=""${tags.length?'':' checked'}> ${esc(fuNormal())}</label>`)+
+        FC().map(c=>`<label class="fu-opt" style="--cc:${esc(c.color||'#6b7785')}"><input type="${multi?'checkbox':'radio'}" name="fu_pick" data-fuc="${esc(c.name)}"${tags.includes(c.name)?' checked':''}> ${esc((c.icon?c.icon+' ':'')+c.name)}${+c.days>0?` <small>(${+c.days} ${+c.days<=10?'أيام':'يومًا'})</small>`:''}</label>`).join('')+
+        `</div>`}
     default:return `<input ${a}${ph} value="${esc(val)}">`;
   }
 }
 function syncCond(){
   const sel=$('#f_status');const role=sel?((st(sel.value)||{}).role||''):'';
-  const fu=$('#f_followup');const on=role==='reminder'||(fu&&fu.value==='عليها متابعة');
+  const fu=$('#f_followup');
+  if(fu&&$('#txForm [data-fuc]'))fu.value=fuJoin($$('#txForm [data-fuc]').filter(x=>x.checked&&x.dataset.fuc).map(x=>x.dataset.fuc));
+  const on=role==='reminder'||(fu&&isFollowVal(fu.value));
+  /* موعد افتراضي حسب مدة التصنيف (مثل «إنجاز سريع» = 3 أيام) — يُعبّأ إذا كان فارغًا أو معبّأً تلقائيًا، ويمكن تعديله */
+  const rd=$('#f_reminderDate');
+  if(fu&&rd&&(!rd.value||rd.value===rd.dataset.auto)){
+    const n=fuDays(fu.value);let v='';
+    if(n){const d=new Date();d.setDate(d.getDate()+n);v=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+    if(v||rd.dataset.auto){rd.value=v;rd.dataset.auto=v;const h=rd.parentElement.querySelector('[data-dh]');if(h)h.textContent=v?fmt(v):''}
+  }
   $$('#txForm [data-when]').forEach(el=>{el.style.display=on?'':'none'});
 }
 function openForm(id){
   const t=id?transactions.find(x=>x.id===id):null;
   if(t?!canEditTx(t):!canAdd())return toast(T('viewer'));
   $('#formTitle').textContent=t?T('form.editTitle'):T('form.addTitle');
-  const defs={department:cfg.brand.org,owner:ownerOn()?myEmp():'',employee:empList().includes(myEmp())?myEmp():'',reminderOwner:myEmp(),followup:FOLLOW_OPTS[0],received:today(),status:defStatus(),type:cfg.types[0]||'',priority:cfg.priorities[0]||''};
+  const defs={department:cfg.brand.org,owner:ownerOn()?myEmp():'',employee:empList().includes(myEmp())?myEmp():'',reminderOwner:myEmp(),followup:fuNormal(),received:today(),status:defStatus(),type:cfg.types[0]||'',priority:cfg.priorities[0]||''};
   let html=`<input type="hidden" id="editId" value="${esc(t?t.id:'')}"><div class="form-grid">`;
   cfg.sections.forEach(sec=>{
     if(sec.visible===false)return;
@@ -1212,12 +1366,12 @@ function logChanges(t,o){
   if(o.isNew){
     if(fv('department')&&t.department)n.push(fieldLabel('department')+': '+t.department);
     if(fv('employee')&&t.employee)n.push(fieldLabel('employee')+': '+t.employee);
-    if(t.followup==='عليها متابعة')n.push('عليها متابعة'+(t.reminderDate?' — '+fieldLabel('reminderDate')+': '+fmt(t.reminderDate):''));
+    if(isFollowVal(t.followup))n.push(t.followup+(t.reminderDate?' — '+fieldLabel('reminderDate')+': '+fmt(t.reminderDate):''));
   }else{
     if(fv('department')&&(t.department||'')!==o.dept)n.push('تحويل '+fieldLabel('department')+': '+(o.dept||'—')+' ← '+(t.department||'—'));
     if(fv('employee')&&(t.employee||'')!==o.emp)n.push('إسناد '+fieldLabel('employee')+': '+(o.emp||'—')+' ← '+(t.employee||'—'));
     if((t.followup||'')!==o.follow&&o.follow!=='')n.push(fieldLabel('followup')+': '+(t.followup||'—'));
-    else if(t.followup==='عليها متابعة'&&(t.reminderDate||'')!==o.deadline)n.push(fieldLabel('reminderDate')+': '+(t.reminderDate?fmt(t.reminderDate):'—'));
+    else if(isFollowVal(t.followup)&&(t.reminderDate||'')!==o.deadline)n.push(fieldLabel('reminderDate')+': '+(t.reminderDate?fmt(t.reminderDate):'—'));
   }
   if(!n.length)return;
   if(t.history.length>o.hl)t.history[t.history.length-1][3]=n.join(' · ');else t.history.push([today(),t.status,me().name,n.join(' · ')]);
@@ -1238,7 +1392,8 @@ function saveForm(){
     if(f.required&&f.type!=='checkbox'&&!hiddenCond&&v===''){toast('أكمل الحقل: '+f.label);el.focus();return}
     vals[f.id]=v;
   }
-  if(vals.followup==='عليها متابعة'&&('reminderDate' in vals)&&!vals.reminderDate){toast('حدّد '+fieldLabel('reminderDate')+' للمعاملة التي عليها متابعة');const e=$('#f_reminderDate');if(e)e.focus();return}
+  if('followup' in vals)vals.followup=fuNorm(vals.followup);
+  if(FCFG('requireDate')&&isFollowVal(vals.followup)&&('reminderDate' in vals)&&!vals.reminderDate){toast('حدّد '+fieldLabel('reminderDate')+' للمعاملة المصنّفة: '+vals.followup);const e=$('#f_reminderDate');if(e)e.focus();return}
   const num=numKey(vals.number);
   if(transactions.some(x=>x.id!==(t&&t.id)&&numKey(x.number)===num))return toast(T('msg.dupNumber'));
   const isNew=!t;
@@ -1264,7 +1419,7 @@ function openDetail(id){
   const rem=isFollow(t);
   const rows=cfg.fields.filter(f=>f.visible!==false&&f.id!=='status'&&f.id!=='number'&&f.id!=='type'&&f.id!=='topic'&&((f.showWhen!=='reminder'&&f.showWhen!=='follow')||rem)).map(f=>{
     const v=getVal(t,f);
-    const shown=(v===''||v==null)?'—':(f.type==='date'?fmt(v):f.type==='checkbox'?(v?'نعم':'لا'):esc(v));
+    const shown=(v===''||v==null)?'—':(f.type==='date'?fmt(v):f.type==='checkbox'?(v?'نعم':'لا'):f.type==='follow'?(fuTags(v).length?clsChips(t):esc(fuNormal())):esc(v));
     return `<p style="margin:.5rem 0"><strong>${esc(f.label)}:</strong> ${shown}</p>`;
   }).join('');
   const stSel=canStatusTx(t)?`<div class="field" style="margin-top:1rem"><label>${esc(T('detail.status'))}</label><div style="display:flex;gap:.5rem;flex-wrap:wrap"><select class="inp" id="detSt">${cfg.statuses.map(s=>`<option${s.name===t.status?' selected':''}>${esc(s.name)}</option>`).join('')}</select><button class="btn secondary" data-act="set-status" data-id="${esc(t.id)}">${esc(T('btn.changeStatus'))}</button></div></div>`:'';
@@ -1272,7 +1427,7 @@ function openDetail(id){
   const steps=`<div class="steps">${cfg.statuses.map((s,i)=>{const on=closedT||i<=cur;return `<span class="${on?'on':''}${i===cur?' cur':''}" style="${on?'background:'+esc(s.color):''}">${esc(s.name)}</span>`}).join('')}</div>`;
   $('#detailBody').innerHTML=`<div class="notice"><strong>${esc(t.number)}</strong> · ${esc(t.type)} · ${esc(fieldLabel('topic'))}: <strong>${esc(t.topic)}</strong> · ${badge(t.status)} ${dueChip(t)}${isAged(t)?`<span class="chip c-age">مفتوحة منذ ${ageOf(t)} يومًا</span>`:''}${steps}</div>
   <div class="grid2"><div>${rows}${stSel}</div><div><h3 class="sub" style="margin-top:0">${esc(T('detail.timeline'))}</h3><div class="timeline">${(t.history||[]).map(h=>`<div class="event"><strong>${badge(h[1])}</strong><small>${fmt(h[0])} · ${esc(h[2])}</small>${h[3]?`<span class="note">${esc(h[3])}</span>`:''}</div>`).join('')||'<small>—</small>'}</div></div></div>
-  <div class="form-actions"><button class="btn secondary" type="button" data-close>→ رجوع</button>${canEditTx(t)?`<button class="btn primary" data-edit="${esc(t.id)}">${esc(T('btn.edit'))}</button>`:''}${canDeleteTx(t)?`<button class="btn danger" data-del="${esc(t.id)}">${esc(T('btn.delete'))}</button>`:''}</div>`;
+  <div class="form-actions"><button class="btn secondary" type="button" data-close>→ رجوع</button>${isFollow(t)&&canEditTx(t)?(inFollowList(t)?`<button class="btn secondary" data-act="fl-pin" data-id="${esc(t.id)}">📌 ${t.fpin?'إلغاء التثبيت':'تثبيت في المتابعة'}</button><button class="btn secondary" data-act="fl-hide" data-id="${esc(t.id)}">✖ إزالة من المتابعة</button>`:`<button class="btn secondary" data-act="fl-restore" data-id="${esc(t.id)}">↩ إرجاع إلى المتابعة</button>`):''}${canEditTx(t)?`<button class="btn primary" data-edit="${esc(t.id)}">${esc(T('btn.edit'))}</button>`:''}${canDeleteTx(t)?`<button class="btn danger" data-del="${esc(t.id)}">${esc(T('btn.delete'))}</button>`:''}</div>`;
   openModal('detailModal');
 }
 function setStatus(id,name){
@@ -1313,6 +1468,9 @@ function criteriaText(p){
   const f=UI.filters[p.id]||{},out=[];
   if(f.q)out.push(T('adv.q')+': '+f.q+(f.qf?' ('+fieldLabel(f.qf)+')':''));
   [['status','adv.status'],['type','adv.type'],['priority','adv.priority'],['owner','adv.owner'],['emp','adv.employee'],['dept','adv.dept'],['party','adv.party']].forEach(([k,t])=>{if(f[k])out.push(T(t)+': '+f[k])});
+  if(f.fu)out.push(fieldLabel('followup')+': '+f.fu);
+  if(f.fdone)out.push('حالة الإنجاز: '+({open:'المفتوحة',done:'المكتملة',late:'المتأخرة'})[f.fdone]);
+  if(f.fscope)out.push('المتابعة: '+({all:'الكل بما فيها المكتملة',done:'المكتملة',late:'المتأخرة'})[f.fscope]);
   if(f.from||f.to)out.push(fieldLabel(f.df||'received')+': '+(f.from?T('adv.from')+' '+fmt(f.from):'')+(f.to?' '+T('adv.to')+' '+fmt(f.to):''));
   return out.join(' | ');
 }
@@ -1398,6 +1556,63 @@ function weeklyReport(format){
   printHtml(html);
 }
 
+/* ======================= تقرير مؤشر المتابعة ======================= */
+function openFollowReport(){
+  if(!canExport())return toast(T('viewer'));
+  const last=UI.frep||{basis:'received',scope:'all',fmt:'pdf',from:'',to:''};
+  openEditor({title:'تقرير مؤشر المتابعة',saveText:'إصدار التقرير',
+    intro:'يشمل كل المعاملات تحت المتابعة ('+FC().map(c=>'«'+c.name+'»').join(' و')+') — المفتوحة والمكتملة — مع نسبة الإنجاز في الموعد. المعاملة التي تحمل أكثر من تصنيف تُحسب مرة واحدة في الإجمالي وتظهر تحت كل تصنيف في جدول «حسب التصنيف». اترك التاريخين فارغين لكل الفترات.',
+    fields:[{k:'from',label:'من تاريخ',type:'date'},{k:'to',label:'إلى تاريخ',type:'date'},
+      {k:'basis',label:'الفترة حسب',type:'select',opts:[['received',fieldLabel('received')],['reminderDate',fieldLabel('reminderDate')],['closed','تاريخ الإغلاق']]},
+      {k:'cls',label:fieldLabel('followup'),type:'select',opts:[['','كل التصنيفات'],...FC().map(c=>[c.name,c.name])]},
+      {k:'scope',label:'المعاملات',type:'select',opts:[['all','الكل (المفتوحة والمكتملة)'],['done','المكتملة فقط'],['open','المفتوحة فقط'],['late','المتأخرة فقط (المفتوحة والمكتملة بعد الموعد)']]},
+      {k:'fmt',label:'الصيغة',type:'select',opts:[['pdf','PDF / طباعة'],['word','Word'],['excel','Excel'],['csv','CSV']]}],
+    values:last,onSave:v=>{UI.frep=v;followReport(v)}});
+}
+function followReport(o){
+  o=o||{};
+  const inP=t=>{const d=ymd(o.basis==='closed'?(isOpen(t)?'':(t.closed||t.updated)):o.basis==='reminderDate'?t.reminderDate:t.received);if(!o.from&&!o.to)return true;if(!d)return false;return (!o.from||d>=o.from)&&(!o.to||d<=o.to)};
+  let rows=visTx().filter(t=>isFollow(t)&&inP(t)&&(!o.cls||hasCls(t,o.cls)));
+  const R=t=>followResult(t);
+  if(o.scope==='done')rows=rows.filter(t=>!isOpen(t));else if(o.scope==='open')rows=rows.filter(isOpen);else if(o.scope==='late')rows=rows.filter(t=>R(t)==='late'||R(t)==='open-late');
+  if(!rows.length)return toast('لا توجد معاملات عليها متابعة في هذه الفترة');
+  rows.sort((a,b)=>(a.reminderDate||'9999').localeCompare(b.reminderDate||'9999'));
+  logEvent('export',{d:'تقرير مؤشر المتابعة — '+rows.length+' معاملة'});
+  const cnt=k=>rows.filter(t=>R(t)===k).length;
+  const done=cnt('ontime')+cnt('late'),pct=done?Math.round(cnt('ontime')/done*100):null;
+  const lateAll=cnt('late')+cnt('open-late');
+  const diffTxt=t=>{const r=R(t);if(r==='ontime'||r==='late'){const n=dDiff(t.reminderDate,ymd(t.closed||t.updated));return n>0?'بعد الموعد بـ '+n+' يوم':(n<0?'قبل الموعد بـ '+(-n)+' يوم':'في يوم الموعد')}if(r==='open-late')return 'متأخرة '+(-dDiff(today(),t.reminderDate))+' يوم';if(r==='open')return daysLeft(t.reminderDate);return '—'};
+  const group=key=>{const m={};rows.forEach(t=>{const ks=key==='cls'?(fuTags(t.followup).length?fuTags(t.followup):['— (حسب المرحلة)']):[(key==='emp'?ownKey(t):t.department)||'—'];ks.forEach(k=>{const g=m[k]=m[k]||{n:0,ontime:0,late:0,open:0,olate:0,nodate:0};g.n++;const r=R(t);if(r==='ontime')g.ontime++;else if(r==='late')g.late++;else if(r==='open')g.open++;else if(r==='open-late')g.olate++;else g.nodate++})});
+    return Object.entries(m).sort((a,b)=>b[1].n-a[1].n).map(([k,g])=>[k,g.n,g.ontime,g.late,g.open,g.olate,(g.ontime+g.late)?Math.round(g.ontime/(g.ontime+g.late)*100)+'٪':'—'])};
+  const cols=['رقم المعاملة','الموضوع',fieldLabel('followup'),'المرحلة','الإدارة','الموظف',fieldLabel('received'),fieldLabel('reminderDate'),'تاريخ الإغلاق','النتيجة','الفرق'];
+  const data=rows.map(t=>[t.number,t.subject,t.followup||'',t.status,t.department||'',ownKey(t)||'',t.received||'',t.reminderDate||'',isOpen(t)?'':ymd(t.closed||t.updated),FOLLOW_RESULT[R(t)]||'',diffTxt(t)]);
+  const name='تقرير_مؤشر_المتابعة_'+today();
+  if(o.fmt==='csv'||o.fmt==='excel'){
+    if(o.fmt==='csv'){const q=v=>{v=String(v);if(/^[=@]/.test(v)||(/^[+\-]/.test(v)&&isNaN(v)))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'};return download('﻿'+[cols,...data].map(r=>r.map(q).join(',')).join('\r\n'),name+'.csv','text/csv;charset=utf-8')}
+    return download('<'+'html dir="rtl"><'+'head><'+'meta charset="utf-8"></'+'head><'+'body><table border="1"><tr>'+cols.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr>'+data.map(r=>'<tr>'+r.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('')+'</table></'+'body></'+'html>',name+'.xls','application/vnd.ms-excel');
+  }
+  const navy=cfg.theme.navy,fg=readable(navy);
+  const kpi=(n,l,c)=>'<td class="k"><div class="n" style="color:'+(c||navy)+'">'+n+'</div><div class="l">'+esc(l)+'</div></td>';
+  const tbl=(h,rs,cls)=>'<table class="grid'+(cls?' '+cls:'')+'"><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr>'+rs.map(r=>'<tr>'+r.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('')+'</table>';
+  const resColor={'اكتملت في الموعد':'#28784f','اكتملت بعد الموعد':'#b34239','مفتوحة — متأخرة':'#b34239','مفتوحة — ضمن الموعد':'#a86f18'};
+  const per=(o.from||o.to)?('الفترة ('+({received:fieldLabel('received'),reminderDate:fieldLabel('reminderDate'),closed:'تاريخ الإغلاق'})[o.basis||'received']+'): '+(o.from?fmt(o.from):'البداية')+' إلى '+(o.to?fmt(o.to):'اليوم')):'كل الفترات';
+  const detail='<table class="grid"><tr>'+cols.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr>'+data.map(r=>'<tr>'+r.map((v,i)=>'<td'+(i===9&&resColor[v]?' style="color:'+resColor[v]+';font-weight:bold"':'')+'>'+esc(i>=6&&i<=8&&v?fmt(v):v)+'</td>').join('')+'</tr>').join('')+'</table>';
+  const html='<'+'html dir="rtl" lang="ar"><'+'head><'+'meta charset="utf-8"><'+'title>تقرير مؤشر المتابعة</'+'title><'+'style>'+
+    'body{font-family:Tahoma,Arial,sans-serif;padding:18px;color:#111;font-size:12px}h2{margin:0 0 4px}h3{margin:18px 0 6px;font-size:13px;color:'+navy+'}'+
+    '.meta{color:#555;font-size:11px;margin:0 0 12px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #999;padding:5px 7px;text-align:right;vertical-align:top}'+
+    '.grid th{background:'+navy+';color:'+fg+'}.kpis td{border:1px solid #ccc;text-align:center;padding:8px}.k .n{font-size:20px;font-weight:bold}.k .l{font-size:11px;color:#444}'+
+    '.big{font-size:15px;margin:10px 0;padding:10px;border:2px solid '+navy+';text-align:center}'+
+    '</'+'style></'+'head><'+'body><h2>تقرير مؤشر المتابعة — '+esc(cfg.brand.title||'')+'</h2><p class="meta">'+esc(cfg.brand.org||'')+' — '+esc(per)+' — تاريخ التقرير: '+fmt(today())+' — أعدّه: '+esc(me().name)+'</p>'+
+    '<div class="big">مؤشر الإنجاز في الموعد: <b style="color:#28784f">'+(pct==null?'—':pct+'٪')+'</b> ('+cnt('ontime')+' من '+done+' معاملة مكتملة)</div>'+
+    '<table class="kpis"><tr>'+kpi(rows.length,'إجمالي تحت المتابعة')+FC().map(c=>kpi(rows.filter(t=>hasCls(t,c.name)).length,'منها '+c.name,c.color)).join('')+(rows.some(t=>fuTags(t.followup).length>1)?kpi(rows.filter(t=>fuTags(t.followup).length>1).length,'تحمل أكثر من تصنيف','#2f7f86'):'')+kpi(cnt('ontime'),'اكتملت في الموعد','#28784f')+kpi(cnt('late'),'اكتملت بعد الموعد','#b34239')+kpi(cnt('open'),'مفتوحة ضمن الموعد','#a86f18')+kpi(cnt('open-late'),'مفتوحة متأخرة','#b34239')+kpi(cnt('nodate'),'بدون موعد','#6b7785')+kpi(rows.length?Math.round(lateAll/rows.length*100)+'٪':'—','نسبة التأخر الكلية','#b34239')+'</tr></table>'+
+    '<h3>حسب التصنيف</h3>'+tbl([fieldLabel('followup'),'الإجمالي','في الموعد','بعد الموعد','مفتوحة','مفتوحة متأخرة','الإنجاز في الموعد'],group('cls'))+
+    '<h3>حسب الإدارة</h3>'+tbl(['الإدارة','الإجمالي','في الموعد','بعد الموعد','مفتوحة','مفتوحة متأخرة','الإنجاز في الموعد'],group('dept'))+
+    '<h3>حسب الموظف</h3>'+tbl(['الموظف','الإجمالي','في الموعد','بعد الموعد','مفتوحة','مفتوحة متأخرة','الإنجاز في الموعد'],group('emp'))+
+    '<h3>تفاصيل المعاملات ('+rows.length+')</h3>'+detail+'</'+'body></'+'html>';
+  if(o.fmt==='word')return download(html,name+'.doc','application/msword');
+  printHtml(html);
+}
+
 /* ======================= Excel: قالب للتعبئة واستيراد (xlsx بدون مكتبات خارجية) ======================= */
 const CRC_T=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);t[n]=c>>>0}return t})();
 function crc32(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=CRC_T[(c^b[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
@@ -1462,7 +1677,7 @@ function fieldList(f){
   if(f.type==='status')return cfg.statuses.map(s=>s.name);
   if(f.type==='type')return cfg.types;
   if(f.type==='priority')return cfg.priorities;
-  if(f.type==='follow')return FOLLOW_OPTS;
+  if(f.type==='follow')return FOLLOW_OPTS_FN();
   if(f.type==='select'||f.type==='combo')return listItems(f);
   if(f.type==='checkbox')return ['نعم','لا'];
   return null;
@@ -1600,6 +1815,7 @@ function applyImport(items){
       if(f.type==='status')v=ensureStatusName(v);
       else if(f.type==='type'){if(!cfg.types.includes(v))cfg.types.push(v)}
       else if(f.type==='priority'){if(!cfg.priorities.includes(v))cfg.priorities.push(v)}
+      else if(f.type==='follow')v=fuNorm(v);
       else if((f.type==='combo'||f.type==='select')&&cfg.lists[f.list]){if(!cfg.lists[f.list].items.includes(v))cfg.lists[f.list].items.push(v)}
       if(f.builtin)t[id]=v;else t.customFields[id]=v;
     });
@@ -1640,10 +1856,10 @@ function handleExcelImport(file){
 }
 
 /* ======================= الإعدادات ======================= */
-const TABS=[['general','عام'],['pages','الصفحات'],['dashboard','لوحة التحكم'],['fields','الحقول والأقسام'],['lists','الحالات والقوائم'],['texts','النصوص'],['theme','الألوان والمظهر'],['users','المستخدمون'],['export','التصدير'],['sync','الربط والنسخ']];
+const TABS=[['general','عام'],['pages','الصفحات'],['dashboard','لوحة التحكم'],['fields','الحقول والأقسام'],['lists','الحالات والقوائم'],['follow','المتابعة والتصنيف'],['search','البحث والتصفية'],['texts','النصوص'],['theme','الألوان والمظهر'],['users','المستخدمون'],['security','الأمان'],['export','التصدير'],['sync','الربط والنسخ']];
 const KIND_NAMES={dashboard:'لوحة تحكم',list:'قائمة معاملات',topics:'موضوعات',settings:'إعدادات'};
 const WIDGET_NAMES={stat:'بطاقة إحصاء',recent:'جدول آخر المعاملات',due:'قائمة المتابعات',bystatus:'توزيع الحالات',byowner:'توزيع الموظفين',stagetime:'متوسط مدة المراحل',workload:'حمل الموظفين',trend:'الاتجاه الشهري',aging:'أقدم المعاملات المفتوحة'};
-const METRICS=[['total','إجمالي المعاملات'],['status','عدد المعاملات في حالات محددة'],['due','المتابعات المتأخرة'],['follow','عليها متابعة ولم تكتمل'],['ontime','نسبة الإنجاز في الموعد'],['aging','مفتوحة أكثر من 30 يومًا'],['today','الواردة اليوم'],['mine','المفتوحة للمستخدم الحالي']];
+const METRICS=[['total','إجمالي المعاملات'],['status','عدد المعاملات في حالات محددة'],['due','المتابعات المتأخرة'],['follow','عليها متابعة ولم تكتمل'],['ontime','نسبة الإنجاز في الموعد'],['aging','المتقادمة (مفتوحة أكثر من المدة المحددة في المتابعة)'],['cls','تصنيف محدد (المفتوحة) — مثل إنجاز سريع'],['today','الواردة اليوم'],['mine','المفتوحة للمستخدم الحالي']];
 const FIELD_TYPES=[['text','نص قصير'],['textarea','نص طويل'],['number','رقم'],['date','تاريخ'],['combo','قائمة: اختيار أو كتابة قيمة جديدة تُحفظ'],['select','قائمة: اختيار فقط'],['checkbox','نعم / لا']];
 const isListType=t=>t==='select'||t==='combo';
 const listArr=key=>(key==='types'||key==='priorities')?cfg[key]:((cfg.lists[key]||{}).items||[]);
@@ -1664,9 +1880,9 @@ const usedCount=name=>transactions.filter(t=>t.status===name).length;
 
 function renderSettings(){
   if(!settingsAllowed()){host().innerHTML=`<div class="panel"><div class="empty">${esc(T('noaccess'))}</div></div>`;return}
-  const tabs=TABS.filter(t=>t[0]!=='users'||isAdmin());if(!tabs.some(t=>t[0]===UI.tab))UI.tab='general';
+  const tabs=TABS.filter(t=>(t[0]!=='users'&&t[0]!=='security')||isAdmin());if(!tabs.some(t=>t[0]===UI.tab))UI.tab='general';
   host().innerHTML=`<div class="tabs">${tabs.map(([k,n])=>`<button class="tab${UI.tab===k?' active':''}" data-act="tab" data-tab="${k}">${n}</button>`).join('')}</div><div class="panel" id="tabBody"></div>`;
-  const fn={general:tabGeneral,pages:tabPages,dashboard:tabDashboard,fields:tabFields,lists:tabLists,texts:tabTexts,theme:tabTheme,users:tabUsers,export:tabExport,sync:tabSync}[UI.tab]||tabGeneral;
+  const fn={general:tabGeneral,pages:tabPages,dashboard:tabDashboard,fields:tabFields,lists:tabLists,follow:tabFollow,search:tabSearch,security:tabSecurity,texts:tabTexts,theme:tabTheme,users:tabUsers,export:tabExport,sync:tabSync}[UI.tab]||tabGeneral;
   $('#tabBody').innerHTML=fn();
   if(UI.tab==='sync'){renderSyncUi();renderFileUi()}
 }
@@ -1677,7 +1893,7 @@ function tabGeneral(){
   return sh('الهوية العامة','تظهر في الشريط الجانبي وعنوان التبويب.')+
   `<div class="form-grid two">${inp('brand.title','عنوان النظام')}${inp('brand.subtitle','العنوان الفرعي')}${inp('brand.mark','حرف الشعار','maxlength="2"')}${inp('brand.org','اسم الجهة / الإدارة الافتراضي','')}</div>
   <p class="notice" style="margin-top:1rem">اسم الجهة يُستخدم كقيمة افتراضية لحقل "الإدارة" عند إضافة معاملة جديدة.</p>
-  <p class="sync" style="margin-top:.8rem">الإصدار 6.2 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
+  <p class="sync" style="margin-top:.8rem">الإصدار 6.6 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
   <hr class="sep"><h3 class="sub">إعادة الضبط</h3>
   <p class="notice warn">إعادة الضبط تُرجع الصفحات والحقول والحالات والنصوص والألوان والمستخدمين للوضع الافتراضي. المعاملات المسجلة لا تُحذف.</p>
   <div class="form-actions"><button class="btn danger" data-act="reset-cfg">إعادة ضبط كل الإعدادات</button></div>`;
@@ -1754,18 +1970,19 @@ function editWidget(id,newType){
   const w=id?cfg.widgets.find(x=>x.id===id):null, type=w?w.type:newType;
   const pageOpts=[['','بدون رابط'],...cfg.pages.filter(p=>p.kind!=='settings'&&p.kind!=='dashboard').map(p=>[p.id,p.title])];
   let f=[];
-  if(type==='stat')f=[{k:'label',label:'نص البطاقة',req:true},{k:'metric',label:'ما الذي تعدّه البطاقة؟',type:'select',opts:METRICS},{k:'statuses',label:'الحالات (تُستخدم مع "حالات محددة")',type:'multi',opts:statusOpts()},{k:'useColor',label:'لون مخصص للرقم',type:'check'},{k:'color',label:'اللون',type:'color'}];
+  if(type==='stat')f=[{k:'label',label:'نص البطاقة',req:true},{k:'metric',label:'ما الذي تعدّه البطاقة؟',type:'select',opts:METRICS},{k:'cls',label:'التصنيف (يُستخدم مع "تصنيف محدد")',type:'select',opts:FC().map(c=>[c.name,c.name])},{k:'statuses',label:'الحالات (تُستخدم مع "حالات محددة")',type:'multi',opts:statusOpts()},{k:'useColor',label:'لون مخصص للرقم',type:'check'},{k:'color',label:'اللون',type:'color'}];
   else{
     f=[{k:'title',label:'العنوان',req:true},{k:'desc',label:'الوصف',type:'textarea'}];
     if(type==='recent'||type==='due'||type==='aging'||type==='workload')f.push({k:'limit',label:'عدد الصفوف',type:'number',min:1,max:50});
     if(type==='recent')f.push({k:'columns',label:'الأعمدة',type:'multi',opts:allCols()});
+    if(type==='trend')f.push({k:'months',label:'عدد الأشهر (3 إلى 24)',type:'number',min:3,max:24});
     f.push({k:'link',label:'زر "عرض الكل" يفتح صفحة',type:'select',opts:pageOpts},{k:'size',label:'العرض',type:'select',opts:[['half','نصف الصفحة'],['full','عرض كامل']]});
   }
-  const vals=w?{...w,useColor:!!w.color,color:w.color||cfg.theme.navy}:{label:'بطاقة جديدة',metric:'status',statuses:[],useColor:false,color:cfg.theme.navy,title:WIDGET_NAMES[type],desc:'',limit:6,columns:['number','subject','status','_updated'],link:'',size:'half'};
+  const vals=w?{...w,cls:w.cls||(FC()[0]||{}).name||'',months:w.months||6,useColor:!!w.color,color:w.color||cfg.theme.navy}:{label:'بطاقة جديدة',metric:'status',cls:(FC()[0]||{}).name||'',months:6,statuses:[],useColor:false,color:cfg.theme.navy,title:WIDGET_NAMES[type],desc:'',limit:6,columns:['number','subject','status','_updated'],link:'',size:'half'};
   openEditor({title:(w?'تعديل ':'إضافة ')+WIDGET_NAMES[type],fields:f,values:vals,onSave:v=>{
     const q=w||{id:uid('w_'),type,visible:true};
-    if(type==='stat'){Object.assign(q,{label:v.label,metric:v.metric,statuses:v.statuses,color:v.useColor?v.color:''})}
-    else{Object.assign(q,{title:v.title,desc:v.desc,link:v.link,size:v.size});if(v.limit)q.limit=v.limit;if(v.columns){const o=allCols().map(c=>c[0]);q.columns=o.filter(c=>v.columns.includes(c))}}
+    if(type==='stat'){Object.assign(q,{label:v.label,metric:v.metric,statuses:v.statuses,color:v.useColor?v.color:''});if(v.metric==='cls')q.cls=v.cls;else delete q.cls}
+    else{Object.assign(q,{title:v.title,desc:v.desc,link:v.link,size:v.size});if(v.limit)q.limit=v.limit;if(type==='trend'&&v.months)q.months=Math.min(24,Math.max(3,v.months));if(v.columns){const o=allCols().map(c=>c[0]);q.columns=o.filter(c=>v.columns.includes(c))}}
     if(!w)cfg.widgets.push(q);persistCfg();
   }});
 }
@@ -1874,6 +2091,94 @@ function listRename(key,old,nw){
   persistTx();
 }
 
+
+/* ---- المتابعة والتصنيف ---- */
+const WEEKDAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const clsUse=n=>transactions.filter(t=>hasCls(t,n)).length;
+const numInp=(path,label,min,max,help)=>`<div class="field"><label>${esc(label)}</label><input type="number" min="${min}" max="${max}" data-cfg="${path}" data-num value="${esc(path.split('.').reduce((o,k)=>o&&o[k],cfg))}">${help?`<small>${esc(help)}</small>`:''}</div>`;
+const chkInp=(path,label,help)=>`<label class="chk-row"><input type="checkbox" data-cfg="${path}"${path.split('.').reduce((o,k)=>o&&o[k],cfg)?' checked':''}> <span><b>${esc(label)}</b>${help?`<small>${esc(help)}</small>`:''}</span></label>`;
+function tabFollow(){
+  return sh('تصنيفات المعاملة','التصنيف يحدد هل المعاملة «عادية» أو تحت المتابعة بموعد نهائي. كل تصنيف (غير العادية) يُدخل المعاملة قائمة المتابعة والمؤشر ويبقيها حتى تكتمل وهي تتنقل بين المراحل.',`<button class="btn primary" data-act="fc-add">+ تصنيف جديد</button>`)+
+  `<div class="rowlist">`+FC().map(c=>rowItem({lead:`<span class="swatch" style="background:${esc(c.color)}"></span><span style="width:1.4rem;text-align:center">${esc(c.icon||'')}</span>`,title:c.name,
+    sub:(+c.days>0?'موعد افتراضي بعد '+(+c.days)+' أيام':'بدون موعد افتراضي (يُحدَّد يدويًا)')+' · '+clsUse(c.name)+' معاملة',
+    btns:moveBtns('fc',c.id)+mb('fc-edit',c.id,'تعديل')+(FC().length>1?mb('fc-del',c.id,'حذف','danger'):'')})).join('')+`</div>
+  <div class="form-grid two" style="margin-top:.9rem">${inp('follow.normal','اسم التصنيف العادي (بدون متابعة)')}</div>
+  <hr class="sep"><h3 class="sub">طريقة الاختيار</h3><div class="chk-list">
+   ${chkInp('follow.multi','السماح بأكثر من تصنيف للمعاملة الواحدة','مثل «عليها متابعة» و«إنجاز سريع» معًا. عند الإيقاف يختار المستخدم تصنيفًا واحدًا فقط.')}
+   ${chkInp('follow.requireDate','الموعد النهائي إلزامي للمعاملات تحت المتابعة','عند الإيقاف يمكن حفظها بدون موعد وتظهر «بدون موعد».')}
+  </div>
+  <hr class="sep"><h3 class="sub">قائمة المتابعة الأسبوعية والمؤشرات</h3><div class="chk-list">
+   ${chkInp('follow.autoClean','التنظيف التلقائي الأسبوعي','المكتملة قبل بداية الأسبوع تُنقل تلقائيًا إلى «المُزالة» (إلا المثبّتة). لا تُحذف ولا تخرج من المؤشر.')}
+  </div>
+  <div class="form-grid two">
+   <div class="field"><label>بداية الأسبوع</label><select data-cfg="follow.weekStart" data-num>${WEEKDAYS.map((d,i)=>`<option value="${i}"${+FCFG('weekStart')===i?' selected':''}>${d}</option>`).join('')}</select></div>
+   ${numInp('follow.soonDays','تنبيه «قريبة» قبل الموعد بـ (أيام)',0,60,'تتلون المعاملة بالأصفر عندما يبقى على موعدها هذا العدد أو أقل.')}
+   ${numInp('follow.weekDays','قسم «موعدها قريب» في القائمة الأسبوعية (أيام)',1,60)}
+   ${numInp('follow.agingDays','المعاملة «متقادمة» إذا بقيت مفتوحة أكثر من (يومًا)',1,365,'يُستخدم في بطاقة «المتقادمة» وجدول «أقدم المعاملات المفتوحة» ولوحة المراحل.')}
+  </div>`;
+}
+function editClass(id){
+  const c=id?FC().find(x=>x.id===id):null;
+  openEditor({title:c?'تعديل التصنيف':'تصنيف جديد',intro:c?'تغيير الاسم يحدّث كل المعاملات المصنّفة به تلقائيًا.':'',
+    fields:[{k:'name',label:'اسم التصنيف',req:true},{k:'icon',label:'رمز (اختياري)',type:'icon'},{k:'color',label:'اللون',type:'color'},{k:'days',label:'موعد نهائي افتراضي بعد (أيام) — 0 = بدون',type:'number',min:0,max:365,help:'يُعبّأ تلقائيًا في «الموعد النهائي» عند اختيار التصنيف، ويمكن تعديله. عند اختيار أكثر من تصنيف يؤخذ الأقصر.'}],
+    values:c?{...c}:{name:'',icon:'',color:'#2d6ea3',days:0},
+    onSave:v=>{
+      const name=String(v.name||'').trim();
+      if(/[+،,]/.test(name)){toast('لا يمكن استخدام + أو الفاصلة في اسم التصنيف');return false}
+      if(name===fuNormal()||FC().some(x=>x.id!==(c&&c.id)&&x.name===name)){toast('الاسم مستخدم');return false}
+      const color=/^#[0-9a-f]{6}$/i.test(v.color||'')?v.color:'#2d6ea3';
+      const days=Math.max(0,Math.min(365,Math.round(+v.days||0)));
+      const old=c&&c.name;const q=c||{id:uid('fc_')};
+      Object.assign(q,{name,icon:String(v.icon||'').slice(0,4),color,days});
+      if(!c)cfg.follow.classes.push(q);
+      if(old&&old!==name){
+        transactions.forEach(t=>{const tg=String(t.followup||'').split(/\s*[+،,]\s*/);if(tg.includes(old)){t.followup=tg.map(x=>x===old?name:x).filter(x=>x!==fuNormal()).join(FSEP);t.rev=Date.now()}});
+        cfg.widgets.forEach(w=>{if(w.cls===old)w.cls=name});if(UI.fcls===old)UI.fcls=name;persistTx();
+      }
+      persistCfg();
+    },onDelete:c&&FC().length>1?()=>delClass(c.id):null});
+}
+function delClass(id){
+  const c=FC().find(x=>x.id===id);if(!c||FC().length<2)return false;
+  const n=clsUse(c.name);
+  const finish=to=>{
+    if(n){transactions.forEach(t=>{if(!hasCls(t,c.name))return;const rest=fuTags(t.followup).filter(x=>x!==c.name);if(to&&!rest.includes(to))rest.push(to);t.followup=fuJoin(FC().map(x=>x.name).filter(x=>rest.includes(x)));t.rev=Date.now()});persistTx()}
+    cfg.follow.classes=cfg.follow.classes.filter(x=>x.id!==id);
+    cfg.widgets.forEach(w=>{if(w.cls===c.name)w.cls=(FC()[0]||{}).name||''});if(UI.fcls===c.name)UI.fcls='';
+    persistCfg();
+  };
+  if(!n){if(confirm('حذف التصنيف "'+c.name+'"؟'))finish('');return}
+  openEditor({title:'حذف التصنيف "'+c.name+'"',intro:'يوجد '+n+' معاملة بهذا التصنيف. اختر ما يحدث لها.',fields:[{k:'to',label:'نقل المعاملات إلى',type:'select',opts:[...FC().filter(x=>x.id!==id).map(x=>[x.name,x.name]),['','إزالة التصنيف فقط (تبقى بالتصنيفات الأخرى أو تصبح '+fuNormal()+')']]}],values:{},saveText:'نقل وحذف',onSave:v=>{finish(v.to)}});
+}
+
+/* ---- البحث والتصفية ---- */
+function tabSearch(){
+  const sel=cfg.search.fields||[];const all=!sel.length;
+  const lists=cfg.pages.filter(p=>p.kind==='list');
+  return sh('البحث السريع','الحقول التي يبحث فيها مربع البحث في كل الصفحات ولوحة المراحل. إذا اخترت كل الحقول يبحث في الجميع.')+
+  `<div class="checks">${cfg.fields.map(f=>`<label><input type="checkbox" data-srch-f="${esc(f.id)}"${(all||sel.includes(f.id))?' checked':''}> ${esc(f.label)}</label>`).join('')}</div>
+  <div class="form-actions" style="margin-top:.4rem"><button class="btn secondary" data-act="srch-all">تحديد الكل</button></div>
+  <hr class="sep"><h3 class="sub">خيارات البحث المتقدم</h3><p class="notice" style="margin-bottom:.7rem">الحقول التي تظهر في «خيارات البحث المتقدم» في الصفحات ذات الشريط الكامل.</p>
+  <div class="checks">${SEARCH_FILTERS.map(([k,n])=>`<label><input type="checkbox" data-cfg="search.filters.${k}"${cfg.search.filters[k]!==false?' checked':''}> ${esc(k==='fu'?fieldLabel('followup'):n)}</label>`).join('')}</div>
+  <div class="chk-list" style="margin-top:.8rem">${chkInp('search.advOpen','إظهار خيارات البحث المتقدم مفتوحة تلقائيًا')}</div>
+  <hr class="sep"><h3 class="sub">شريط البحث في كل صفحة</h3>
+  <div class="rowlist">${lists.map(p=>rowItem({lead:`<span style="width:1.4rem;text-align:center">${esc(p.icon||'•')}</span>`,title:p.title,btns:`<select data-pg-tb="${esc(p.id)}">${[['full','كامل'],['basic','بسيط (بحث + حالة)'],['none','بدون']].map(([v,n])=>`<option value="${v}"${(p.toolbar||'basic')===v?' selected':''}>${n}</option>`).join('')}</select>`})).join('')}</div>
+  <p class="notice" style="margin-top:.7rem">نصوص مربع البحث ورسائله تُعدَّل من تبويب «النصوص».</p>`;
+}
+
+/* ---- الأمان ---- */
+function tabSecurity(){
+  if(!isAdmin())return `<div class="empty">${esc(T('noaccess'))}</div>`;
+  return sh('الأمان والدخول','إعدادات تخص المدير فقط وتنطبق على كل الأجهزة.')+
+  `<div class="form-grid two">
+   ${numInp('security.pinMin','الحد الأدنى لطول الرقم السري',4,12,'يُطبَّق عند تعيين رقم جديد أو تغييره. يُنصح بـ 6 خانات.')}
+   ${numInp('security.idleMin','قفل تلقائي بعد عدم النشاط (دقيقة) — 0 = متوقف',0,480,'يطلب الرقم السري مرة أخرى إذا تُرك الجهاز بدون استخدام.')}
+  </div>
+  <hr class="sep"><h3 class="sub">حماية الخادم (من ملف Code.gs)</h3>
+  <p class="notice">هذه تُضبط داخل Code.gs ولا تُغيَّر من هنا حتى لا يستطيع أحد تعطيلها من المتصفح: الرمز السري (SECRET_TOKEN)، مدة الجلسة (SESSION_DAYS)، وعدد المحاولات الخاطئة قبل القفل. الصلاحيات تُفرض على الخادم، والأرقام السرية لا تُرسل للأجهزة، وتغيير الرقم السري أو إيقاف المستخدم يُنهي جلساته.</p>
+  <div class="form-actions" style="margin-top:.6rem"><button class="btn secondary" data-nav="audit">فتح سجل النشاط</button></div>`;
+}
+
 /* ---- النصوص ---- */
 function tabTexts(){
   let h=sh('نصوص الواجهة','غيّر أي نص ثابت في الأزرار والرسائل والبحث. أسماء الصفحات والحقول والحالات تُعدَّل من تبويباتها. اترك الحقل فارغًا لاستعادة النص الافتراضي.',`<button class="btn secondary" data-act="texts-reset">استعادة كل النصوص</button>`)+
@@ -1924,9 +2229,10 @@ function editUser(id){
   const u=id?cfg.users.find(x=>x.id===id):null;
   const empOpts=[['','نفس اسم المستخدم'],...empList().map(n=>[n,n])];
   const empFld={k:'employee',label:'اسمه في قائمة الموظفين (لصلاحية "معاملاته فقط")',type:'select',opts:empOpts,help:'المستخدم حساب دخول فقط. قائمة "الموظف المسؤول" مستقلة وتُدار من تبويب الحالات والقوائم.'};
-  openEditor({title:u?'تعديل المستخدم':'مستخدم جديد',fields:u?[{k:'name',label:'اسم المستخدم (للدخول)',req:true},empFld]:[{k:'name',label:'اسم المستخدم (للدخول)',req:true},{k:'role',label:'الدور (قالب الصلاحيات)',type:'select',opts:[['موظف','موظف'],['مشاهد','مشاهد'],['مدير','مدير']]},{k:'pin',label:'الرقم السري (اختياري)',help:'يُطلب منه عند الدخول. يمكن تعيينه لاحقًا.'},empFld],values:u?{name:u.name,employee:u.employee||''}:{name:'',role:'موظف',pin:'',employee:''},
+  openEditor({title:u?'تعديل المستخدم':'مستخدم جديد',fields:u?[{k:'name',label:'اسم المستخدم (للدخول)',req:true},empFld]:[{k:'name',label:'اسم المستخدم (للدخول)',req:true},{k:'role',label:'الدور (قالب الصلاحيات)',type:'select',opts:[['موظف','موظف'],['مشاهد','مشاهد'],['مدير','مدير']]},{k:'pin',label:'الرقم السري (اختياري)',help:'يُطلب منه عند الدخول. يمكن تعيينه لاحقًا. الحد الأدنى للطول من تبويب الأمان.'},empFld],values:u?{name:u.name,employee:u.employee||''}:{name:'',role:'موظف',pin:'',employee:''},
   onSave:v=>{
     if(cfg.users.some(x=>x.id!==(u&&u.id)&&x.name===v.name)){toast('الاسم مستخدم');return false}
+    if(!u&&v.pin&&v.pin.length<Math.max(4,+(cfg.security||{}).pinMin||4)){toast('الرقم السري '+Math.max(4,+(cfg.security||{}).pinMin||4)+' خانات على الأقل');return false}
     if(!u){const q={id:uid('u'),name:v.name,role:v.role,active:true,perms:Object.assign({},ROLE_PERMS[v.role],{pages:[]})};if(v.pin)q.pin=sha256(q.id+':'+v.pin);if(v.employee)q.employee=v.employee;cfg.users.push(q);persistCfg();return}
     const old=u.name;u.name=v.name;
     if(v.employee)u.employee=v.employee;else if(old!==v.name&&empList().includes(old))u.employee=old;else delete u.employee;
@@ -1939,7 +2245,7 @@ function editPin(id){
   openEditor({title:'الرقم السري — '+u.name,intro:'اتركه فارغًا لإزالة الرقم السري (الدخول باسمه بدون رقم).',fields:[{k:'pin',label:'الرقم السري الجديد'},{k:'pin2',label:'تأكيد الرقم السري'}],values:{},
   onSave:v=>{
     if(v.pin!==v.pin2){toast('الرقمان غير متطابقين');return false}
-    if(v.pin&&v.pin.length<4){toast('الرقم السري 4 خانات على الأقل');return false}
+    const pm=Math.max(4,+(cfg.security||{}).pinMin||4);if(v.pin&&v.pin.length<pm){toast('الرقم السري '+pm+' خانات على الأقل (من الإعدادات ← الأمان)');return false}
     if(v.pin)u.pin=sha256(u.id+':'+v.pin);else delete u.pin;
     if(u.name===me().name&&v.pin)setUnlocked(u.id);
     persistCfg();toast(v.pin?'تم حفظ الرقم السري':'تمت إزالة الرقم السري');
@@ -1984,12 +2290,22 @@ function tabSync(){
 
 /* ======================= الأوامر ======================= */
 const ACTIONS={
+  'fl-tab':el=>{UI.ftab=el.dataset.id;renderPage()},
+  'fl-pin':el=>flUpdate(el.dataset.id,t=>{t.fpin=!t.fpin;if(t.fpin)delete t.fhide},'تم التحديث'),
+  'fl-hide':el=>flUpdate(el.dataset.id,t=>{t.fhide=Date.now();delete t.fpin;delete t.fkeep},'أُزيلت من قائمة المتابعة — تجدها في «المُزالة»'),
+  'fl-restore':el=>flUpdate(el.dataset.id,t=>{delete t.fhide;t.fkeep=today()},'أُرجعت إلى قائمة المتابعة'),
+  'fl-print':()=>{logEvent('print',{d:'قائمة المتابعة الأسبوعية'});printHtml(followWeekHtml())},
+  'fl-print-doc':()=>{logEvent('export',{d:'قائمة المتابعة الأسبوعية (Word)'});download(followWeekHtml(),'قائمة_المتابعة_'+today()+'.doc','application/msword')},
+  'follow-report':()=>openFollowReport(),
   'weekly':()=>weeklyReport('pdf'),'weekly-doc':()=>weeklyReport('word'),'theme-toggle':()=>{L.dark=!L.dark;saveLocal();applyTheme();renderUserSel()},
   'au-refresh':()=>loadAudit(),'au-export':()=>exportAudit(),'au-more':()=>{UI.audit.show+=300;renderAuditBody()},
   'tab':el=>{UI.tab=el.dataset.tab;renderSettings()},
+  'fc-add':()=>editClass(null),'fc-edit':el=>editClass(el.dataset.id),'fc-del':el=>delClass(el.dataset.id),
+  'fc-up':el=>{moveItem(cfg.follow.classes,el.dataset.id,-1);persistCfg()},'fc-down':el=>{moveItem(cfg.follow.classes,el.dataset.id,1);persistCfg()},
+  'srch-all':()=>{cfg.search.fields=[];persistCfg()},
   'add':()=>openForm(),
   'clear-filters':()=>{UI.filters[UI.page]={};renderPage()},
-  'adv-toggle':()=>{UI.advOpen=!UI.advOpen;const a=$('.adv');if(a)a.classList.toggle('open',UI.advOpen)},
+  'adv-toggle':()=>{UI.advOpen=!(UI.advOpen==null?!!cfg.search.advOpen:UI.advOpen);const a=$('.adv');if(a)a.classList.toggle('open',UI.advOpen)},
   'export':()=>openExport(),
   'set-status':el=>setStatus(el.dataset.id,$('#detSt').value),
   'reset-cfg':()=>{if(confirm('إعادة ضبط كل الإعدادات للوضع الافتراضي؟ (المعاملات لن تُحذف)')){const d=defaultCfg();Object.keys(cfg).forEach(k=>delete cfg[k]);Object.assign(cfg,normalizeCfg(d));UI.page='dashboard';persistCfg();toast('تمت إعادة الضبط')}},
@@ -2311,7 +2627,7 @@ function showLogin(blocking,preId){
   setTimeout(()=>{try{$('#loginPin').focus()}catch(e){}},50);
 }
 function syncLoginPin(){const u=loginList.find(x=>x.id===$('#loginUser').value);$('#loginPinWrap').style.display=(u&&u.pin)?'':'none'}
-function hideLogin(){$('#loginModal').classList.remove('show');loginBlocking=false}
+function hideLogin(){$('#loginModal').classList.remove('show');loginBlocking=false;idleArm()}
 function doLogin(){
   if(hostedMode)return hostedSubmit();
   const u=cfg.users.find(x=>x.id===$('#loginUser').value);if(!u)return;
@@ -2355,6 +2671,15 @@ async function hostedSubmit(){
   }catch(e){$('#loginErr').textContent=errMsg(e)}
   finally{btn.disabled=false}
 }
+/* قفل تلقائي بعد عدم النشاط (الإعدادات ← الأمان) */
+var idleT=0;
+function idleArm(){
+  clearTimeout(idleT);const m=+((cfg.security||{}).idleMin)||0;if(m<=0)return;
+  if($('#loginModal')&&$('#loginModal').classList.contains('show'))return;
+  if(!L.sess&&!me().pin)return;
+  idleT=setTimeout(()=>{if($('#loginModal')&&$('#loginModal').classList.contains('show'))return;logout();toast('تم القفل تلقائيًا بعد عدم النشاط')},m*60000);
+}
+['click','keydown','touchstart','wheel'].forEach(ev=>document.addEventListener(ev,()=>idleArm(),{passive:true,capture:true}));
 function logout(){
   if(L.sess){logEvent('logout');flushEvents({sess:L.sess},true)}
   setUnlocked('');closeModals();
@@ -2444,12 +2769,14 @@ document.addEventListener('click',e=>{
 document.addEventListener('input',e=>{
   const el=e.target,d=el.dataset||{};
   if(d.flt!=null){const p=page(UI.page);(UI.filters[p.id]=UI.filters[p.id]||{})[d.flt]=el.value;fillTable(p);return}
+  if(el.hasAttribute&&el.hasAttribute('data-fcls')){UI.fcls=el.value;renderPage();return}
   if(d.bd!=null){UI.board[d.bd]=el.type==='checkbox'?el.checked:el.value;fillBoard();return}
   if(d.au!=null){UI.audit.f[d.au]=el.value;UI.audit.show=200;renderAuditBody();return}
   if(d.cfg){
     let v=el.type==='checkbox'?el.checked:el.value;if(d.num!=null)v=Number(v);
     setPath(cfg,d.cfg,v);persistCfg(true);
     if(d.cfg.indexOf('brand.')===0)renderNav();
+    if(d.cfg==='security.idleMin')idleArm();
     if(d.cfg==='theme.fontScale'&&$('#fsVal'))$('#fsVal').textContent=v;
     if(d.cfg==='theme.radius'&&$('#rdVal'))$('#rdVal').textContent=v;
     return;
@@ -2465,7 +2792,9 @@ document.addEventListener('input',e=>{
   if(d.text!=null){if(el.value==='')delete cfg.texts[d.text];else cfg.texts[d.text]=el.value;persistCfg(true);return}
   if(d.expCol!=null){cfg.export.columns=allCols().map(c=>c[0]).filter(k=>{const c=$(`[data-exp-col="${k}"]`);return c&&c.checked});persistCfg(true);return}
   if(d.tfilter!=null){const q=el.value.trim();$$('.trow').forEach(r=>{r.style.display=(!q||r.dataset.search.includes(q))?'':'none'});return}
-  if(el.id==='f_status'||el.id==='f_followup')syncCond();
+  if(el.id==='f_status'||el.id==='f_followup'||(el.hasAttribute&&el.hasAttribute('data-fuc')))syncCond();
+  if(d.srchF!=null){const ch=$$('[data-srch-f]').filter(x=>x.checked).map(x=>x.dataset.srchF);if(!ch.length){toast('اختر حقلًا واحدًا على الأقل');el.checked=true;return}cfg.search.fields=ch.length===cfg.fields.length?[]:ch;persistCfg(true);return}
+  if(d.pgTb!=null){const p=page(d.pgTb);if(p){p.toolbar=el.value;persistCfg(true)}return}
   if(el.type==='date'&&d.f){const h=el.parentElement.querySelector('[data-dh]');if(h)h.textContent=el.value?fmt(el.value):''}
 });
 document.addEventListener('change',e=>{
