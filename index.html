@@ -264,7 +264,7 @@ input[type=date]{direction:ltr;text-align:right;font-variant-numeric:tabular-num
       <div style="display:flex;gap:.7rem;align-items:flex-start"><button class="mobile-menu" id="menuBtn" aria-label="القائمة">☰</button><div><h1 id="pageTitle"></h1><p id="pageDesc"></p></div></div>
       <div class="top-actions"><span class="sync"><i class="dot" id="syncDot"></i><span id="syncText"></span></span><select class="inp" id="userSel" title="المستخدم الحالي"></select><button class="btn secondary" id="themeBtn" data-act="theme-toggle" title="الوضع الليلي" aria-label="الوضع الليلي">🌙</button><button class="btn secondary" id="lockBtn" style="display:none"></button><button class="btn primary" id="addBtn"></button></div>
     </header>
-    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 6.6)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
+    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 6.7)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
   </main>
 </div>
 <div class="modal" id="formModal"><div class="modal-box"><div class="modal-head"><h2 id="formTitle"></h2><button class="close" data-close aria-label="رجوع"><span class="m-only">→ رجوع</span><span class="d-only">×</span></button></div><form id="txForm" novalidate></form></div></div>
@@ -1255,11 +1255,11 @@ function flTable(list,mode){
 }
 const flTitle=(k,title)=>k==='week'?'🟡 موعدها خلال '+FCFG('weekDays')+' أيام':title;
 function renderFollowPage(p){
-  const cls=UI.fcls||'';const all=visTx().filter(t=>isFollow(t)&&(!cls||hasCls(t,cls))),inList=all.filter(inFollowList),hidden=all.filter(t=>!inFollowList(t));
+  const cls=UI.fcls||'';const fqT=norm(UI.fq||'').split(/\s+/).filter(Boolean);const all=visTx().filter(t=>isFollow(t)&&(!cls||hasCls(t,cls))&&(!fqT.length||(h=>fqT.every(w=>h.includes(w)))(searchText(t)))),inList=all.filter(inFollowList),hidden=all.filter(t=>!inFollowList(t));
   const tab=UI.ftab;
   const tabs=`<div class="ftabs"><button class="ftab${tab==='week'?' on':''}" data-act="fl-tab" data-id="week">القائمة الأسبوعية <b>${inList.length}</b></button><button class="ftab${tab==='all'?' on':''}" data-act="fl-tab" data-id="all">كل المتابعات <b>${all.length}</b></button><button class="ftab${tab==='hidden'?' on':''}" data-act="fl-tab" data-id="hidden">المُزالة <b>${hidden.length}</b></button></div>`;
   if(tab==='all'){renderListPage(p);const ph=host().querySelector('.panel-head');if(ph)ph.insertAdjacentHTML('afterend',tabs);return}
-  const tools=`<div class="filters"><select data-fcls>${[['','كل التصنيفات'],...FC().map(c=>[c.name,(c.icon?c.icon+' ':'')+c.name])].map(([v,n])=>`<option value="${esc(v)}"${cls===v?' selected':''}>${esc(n)}</option>`).join('')}</select>${canExport()?`<button class="btn primary" data-act="fl-print">🖨 طباعة القائمة الأسبوعية</button><button class="btn secondary" data-act="fl-print-doc">Word</button><button class="btn secondary" data-act="follow-report">📊 تقرير مؤشر المتابعة</button>`:''}</div>`;
+  const tools=`<div class="filters">${(p.toolbar||'basic')!=='none'?`<input type="search" data-fq value="${esc(UI.fq||'')}" placeholder="${esc(T('search.ph'))}">`:''}<select data-fcls>${[['','كل التصنيفات'],...FC().map(c=>[c.name,(c.icon?c.icon+' ':'')+c.name])].map(([v,n])=>`<option value="${esc(v)}"${cls===v?' selected':''}>${esc(n)}</option>`).join('')}</select>${canExport()?`<button class="btn primary" data-act="fl-print">🖨 طباعة القائمة الأسبوعية</button><button class="btn secondary" data-act="fl-print-doc">Word</button><button class="btn secondary" data-act="follow-report">📊 تقرير مؤشر المتابعة</button>`:''}</div>`;
   let body='';
   if(tab==='hidden'){
     body=hidden.length?`<p class="hint" style="margin:0 0 .6rem">المعاملات هنا ما زالت تحت المتابعة ومحسوبة في المؤشر — أُخفيت من القائمة الأسبوعية فقط.</p>`+flTable(hidden.sort((a,b)=>(b.fhide||0)-(a.fhide||0)||ymd(b.closed||b.updated).localeCompare(ymd(a.closed||a.updated))),'hidden'):'<div class="empty">لا توجد معاملات مُزالة.</div>';
@@ -1893,7 +1893,7 @@ function tabGeneral(){
   return sh('الهوية العامة','تظهر في الشريط الجانبي وعنوان التبويب.')+
   `<div class="form-grid two">${inp('brand.title','عنوان النظام')}${inp('brand.subtitle','العنوان الفرعي')}${inp('brand.mark','حرف الشعار','maxlength="2"')}${inp('brand.org','اسم الجهة / الإدارة الافتراضي','')}</div>
   <p class="notice" style="margin-top:1rem">اسم الجهة يُستخدم كقيمة افتراضية لحقل "الإدارة" عند إضافة معاملة جديدة.</p>
-  <p class="sync" style="margin-top:.8rem">الإصدار 6.6 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
+  <p class="sync" style="margin-top:.8rem">الإصدار 6.7 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
   <hr class="sep"><h3 class="sub">إعادة الضبط</h3>
   <p class="notice warn">إعادة الضبط تُرجع الصفحات والحقول والحالات والنصوص والألوان والمستخدمين للوضع الافتراضي. المعاملات المسجلة لا تُحذف.</p>
   <div class="form-actions"><button class="btn danger" data-act="reset-cfg">إعادة ضبط كل الإعدادات</button></div>`;
@@ -2770,6 +2770,7 @@ document.addEventListener('input',e=>{
   const el=e.target,d=el.dataset||{};
   if(d.flt!=null){const p=page(UI.page);(UI.filters[p.id]=UI.filters[p.id]||{})[d.flt]=el.value;fillTable(p);return}
   if(el.hasAttribute&&el.hasAttribute('data-fcls')){UI.fcls=el.value;renderPage();return}
+  if(el.hasAttribute&&el.hasAttribute('data-fq')){UI.fq=el.value;const pos=el.selectionStart;renderPage();const n=$('[data-fq]');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}}return}
   if(d.bd!=null){UI.board[d.bd]=el.type==='checkbox'?el.checked:el.value;fillBoard();return}
   if(d.au!=null){UI.audit.f[d.au]=el.value;UI.audit.show=200;renderAuditBody();return}
   if(d.cfg){
