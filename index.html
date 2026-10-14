@@ -264,7 +264,7 @@ input[type=date]{direction:ltr;text-align:right;font-variant-numeric:tabular-num
       <div style="display:flex;gap:.7rem;align-items:flex-start"><button class="mobile-menu" id="menuBtn" aria-label="القائمة">☰</button><div><h1 id="pageTitle"></h1><p id="pageDesc"></p></div></div>
       <div class="top-actions"><span class="sync"><i class="dot" id="syncDot"></i><span id="syncText"></span></span><select class="inp" id="userSel" title="المستخدم الحالي"></select><button class="btn secondary" id="themeBtn" data-act="theme-toggle" title="الوضع الليلي" aria-label="الوضع الليلي">🌙</button><button class="btn secondary" id="lockBtn" style="display:none"></button><button class="btn primary" id="addBtn"></button></div>
     </header>
-    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 6.7)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
+    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 6.8)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
   </main>
 </div>
 <div class="modal" id="formModal"><div class="modal-box"><div class="modal-head"><h2 id="formTitle"></h2><button class="close" data-close aria-label="رجوع"><span class="m-only">→ رجوع</span><span class="d-only">×</span></button></div><form id="txForm" novalidate></form></div></div>
@@ -1259,7 +1259,7 @@ function renderFollowPage(p){
   const tab=UI.ftab;
   const tabs=`<div class="ftabs"><button class="ftab${tab==='week'?' on':''}" data-act="fl-tab" data-id="week">القائمة الأسبوعية <b>${inList.length}</b></button><button class="ftab${tab==='all'?' on':''}" data-act="fl-tab" data-id="all">كل المتابعات <b>${all.length}</b></button><button class="ftab${tab==='hidden'?' on':''}" data-act="fl-tab" data-id="hidden">المُزالة <b>${hidden.length}</b></button></div>`;
   if(tab==='all'){renderListPage(p);const ph=host().querySelector('.panel-head');if(ph)ph.insertAdjacentHTML('afterend',tabs);return}
-  const tools=`<div class="filters">${(p.toolbar||'basic')!=='none'?`<input type="search" data-fq value="${esc(UI.fq||'')}" placeholder="${esc(T('search.ph'))}">`:''}<select data-fcls>${[['','كل التصنيفات'],...FC().map(c=>[c.name,(c.icon?c.icon+' ':'')+c.name])].map(([v,n])=>`<option value="${esc(v)}"${cls===v?' selected':''}>${esc(n)}</option>`).join('')}</select>${canExport()?`<button class="btn primary" data-act="fl-print">🖨 طباعة القائمة الأسبوعية</button><button class="btn secondary" data-act="fl-print-doc">Word</button><button class="btn secondary" data-act="follow-report">📊 تقرير مؤشر المتابعة</button>`:''}</div>`;
+  const tools=`<div class="filters">${(p.toolbar||'basic')!=='none'?`<input type="search" data-fq value="${esc(UI.fq||'')}" placeholder="${esc(T('search.ph'))}">`:''}<select data-fcls>${[['','كل التصنيفات'],...FC().map(c=>[c.name,(c.icon?c.icon+' ':'')+c.name])].map(([v,n])=>`<option value="${esc(v)}"${cls===v?' selected':''}>${esc(n)}</option>`).join('')}</select>${canExport()?`<button class="btn primary" data-act="fl-print">🖨 طباعة القائمة الأسبوعية</button><button class="btn secondary" data-act="fl-print-doc">Word</button><button class="btn secondary" data-act="follow-report">📊 تقرير مؤشر المتابعة</button>${all.some(t=>t.fpin)?`<button class="btn secondary" data-act="fl-print-pin">📌 طباعة المثبّتة بالتفصيل (${all.filter(t=>t.fpin).length})</button>`:''}`:''}</div>`;
   let body='';
   if(tab==='hidden'){
     body=hidden.length?`<p class="hint" style="margin:0 0 .6rem">المعاملات هنا ما زالت تحت المتابعة ومحسوبة في المؤشر — أُخفيت من القائمة الأسبوعية فقط.</p>`+flTable(hidden.sort((a,b)=>(b.fhide||0)-(a.fhide||0)||ymd(b.closed||b.updated).localeCompare(ymd(a.closed||a.updated))),'hidden'):'<div class="empty">لا توجد معاملات مُزالة.</div>';
@@ -1559,13 +1559,14 @@ function weeklyReport(format){
 /* ======================= تقرير مؤشر المتابعة ======================= */
 function openFollowReport(){
   if(!canExport())return toast(T('viewer'));
-  const last=UI.frep||{basis:'received',scope:'all',fmt:'pdf',from:'',to:''};
+  const last=Object.assign({basis:'received',scope:'all',fmt:'pdf',from:'',to:'',detail:false},UI.frep||{});
   openEditor({title:'تقرير مؤشر المتابعة',saveText:'إصدار التقرير',
     intro:'يشمل كل المعاملات تحت المتابعة ('+FC().map(c=>'«'+c.name+'»').join(' و')+') — المفتوحة والمكتملة — مع نسبة الإنجاز في الموعد. المعاملة التي تحمل أكثر من تصنيف تُحسب مرة واحدة في الإجمالي وتظهر تحت كل تصنيف في جدول «حسب التصنيف». اترك التاريخين فارغين لكل الفترات.',
     fields:[{k:'from',label:'من تاريخ',type:'date'},{k:'to',label:'إلى تاريخ',type:'date'},
       {k:'basis',label:'الفترة حسب',type:'select',opts:[['received',fieldLabel('received')],['reminderDate',fieldLabel('reminderDate')],['closed','تاريخ الإغلاق']]},
       {k:'cls',label:fieldLabel('followup'),type:'select',opts:[['','كل التصنيفات'],...FC().map(c=>[c.name,c.name])]},
-      {k:'scope',label:'المعاملات',type:'select',opts:[['all','الكل (المفتوحة والمكتملة)'],['done','المكتملة فقط'],['open','المفتوحة فقط'],['late','المتأخرة فقط (المفتوحة والمكتملة بعد الموعد)']]},
+      {k:'scope',label:'المعاملات',type:'select',opts:[['all','الكل (المفتوحة والمكتملة)'],['pinned','📌 المثبّتة فقط'],['done','المكتملة فقط'],['open','المفتوحة فقط'],['late','المتأخرة فقط (المفتوحة والمكتملة بعد الموعد)']]},
+      {k:'detail',label:'تفصيل كل معاملة (كل البيانات والملاحظات والخط الزمني)',type:'check'},
       {k:'fmt',label:'الصيغة',type:'select',opts:[['pdf','PDF / طباعة'],['word','Word'],['excel','Excel'],['csv','CSV']]}],
     values:last,onSave:v=>{UI.frep=v;followReport(v)}});
 }
@@ -1574,8 +1575,8 @@ function followReport(o){
   const inP=t=>{const d=ymd(o.basis==='closed'?(isOpen(t)?'':(t.closed||t.updated)):o.basis==='reminderDate'?t.reminderDate:t.received);if(!o.from&&!o.to)return true;if(!d)return false;return (!o.from||d>=o.from)&&(!o.to||d<=o.to)};
   let rows=visTx().filter(t=>isFollow(t)&&inP(t)&&(!o.cls||hasCls(t,o.cls)));
   const R=t=>followResult(t);
-  if(o.scope==='done')rows=rows.filter(t=>!isOpen(t));else if(o.scope==='open')rows=rows.filter(isOpen);else if(o.scope==='late')rows=rows.filter(t=>R(t)==='late'||R(t)==='open-late');
-  if(!rows.length)return toast('لا توجد معاملات عليها متابعة في هذه الفترة');
+  if(o.scope==='pinned')rows=rows.filter(t=>t.fpin);else if(o.scope==='done')rows=rows.filter(t=>!isOpen(t));else if(o.scope==='open')rows=rows.filter(isOpen);else if(o.scope==='late')rows=rows.filter(t=>R(t)==='late'||R(t)==='open-late');
+  if(!rows.length)return toast(o.scope==='pinned'?'لا توجد معاملات مثبّتة — ثبّتها بزر 📌 في قائمة المتابعة':'لا توجد معاملات عليها متابعة في هذه الفترة');
   rows.sort((a,b)=>(a.reminderDate||'9999').localeCompare(b.reminderDate||'9999'));
   logEvent('export',{d:'تقرير مؤشر المتابعة — '+rows.length+' معاملة'});
   const cnt=k=>rows.filter(t=>R(t)===k).length;
@@ -1585,7 +1586,8 @@ function followReport(o){
   const group=key=>{const m={};rows.forEach(t=>{const ks=key==='cls'?(fuTags(t.followup).length?fuTags(t.followup):['— (حسب المرحلة)']):[(key==='emp'?ownKey(t):t.department)||'—'];ks.forEach(k=>{const g=m[k]=m[k]||{n:0,ontime:0,late:0,open:0,olate:0,nodate:0};g.n++;const r=R(t);if(r==='ontime')g.ontime++;else if(r==='late')g.late++;else if(r==='open')g.open++;else if(r==='open-late')g.olate++;else g.nodate++})});
     return Object.entries(m).sort((a,b)=>b[1].n-a[1].n).map(([k,g])=>[k,g.n,g.ontime,g.late,g.open,g.olate,(g.ontime+g.late)?Math.round(g.ontime/(g.ontime+g.late)*100)+'٪':'—'])};
   const cols=['رقم المعاملة','الموضوع',fieldLabel('followup'),'المرحلة','الإدارة','الموظف',fieldLabel('received'),fieldLabel('reminderDate'),'تاريخ الإغلاق','النتيجة','الفرق'];
-  const data=rows.map(t=>[t.number,t.subject,t.followup||'',t.status,t.department||'',ownKey(t)||'',t.received||'',t.reminderDate||'',isOpen(t)?'':ymd(t.closed||t.updated),FOLLOW_RESULT[R(t)]||'',diffTxt(t)]);
+  if(o.detail)cols.push(fieldLabel('notes'),'الخط الزمني');
+  const data=rows.map(t=>[t.number,t.subject,t.followup||'',t.status,t.department||'',ownKey(t)||'',t.received||'',t.reminderDate||'',isOpen(t)?'':ymd(t.closed||t.updated),FOLLOW_RESULT[R(t)]||'',diffTxt(t),...(o.detail?[t.notes||'',(t.history||[]).map(h=>ymd(h[0])+' '+h[1]+(h[2]?' ('+h[2]+')':'')+(h[3]?' — '+h[3]:'')).join(' | ')]:[])]);
   const name='تقرير_مؤشر_المتابعة_'+today();
   if(o.fmt==='csv'||o.fmt==='excel'){
     if(o.fmt==='csv'){const q=v=>{v=String(v);if(/^[=@]/.test(v)||(/^[+\-]/.test(v)&&isNaN(v)))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'};return download('﻿'+[cols,...data].map(r=>r.map(q).join(',')).join('\r\n'),name+'.csv','text/csv;charset=utf-8')}
@@ -1596,19 +1598,29 @@ function followReport(o){
   const tbl=(h,rs,cls)=>'<table class="grid'+(cls?' '+cls:'')+'"><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr>'+rs.map(r=>'<tr>'+r.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('')+'</table>';
   const resColor={'اكتملت في الموعد':'#28784f','اكتملت بعد الموعد':'#b34239','مفتوحة — متأخرة':'#b34239','مفتوحة — ضمن الموعد':'#a86f18'};
   const per=(o.from||o.to)?('الفترة ('+({received:fieldLabel('received'),reminderDate:fieldLabel('reminderDate'),closed:'تاريخ الإغلاق'})[o.basis||'received']+'): '+(o.from?fmt(o.from):'البداية')+' إلى '+(o.to?fmt(o.to):'اليوم')):'كل الفترات';
-  const detail='<table class="grid"><tr>'+cols.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr>'+data.map(r=>'<tr>'+r.map((v,i)=>'<td'+(i===9&&resColor[v]?' style="color:'+resColor[v]+';font-weight:bold"':'')+'>'+esc(i>=6&&i<=8&&v?fmt(v):v)+'</td>').join('')+'</tr>').join('')+'</table>';
+  const detailCols=o.detail?cols.slice(0,cols.length-2):cols;
+  const fullTx=!o.detail?'':'<h3>تفصيل المعاملات</h3>'+rows.map((t,i)=>{
+    const fl=cfg.fields.filter(f=>f.visible!==false&&f.id!=='subject').map(f=>{const v=plain(t,f);return v?[f.label,f.type==='date'?fmt(v):v]:null}).filter(Boolean);
+    fl.push(['النتيجة',FOLLOW_RESULT[R(t)]||'—'],['الفرق عن الموعد',diffTxt(t)]);
+    if(!isOpen(t))fl.push(['تاريخ الإغلاق',fmt(ymd(t.closed||t.updated))]);
+    if(t.fpin)fl.push(['في قائمة المتابعة','📌 مثبّتة']);
+    const hist=(t.history||[]).map(h=>[fmt(ymd(h[0])),h[1]||'',h[2]||'',h[3]||'']);
+    return '<div class="card"><div class="ch">'+(i+1)+'. '+esc(t.number)+' — '+esc(t.subject||'')+'</div><table class="kv">'+fl.map(([k,v])=>'<tr><th>'+esc(k)+'</th><td>'+esc(v)+'</td></tr>').join('')+'</table>'+
+      (hist.length?'<div class="tl">الخط الزمني</div>'+tbl(['التاريخ','المرحلة','بواسطة','ملاحظة'],hist):'')+'</div>'}).join('');
+  const detail='<table class="grid"><tr>'+detailCols.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr>'+data.map(r=>'<tr>'+r.slice(0,detailCols.length).map((v,i)=>'<td'+(i===9&&resColor[v]?' style="color:'+resColor[v]+';font-weight:bold"':'')+'>'+esc(i>=6&&i<=8&&v?fmt(v):v)+'</td>').join('')+'</tr>').join('')+'</table>';
   const html='<'+'html dir="rtl" lang="ar"><'+'head><'+'meta charset="utf-8"><'+'title>تقرير مؤشر المتابعة</'+'title><'+'style>'+
     'body{font-family:Tahoma,Arial,sans-serif;padding:18px;color:#111;font-size:12px}h2{margin:0 0 4px}h3{margin:18px 0 6px;font-size:13px;color:'+navy+'}'+
     '.meta{color:#555;font-size:11px;margin:0 0 12px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #999;padding:5px 7px;text-align:right;vertical-align:top}'+
     '.grid th{background:'+navy+';color:'+fg+'}.kpis td{border:1px solid #ccc;text-align:center;padding:8px}.k .n{font-size:20px;font-weight:bold}.k .l{font-size:11px;color:#444}'+
     '.big{font-size:15px;margin:10px 0;padding:10px;border:2px solid '+navy+';text-align:center}'+
-    '</'+'style></'+'head><'+'body><h2>تقرير مؤشر المتابعة — '+esc(cfg.brand.title||'')+'</h2><p class="meta">'+esc(cfg.brand.org||'')+' — '+esc(per)+' — تاريخ التقرير: '+fmt(today())+' — أعدّه: '+esc(me().name)+'</p>'+
+    '.card{border:1px solid #bbb;border-radius:6px;padding:8px 10px;margin:10px 0;page-break-inside:avoid}.ch{font-weight:bold;font-size:13px;color:'+navy+';margin-bottom:6px}.kv th{width:28%;background:#f1f3f6;font-weight:bold}.tl{font-weight:bold;margin:8px 0 4px}'+
+    '</'+'style></'+'head><'+'body><h2>تقرير مؤشر المتابعة'+(o.scope==='pinned'?' — المعاملات المثبّتة':'')+' — '+esc(cfg.brand.title||'')+'</h2><p class="meta">'+esc(cfg.brand.org||'')+' — '+esc(per)+' — تاريخ التقرير: '+fmt(today())+' — أعدّه: '+esc(me().name)+'</p>'+
     '<div class="big">مؤشر الإنجاز في الموعد: <b style="color:#28784f">'+(pct==null?'—':pct+'٪')+'</b> ('+cnt('ontime')+' من '+done+' معاملة مكتملة)</div>'+
     '<table class="kpis"><tr>'+kpi(rows.length,'إجمالي تحت المتابعة')+FC().map(c=>kpi(rows.filter(t=>hasCls(t,c.name)).length,'منها '+c.name,c.color)).join('')+(rows.some(t=>fuTags(t.followup).length>1)?kpi(rows.filter(t=>fuTags(t.followup).length>1).length,'تحمل أكثر من تصنيف','#2f7f86'):'')+kpi(cnt('ontime'),'اكتملت في الموعد','#28784f')+kpi(cnt('late'),'اكتملت بعد الموعد','#b34239')+kpi(cnt('open'),'مفتوحة ضمن الموعد','#a86f18')+kpi(cnt('open-late'),'مفتوحة متأخرة','#b34239')+kpi(cnt('nodate'),'بدون موعد','#6b7785')+kpi(rows.length?Math.round(lateAll/rows.length*100)+'٪':'—','نسبة التأخر الكلية','#b34239')+'</tr></table>'+
     '<h3>حسب التصنيف</h3>'+tbl([fieldLabel('followup'),'الإجمالي','في الموعد','بعد الموعد','مفتوحة','مفتوحة متأخرة','الإنجاز في الموعد'],group('cls'))+
     '<h3>حسب الإدارة</h3>'+tbl(['الإدارة','الإجمالي','في الموعد','بعد الموعد','مفتوحة','مفتوحة متأخرة','الإنجاز في الموعد'],group('dept'))+
     '<h3>حسب الموظف</h3>'+tbl(['الموظف','الإجمالي','في الموعد','بعد الموعد','مفتوحة','مفتوحة متأخرة','الإنجاز في الموعد'],group('emp'))+
-    '<h3>تفاصيل المعاملات ('+rows.length+')</h3>'+detail+'</'+'body></'+'html>';
+    '<h3>'+(o.scope==='pinned'?'المعاملات المثبّتة':'تفاصيل المعاملات')+' ('+rows.length+')</h3>'+detail+fullTx+'</'+'body></'+'html>';
   if(o.fmt==='word')return download(html,name+'.doc','application/msword');
   printHtml(html);
 }
@@ -1893,7 +1905,7 @@ function tabGeneral(){
   return sh('الهوية العامة','تظهر في الشريط الجانبي وعنوان التبويب.')+
   `<div class="form-grid two">${inp('brand.title','عنوان النظام')}${inp('brand.subtitle','العنوان الفرعي')}${inp('brand.mark','حرف الشعار','maxlength="2"')}${inp('brand.org','اسم الجهة / الإدارة الافتراضي','')}</div>
   <p class="notice" style="margin-top:1rem">اسم الجهة يُستخدم كقيمة افتراضية لحقل "الإدارة" عند إضافة معاملة جديدة.</p>
-  <p class="sync" style="margin-top:.8rem">الإصدار 6.7 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
+  <p class="sync" style="margin-top:.8rem">الإصدار 6.8 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
   <hr class="sep"><h3 class="sub">إعادة الضبط</h3>
   <p class="notice warn">إعادة الضبط تُرجع الصفحات والحقول والحالات والنصوص والألوان والمستخدمين للوضع الافتراضي. المعاملات المسجلة لا تُحذف.</p>
   <div class="form-actions"><button class="btn danger" data-act="reset-cfg">إعادة ضبط كل الإعدادات</button></div>`;
@@ -2297,6 +2309,7 @@ const ACTIONS={
   'fl-print':()=>{logEvent('print',{d:'قائمة المتابعة الأسبوعية'});printHtml(followWeekHtml())},
   'fl-print-doc':()=>{logEvent('export',{d:'قائمة المتابعة الأسبوعية (Word)'});download(followWeekHtml(),'قائمة_المتابعة_'+today()+'.doc','application/msword')},
   'follow-report':()=>openFollowReport(),
+  'fl-print-pin':()=>{if(!canExport())return toast(T('viewer'));followReport({basis:'received',scope:'pinned',detail:true,fmt:'pdf',cls:UI.fcls||''})},
   'weekly':()=>weeklyReport('pdf'),'weekly-doc':()=>weeklyReport('word'),'theme-toggle':()=>{L.dark=!L.dark;saveLocal();applyTheme();renderUserSel()},
   'au-refresh':()=>loadAudit(),'au-export':()=>exportAudit(),'au-more':()=>{UI.audit.show+=300;renderAuditBody()},
   'tab':el=>{UI.tab=el.dataset.tab;renderSettings()},
