@@ -73,6 +73,7 @@ button{cursor:pointer}
 .c-cls{background:color-mix(in srgb,var(--cc) 15%,transparent);color:var(--cc);margin-inline-start:.2rem}
 .fu-pick{display:flex;flex-wrap:wrap;gap:.45rem}.fu-opt{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .75rem;border:1.5px solid var(--line);border-radius:999px;cursor:pointer;font-weight:600;font-size:.9rem;background:var(--card)}
 .fu-opt input{width:1.05rem;height:1.05rem;min-height:0;margin:0;accent-color:var(--cc,var(--navy))}.fu-opt:has(input:checked){border-color:var(--cc,var(--navy));background:color-mix(in srgb,var(--cc,var(--navy)) 12%,transparent);color:var(--cc,var(--head))}.fu-opt small{font-weight:400;opacity:.8}.fu-hint{display:block;margin-top:.3rem}
+.pin-exp{display:inline-flex;align-items:center;gap:.35rem;flex-wrap:wrap;padding:.15rem .5rem;border:1px dashed var(--line);border-radius:999px}.pin-exp .btn{padding:.35rem .7rem}
 .chk-list{display:grid;gap:.55rem;margin:.3rem 0 .9rem}.chk-row{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer}.chk-row input{width:1.15rem;height:1.15rem;min-height:0;margin-top:.15rem}.chk-row small{display:block;color:var(--muted);font-weight:400;margin-top:.1rem}
 tr.row-late td{background:rgba(179,66,57,.06)}tr.row-soon td{background:rgba(201,138,30,.07)}
 .trend{display:flex;gap:.8rem;align-items:flex-end;height:11rem;padding:1.2rem .2rem 0}
@@ -264,7 +265,7 @@ input[type=date]{direction:ltr;text-align:right;font-variant-numeric:tabular-num
       <div style="display:flex;gap:.7rem;align-items:flex-start"><button class="mobile-menu" id="menuBtn" aria-label="القائمة">☰</button><div><h1 id="pageTitle"></h1><p id="pageDesc"></p></div></div>
       <div class="top-actions"><span class="sync"><i class="dot" id="syncDot"></i><span id="syncText"></span></span><select class="inp" id="userSel" title="المستخدم الحالي"></select><button class="btn secondary" id="themeBtn" data-act="theme-toggle" title="الوضع الليلي" aria-label="الوضع الليلي">🌙</button><button class="btn secondary" id="lockBtn" style="display:none"></button><button class="btn primary" id="addBtn"></button></div>
     </header>
-    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 6.8)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
+    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 7.0)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
   </main>
 </div>
 <div class="modal" id="formModal"><div class="modal-box"><div class="modal-head"><h2 id="formTitle"></h2><button class="close" data-close aria-label="رجوع"><span class="m-only">→ رجوع</span><span class="d-only">×</span></button></div><form id="txForm" novalidate></form></div></div>
@@ -1259,7 +1260,7 @@ function renderFollowPage(p){
   const tab=UI.ftab;
   const tabs=`<div class="ftabs"><button class="ftab${tab==='week'?' on':''}" data-act="fl-tab" data-id="week">القائمة الأسبوعية <b>${inList.length}</b></button><button class="ftab${tab==='all'?' on':''}" data-act="fl-tab" data-id="all">كل المتابعات <b>${all.length}</b></button><button class="ftab${tab==='hidden'?' on':''}" data-act="fl-tab" data-id="hidden">المُزالة <b>${hidden.length}</b></button></div>`;
   if(tab==='all'){renderListPage(p);const ph=host().querySelector('.panel-head');if(ph)ph.insertAdjacentHTML('afterend',tabs);return}
-  const tools=`<div class="filters">${(p.toolbar||'basic')!=='none'?`<input type="search" data-fq value="${esc(UI.fq||'')}" placeholder="${esc(T('search.ph'))}">`:''}<select data-fcls>${[['','كل التصنيفات'],...FC().map(c=>[c.name,(c.icon?c.icon+' ':'')+c.name])].map(([v,n])=>`<option value="${esc(v)}"${cls===v?' selected':''}>${esc(n)}</option>`).join('')}</select>${canExport()?`<button class="btn primary" data-act="fl-print">🖨 طباعة القائمة الأسبوعية</button><button class="btn secondary" data-act="fl-print-doc">Word</button><button class="btn secondary" data-act="follow-report">📊 تقرير مؤشر المتابعة</button>${all.some(t=>t.fpin)?`<button class="btn secondary" data-act="fl-print-pin">📌 طباعة المثبّتة بالتفصيل (${all.filter(t=>t.fpin).length})</button>`:''}`:''}</div>`;
+  const tools=`<div class="filters">${(p.toolbar||'basic')!=='none'?`<input type="search" data-fq value="${esc(UI.fq||'')}" placeholder="${esc(T('search.ph'))}">`:''}<select data-fcls>${[['','كل التصنيفات'],...FC().map(c=>[c.name,(c.icon?c.icon+' ':'')+c.name])].map(([v,n])=>`<option value="${esc(v)}"${cls===v?' selected':''}>${esc(n)}</option>`).join('')}</select>${canExport()?`<button class="btn primary" data-act="fl-print">🖨 طباعة القائمة الأسبوعية</button><button class="btn secondary" data-act="fl-print-doc">Word</button><button class="btn secondary" data-act="follow-report">📊 تقرير مؤشر المتابعة</button>${all.some(t=>t.fpin)?`<span class="pin-exp"><b>📌 المثبّتة (${all.filter(t=>t.fpin).length}):</b><button class="btn secondary" data-act="fl-print-pin" data-id="pdf">PDF</button><button class="btn secondary" data-act="fl-print-pin" data-id="word">Word</button><button class="btn secondary" data-act="fl-print-pin" data-id="excel">Excel</button></span>`:''}`:''}</div>`;
   let body='';
   if(tab==='hidden'){
     body=hidden.length?`<p class="hint" style="margin:0 0 .6rem">المعاملات هنا ما زالت تحت المتابعة ومحسوبة في المؤشر — أُخفيت من القائمة الأسبوعية فقط.</p>`+flTable(hidden.sort((a,b)=>(b.fhide||0)-(a.fhide||0)||ymd(b.closed||b.updated).localeCompare(ymd(a.closed||a.updated))),'hidden'):'<div class="empty">لا توجد معاملات مُزالة.</div>';
@@ -1559,19 +1560,19 @@ function weeklyReport(format){
 /* ======================= تقرير مؤشر المتابعة ======================= */
 function openFollowReport(){
   if(!canExport())return toast(T('viewer'));
-  const last=Object.assign({basis:'received',scope:'all',fmt:'pdf',from:'',to:'',detail:false},UI.frep||{});
+  const last=Object.assign({basis:'received',scope:'all',fmt:'pdf',from:'',to:'',style:'full'},UI.frep||{});
   openEditor({title:'تقرير مؤشر المتابعة',saveText:'إصدار التقرير',
     intro:'يشمل كل المعاملات تحت المتابعة ('+FC().map(c=>'«'+c.name+'»').join(' و')+') — المفتوحة والمكتملة — مع نسبة الإنجاز في الموعد. المعاملة التي تحمل أكثر من تصنيف تُحسب مرة واحدة في الإجمالي وتظهر تحت كل تصنيف في جدول «حسب التصنيف». اترك التاريخين فارغين لكل الفترات.',
     fields:[{k:'from',label:'من تاريخ',type:'date'},{k:'to',label:'إلى تاريخ',type:'date'},
       {k:'basis',label:'الفترة حسب',type:'select',opts:[['received',fieldLabel('received')],['reminderDate',fieldLabel('reminderDate')],['closed','تاريخ الإغلاق']]},
       {k:'cls',label:fieldLabel('followup'),type:'select',opts:[['','كل التصنيفات'],...FC().map(c=>[c.name,c.name])]},
       {k:'scope',label:'المعاملات',type:'select',opts:[['all','الكل (المفتوحة والمكتملة)'],['pinned','📌 المثبّتة فقط'],['done','المكتملة فقط'],['open','المفتوحة فقط'],['late','المتأخرة فقط (المفتوحة والمكتملة بعد الموعد)']]},
-      {k:'detail',label:'تفصيل كل معاملة (كل البيانات والملاحظات والخط الزمني)',type:'check'},
+      {k:'style',label:'شكل التقرير (PDF / Word)',type:'select',opts:[['brief','مختصر — جدول واحد بالأهم'],['full','كامل — المؤشرات والجداول'],['detail','كامل + تفصيل كل معاملة والخط الزمني']]},
       {k:'fmt',label:'الصيغة',type:'select',opts:[['pdf','PDF / طباعة'],['word','Word'],['excel','Excel'],['csv','CSV']]}],
     values:last,onSave:v=>{UI.frep=v;followReport(v)}});
 }
 function followReport(o){
-  o=o||{};
+  o=o||{};if(o.detail&&!o.style)o.style='detail';o.detail=o.style==='detail';
   const inP=t=>{const d=ymd(o.basis==='closed'?(isOpen(t)?'':(t.closed||t.updated)):o.basis==='reminderDate'?t.reminderDate:t.received);if(!o.from&&!o.to)return true;if(!d)return false;return (!o.from||d>=o.from)&&(!o.to||d<=o.to)};
   let rows=visTx().filter(t=>isFollow(t)&&inP(t)&&(!o.cls||hasCls(t,o.cls)));
   const R=t=>followResult(t);
@@ -1589,6 +1590,12 @@ function followReport(o){
   if(o.detail)cols.push(fieldLabel('notes'),'الخط الزمني');
   const data=rows.map(t=>[t.number,t.subject,t.followup||'',t.status,t.department||'',ownKey(t)||'',t.received||'',t.reminderDate||'',isOpen(t)?'':ymd(t.closed||t.updated),FOLLOW_RESULT[R(t)]||'',diffTxt(t),...(o.detail?[t.notes||'',(t.history||[]).map(h=>ymd(h[0])+' '+h[1]+(h[2]?' ('+h[2]+')':'')+(h[3]?' — '+h[3]:'')).join(' | ')]:[])]);
   const name='تقرير_مؤشر_المتابعة_'+today();
+  if(o.style==='brief'&&(o.fmt==='csv'||o.fmt==='excel')){
+    const lastA=t=>{const h=(t.history||[]).slice(-1)[0];return h?(h[1]||'')+' · '+fmt(ymd(h[0])):''};
+    const stA=t=>{const r=R(t);return (r==='open'||r==='open-late')?diffTxt(t):(FOLLOW_RESULT[r]||'')};
+    cols.length=0;cols.push('#','رقم المعاملة','الموضوع',fieldLabel('notes'),'المرحلة','الموظف',fieldLabel('reminderDate'),'الوضع','آخر إجراء');
+    data.length=0;rows.forEach((t,i)=>data.push([i+1,t.number,t.subject||'',t.notes||'',t.status||'',ownKey(t)||t.department||'',t.reminderDate?fmt(t.reminderDate):'',stA(t),lastA(t)]));
+  }
   if(o.fmt==='csv'||o.fmt==='excel'){
     if(o.fmt==='csv'){const q=v=>{v=String(v);if(/^[=@]/.test(v)||(/^[+\-]/.test(v)&&isNaN(v)))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'};return download('﻿'+[cols,...data].map(r=>r.map(q).join(',')).join('\r\n'),name+'.csv','text/csv;charset=utf-8')}
     return download('<'+'html dir="rtl"><'+'head><'+'meta charset="utf-8"></'+'head><'+'body><table border="1"><tr>'+cols.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr>'+data.map(r=>'<tr>'+r.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('')+'</table></'+'body></'+'html>',name+'.xls','application/vnd.ms-excel');
@@ -1608,6 +1615,18 @@ function followReport(o){
     return '<div class="card"><div class="ch">'+(i+1)+'. '+esc(t.number)+' — '+esc(t.subject||'')+'</div><table class="kv">'+fl.map(([k,v])=>'<tr><th>'+esc(k)+'</th><td>'+esc(v)+'</td></tr>').join('')+'</table>'+
       (hist.length?'<div class="tl">الخط الزمني</div>'+tbl(['التاريخ','المرحلة','بواسطة','ملاحظة'],hist):'')+'</div>'}).join('');
   const detail='<table class="grid"><tr>'+detailCols.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr>'+data.map(r=>'<tr>'+r.slice(0,detailCols.length).map((v,i)=>'<td'+(i===9&&resColor[v]?' style="color:'+resColor[v]+';font-weight:bold"':'')+'>'+esc(i>=6&&i<=8&&v?fmt(v):v)+'</td>').join('')+'</tr>').join('')+'</table>';
+  if(o.style==='brief'){
+    const last=t=>{const h=(t.history||[]).slice(-1)[0];return h?(h[1]||'')+' · '+fmt(ymd(h[0])):'—'};
+    const st=t=>{const r=R(t);return (r==='open'||r==='open-late')?diffTxt(t):(FOLLOW_RESULT[r]||'—')};
+    const col=t=>{const r=R(t);return r==='late'||r==='open-late'?'#b34239':r==='ontime'?'#28784f':'#a86f18'};
+    const bh='<'+'html dir="rtl" lang="ar"><'+'head><'+'meta charset="utf-8"><'+'title>'+(o.scope==='pinned'?'المعاملات المثبّتة':'مؤشر المتابعة')+'</'+'title><'+'style>body{font-family:Tahoma,Arial,sans-serif;padding:16px;font-size:12px;color:#111}h2{margin:0 0 4px;font-size:16px}.meta{color:#555;font-size:11px;margin:0 0 10px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #999;padding:5px 6px;text-align:right;vertical-align:top}th{background:'+navy+';color:'+fg+'}td.s{font-weight:bold;white-space:nowrap}</'+'style></'+'head><'+'body>'+
+      '<h2>'+(o.scope==='pinned'?'المعاملات المثبّتة':'مؤشر المتابعة')+' — '+esc(cfg.brand.title||'')+'</h2><p class="meta">'+esc(cfg.brand.org||'')+' — '+fmt(today())+' — العدد: '+rows.length+' — متأخرة: '+lateAll+' — أعدّه: '+esc(me().name)+'</p>'+
+      '<table><tr><th>#</th><th>رقم المعاملة</th><th>الموضوع</th><th>المرحلة</th><th>الموظف</th><th>الموعد</th><th>الوضع</th><th>آخر إجراء</th></tr>'+
+      rows.map((t,i)=>'<tr><td>'+(i+1)+'</td><td>'+esc(t.number)+'</td><td>'+esc(t.subject||'')+(t.notes?'<br><small style="color:#555">'+esc(t.notes)+'</small>':'')+'</td><td>'+esc(t.status||'')+'</td><td>'+esc(ownKey(t)||t.department||'')+'</td><td>'+(t.reminderDate?fmt(t.reminderDate):'—')+'</td><td class="s" style="color:'+col(t)+'">'+esc(st(t))+'</td><td>'+esc(last(t))+'</td></tr>').join('')+
+      '</table></'+'body></'+'html>';
+    if(o.fmt==='word')return download(bh,name+'.doc','application/msword');
+    return printHtml(bh);
+  }
   const html='<'+'html dir="rtl" lang="ar"><'+'head><'+'meta charset="utf-8"><'+'title>تقرير مؤشر المتابعة</'+'title><'+'style>'+
     'body{font-family:Tahoma,Arial,sans-serif;padding:18px;color:#111;font-size:12px}h2{margin:0 0 4px}h3{margin:18px 0 6px;font-size:13px;color:'+navy+'}'+
     '.meta{color:#555;font-size:11px;margin:0 0 12px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #999;padding:5px 7px;text-align:right;vertical-align:top}'+
@@ -1905,7 +1924,7 @@ function tabGeneral(){
   return sh('الهوية العامة','تظهر في الشريط الجانبي وعنوان التبويب.')+
   `<div class="form-grid two">${inp('brand.title','عنوان النظام')}${inp('brand.subtitle','العنوان الفرعي')}${inp('brand.mark','حرف الشعار','maxlength="2"')}${inp('brand.org','اسم الجهة / الإدارة الافتراضي','')}</div>
   <p class="notice" style="margin-top:1rem">اسم الجهة يُستخدم كقيمة افتراضية لحقل "الإدارة" عند إضافة معاملة جديدة.</p>
-  <p class="sync" style="margin-top:.8rem">الإصدار 6.8 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
+  <p class="sync" style="margin-top:.8rem">الإصدار 7.0 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
   <hr class="sep"><h3 class="sub">إعادة الضبط</h3>
   <p class="notice warn">إعادة الضبط تُرجع الصفحات والحقول والحالات والنصوص والألوان والمستخدمين للوضع الافتراضي. المعاملات المسجلة لا تُحذف.</p>
   <div class="form-actions"><button class="btn danger" data-act="reset-cfg">إعادة ضبط كل الإعدادات</button></div>`;
@@ -2309,7 +2328,7 @@ const ACTIONS={
   'fl-print':()=>{logEvent('print',{d:'قائمة المتابعة الأسبوعية'});printHtml(followWeekHtml())},
   'fl-print-doc':()=>{logEvent('export',{d:'قائمة المتابعة الأسبوعية (Word)'});download(followWeekHtml(),'قائمة_المتابعة_'+today()+'.doc','application/msword')},
   'follow-report':()=>openFollowReport(),
-  'fl-print-pin':()=>{if(!canExport())return toast(T('viewer'));followReport({basis:'received',scope:'pinned',detail:true,fmt:'pdf',cls:UI.fcls||''})},
+  'fl-print-pin':el=>{if(!canExport())return toast(T('viewer'));followReport({basis:'received',scope:'pinned',style:'brief',fmt:(el&&el.dataset.id)||'pdf',cls:UI.fcls||''})},
   'weekly':()=>weeklyReport('pdf'),'weekly-doc':()=>weeklyReport('word'),'theme-toggle':()=>{L.dark=!L.dark;saveLocal();applyTheme();renderUserSel()},
   'au-refresh':()=>loadAudit(),'au-export':()=>exportAudit(),'au-more':()=>{UI.audit.show+=300;renderAuditBody()},
   'tab':el=>{UI.tab=el.dataset.tab;renderSettings()},
