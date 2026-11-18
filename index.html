@@ -69,7 +69,8 @@ button{cursor:pointer}
 .prog i{display:block;height:100%;border-radius:99px}
 .prog-l{margin-inline-start:.35rem;color:var(--muted);font-size:.7rem}
 .chip{display:inline-block;font-size:.7rem;font-weight:700;padding:.12rem .5rem;border-radius:99px;margin:.15rem 0 0 .25rem;white-space:nowrap}
-.c-late{background:var(--red-bg);color:var(--red)}.c-soon{background:rgba(201,138,30,.16);color:var(--amber)}.c-ok{background:var(--green-bg);color:var(--green)}.c-age{background:rgba(192,91,32,.13);color:var(--orange)}.c-pri{background:var(--line);color:var(--head)}.c-quick{background:rgba(102,83,165,.14);color:#6653a5}
+.c-late{background:var(--red-bg);color:var(--red)}.c-soon{background:rgba(201,138,30,.16);color:var(--amber)}.c-ok{background:var(--green-bg);color:var(--green)}.c-age{background:rgba(192,91,32,.13);color:var(--orange)}.c-pri{background:var(--line);color:var(--head)}.c-dev{background:rgba(23,50,77,.12);color:var(--head);font-weight:800}.dev-row td{background:color-mix(in srgb,var(--gold) 8%,transparent)}
+.c-quick{background:rgba(102,83,165,.14);color:#6653a5}
 .c-cls{background:color-mix(in srgb,var(--cc) 15%,transparent);color:var(--cc);margin-inline-start:.2rem}
 .fu-pick{display:flex;flex-wrap:wrap;gap:.45rem}.fu-opt{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .75rem;border:1.5px solid var(--line);border-radius:999px;cursor:pointer;font-weight:600;font-size:.9rem;background:var(--card)}
 .fu-opt input{width:1.05rem;height:1.05rem;min-height:0;margin:0;accent-color:var(--cc,var(--navy))}.fu-opt:has(input:checked){border-color:var(--cc,var(--navy));background:color-mix(in srgb,var(--cc,var(--navy)) 12%,transparent);color:var(--cc,var(--head))}.fu-opt small{font-weight:400;opacity:.8}.fu-hint{display:block;margin-top:.3rem}
@@ -265,7 +266,7 @@ input[type=date]{direction:ltr;text-align:right;font-variant-numeric:tabular-num
       <div style="display:flex;gap:.7rem;align-items:flex-start"><button class="mobile-menu" id="menuBtn" aria-label="القائمة">☰</button><div><h1 id="pageTitle"></h1><p id="pageDesc"></p></div></div>
       <div class="top-actions"><span class="sync"><i class="dot" id="syncDot"></i><span id="syncText"></span></span><select class="inp" id="userSel" title="المستخدم الحالي"></select><button class="btn secondary" id="themeBtn" data-act="theme-toggle" title="الوضع الليلي" aria-label="الوضع الليلي">🌙</button><button class="btn secondary" id="lockBtn" style="display:none"></button><button class="btn primary" id="addBtn"></button></div>
     </header>
-    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 7.1)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
+    <div class="view-host" id="viewHost"><div class="panel" id="bootMsg">جاري تحميل النظام… (الإصدار 7.2)<br><small style="color:var(--muted)">إذا بقيت هذه الرسالة ظاهرة فالنظام لم يكتمل تشغيله. صوّر الصفحة كاملة وأرسلها.</small></div></div>
   </main>
 </div>
 <div class="modal" id="formModal"><div class="modal-box"><div class="modal-head"><h2 id="formTitle"></h2><button class="close" data-close aria-label="رجوع"><span class="m-only">→ رجوع</span><span class="d-only">×</span></button></div><form id="txForm" novalidate></form></div></div>
@@ -377,7 +378,14 @@ const PRESETS={
  'الداكن':{navy:'#0f1722',gold:'#d9a441',bg:'#141c27',paper:'#1b2533',ink:'#e8edf3',muted:'#93a1b3',line:'#2a3647',blue:'#6fa8dc',green:'#5fc08d',red:'#ef8a80',amber:'#e3b767',orange:'#f0a070'}
 };
 /* الصلاحيات: القالب الافتراضي لكل دور، والمدير يعدّلها لكل مستخدم من جدول الصلاحيات */
+/* المطور: حساب ثابت (بندر) بصلاحيات المدير كاملة، لا يُحذف ولا يُعدَّل إلا من نفسه، ونص الحقوق مثبّت ولا يُعدَّل من الإعدادات */
+const DEV_ROLE='المطور';
+const CREDIT={name:'تصميم وتطوير: بندر الجش',email:'bahaalmutairi@moh.gov.sa'};
+const LOCKED_TEXTS={'side.credit':CREDIT.name,'side.email':CREDIT.email};
+const DEV_TEXTS=/^(sync|noaccess|viewer|side)/;
+const isAdmRole=r=>r==='مدير'||r===DEV_ROLE;
 const ROLE_PERMS={
+ 'المطور':{scope:'all',add:true,edit:'all',status:true,del:true,export:true,settings:true},
  'مدير':{scope:'all',add:true,edit:'all',status:true,del:true,export:true,settings:true},
  'موظف':{scope:'all',add:true,edit:'all',status:true,del:false,export:true,settings:false},
  'مشاهد':{scope:'all',add:false,edit:'none',status:false,del:false,export:false,settings:false}
@@ -540,6 +548,12 @@ function normalizeCfg(c){
   }
   /* 6.3: صفحة المتابعة قابلة للتصدير */
   if(!c.mig63){c.mig63=true;const rp=(c.pages||[]).find(p=>p.id==='reminders');if(rp&&rp.filter&&rp.filter.followOnly)rp.exports=true}
+  /* تعيين المطور مرة واحدة: حساب «بندر» (يفضَّل المدير)، ومطور واحد فقط */
+  if(Array.isArray(c.users)){
+    if(!c.users.some(u=>u&&u.role===DEV_ROLE)){const cand=c.users.filter(u=>u&&/^\s*بندر/.test(u.name||''));const d=cand.find(u=>u.role==='مدير')||cand[0];if(d)d.role=DEV_ROLE}
+    let seen=false;c.users.forEach(u=>{if(u&&u.role===DEV_ROLE){if(seen)u.role='مدير';seen=true;u.active=true}});
+    if(c.texts){delete c.texts['side.credit'];delete c.texts['side.email']}
+  }
   if(!c.mig70){c.mig70=true;if(!(c.pages||[]).some(p=>p.id==='quick')&&((c.follow&&c.follow.classes)||[]).some(x=>x.name==='إنجاز سريع')){const qp=DEFAULT_PAGES().find(p=>p.id==='quick');const ri=c.pages.findIndex(p=>p.id==='reminders');qp.group=(c.pages[ri]||{}).group||qp.group;if(!c.navGroups.some(g=>g.id===qp.group))qp.group=c.navGroups[0].id;c.pages.splice(ri>-1?ri+1:c.pages.length,0,qp)}}
   if(!c.mig66){c.mig66=true;(c.widgets||[]).forEach(w=>{if(w.type==='stat'&&w.metric==='quick'){w.metric='cls';w.cls='إنجاز سريع'}});const ff=(c.fields||[]).find(f=>f.id==='followup');if(ff&&/^«عليها متابعة» أو «إنجاز سريع»/.test(ff.help||''))ff.help=DEFAULT_FIELDS().find(f=>f.id==='followup').help}
   if(!c.mig65){c.mig65=true;const ff=(c.fields||[]).find(f=>f.id==='followup');if(ff&&ff.label==='تصنيف المتابعة'){ff.label='تصنيف المعاملة';ff.help=DEFAULT_FIELDS().find(f=>f.id==='followup').help}const wf=(c.widgets||[]).find(w=>w.id==='w_follow');if(wf&&wf.label==='عليها متابعة')wf.label='تحت المتابعة'}
@@ -580,8 +594,8 @@ function normalizeCfg(c){
   c.users.forEach((u,i)=>{
     if(!u.id)u.id='u'+(i+1)+Date.now().toString(36);
     const base=ROLE_PERMS[u.role]||ROLE_PERMS['موظف'];
-    u.perms=u.role==='مدير'?Object.assign({},ROLE_PERMS['مدير']):Object.assign({},base,u.perms||{});
-    if(!Array.isArray(u.perms.pages)||u.role==='مدير')u.perms.pages=[];
+    u.perms=isAdmRole(u.role)?Object.assign({},ROLE_PERMS['مدير']):Object.assign({},base,u.perms||{});
+    if(!Array.isArray(u.perms.pages)||isAdmRole(u.role))u.perms.pages=[];
   });
   c.fields.forEach(f=>{if(!c.sections.some(s=>s.id===f.section))f.section=c.sections[0].id});
   c.pages.forEach(p=>{if(!c.navGroups.some(g=>g.id===p.group))p.group=c.navGroups[0].id});
@@ -648,7 +662,7 @@ let cfg=loadCfg();
 let transactions=loadTx();
 let tomb=jparse(store.getItem(KEY_TOMB),{});
 const UI={page:'dashboard',tab:'general',filters:{},sort:{}};
-const T=k=>(cfg.texts&&cfg.texts[k]!=null&&cfg.texts[k]!=='')?cfg.texts[k]:(TEXT_DEFAULTS[k]??k);
+const T=k=>(k in LOCKED_TEXTS)?LOCKED_TEXTS[k]:(cfg.texts&&cfg.texts[k]!=null&&cfg.texts[k]!=='')?cfg.texts[k]:(TEXT_DEFAULTS[k]??k);
 
 /* ======================= اختصارات منطقية ======================= */
 const st=n=>cfg.statuses.find(s=>s.name===n);
@@ -778,7 +792,9 @@ const defStatus=()=>(cfg.statuses.find(s=>s.role==='new')||cfg.statuses[0]).name
 const activeUsers=()=>cfg.users.filter(u=>u.active);
 /* المستخدم الحالي يُحدَّد بمعرّفه (ثابت حتى لو تغيّر الاسم)، ثم بالاسم للتوافق مع النسخ السابقة */
 const me=()=>(L.uid&&cfg.users.find(u=>u.id===L.uid))||cfg.users.find(u=>u.name===L.user)||activeUsers()[0]||cfg.users[0]||{name:'',role:'موظف'};
-const isAdmin=()=>me().role==='مدير';
+const isAdmin=()=>isAdmRole(me().role);
+const isDev=()=>me().role===DEV_ROLE;
+const isDevUser=u=>!!u&&u.role===DEV_ROLE;
 const P=()=>me().perms||ROLE_PERMS['موظف'];
 const myEmp=()=>me().employee||me().name;
 function setMenu(o){const s=document.getElementById('sidebar'),b=document.getElementById('menuBtn');if(s)s.classList.toggle('open',!!o);if(b){b.textContent=o?'✕':'☰';b.setAttribute('aria-expanded',o?'true':'false')}}
@@ -814,7 +830,7 @@ const canEditTx=t=>P().edit==='all'||(P().edit==='own'&&isMine(t));
 const canStatusTx=t=>!!P().status&&(P().scope!=='own'||isMine(t));
 const canDeleteTx=t=>!!P().del&&(P().scope!=='own'||isMine(t));
 const canExport=()=>!!P().export;
-const settingsAllowed=()=>isAdmin()||!!P().settings||!cfg.users.some(u=>u.active&&u.role==='مدير');
+const settingsAllowed=()=>isAdmin()||!!P().settings||!cfg.users.some(u=>u.active&&isAdmRole(u.role));
 const pageAllowed=p=>p.adminOnly||p.kind==='audit'?isAdmin():p.kind==='settings'?settingsAllowed():(isAdmin()||!(P().pages||[]).length||P().pages.includes(p.id));
 const page=id=>cfg.pages.find(p=>p.id===id);
 const fieldOf=id=>cfg.fields.find(f=>f.id===id);
@@ -1938,7 +1954,7 @@ function tabGeneral(){
   return sh('الهوية العامة','تظهر في الشريط الجانبي وعنوان التبويب.')+
   `<div class="form-grid two">${inp('brand.title','عنوان النظام')}${inp('brand.subtitle','العنوان الفرعي')}${inp('brand.mark','حرف الشعار','maxlength="2"')}${inp('brand.org','اسم الجهة / الإدارة الافتراضي','')}</div>
   <p class="notice" style="margin-top:1rem">اسم الجهة يُستخدم كقيمة افتراضية لحقل "الإدارة" عند إضافة معاملة جديدة.</p>
-  <p class="sync" style="margin-top:.8rem">الإصدار 7.1 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
+  <p class="sync" style="margin-top:.8rem">الإصدار 7.2 · ${esc(T('side.credit'))} · <a href="mailto:${esc(T('side.email'))}" dir="ltr">${esc(T('side.email'))}</a></p>
   <hr class="sep"><h3 class="sub">إعادة الضبط</h3>
   <p class="notice warn">إعادة الضبط تُرجع الصفحات والحقول والحالات والنصوص والألوان والمستخدمين للوضع الافتراضي. المعاملات المسجلة لا تُحذف.</p>
   <div class="form-actions"><button class="btn danger" data-act="reset-cfg">إعادة ضبط كل الإعدادات</button></div>`;
@@ -2230,7 +2246,8 @@ function tabTexts(){
   let h=sh('نصوص الواجهة','غيّر أي نص ثابت في الأزرار والرسائل والبحث. أسماء الصفحات والحقول والحالات تُعدَّل من تبويباتها. اترك الحقل فارغًا لاستعادة النص الافتراضي.',`<button class="btn secondary" data-act="texts-reset">استعادة كل النصوص</button>`)+
   `<div class="filters"><input type="search" data-tfilter placeholder="ابحث في النصوص..."></div>`;
   TEXT_GROUPS.forEach(([name,re])=>{
-    const keys=Object.keys(TEXT_DEFAULTS).filter(k=>re.test(k));if(!keys.length)return;
+    if(String(re)===String(DEV_TEXTS)&&!isDev())return;
+    const keys=Object.keys(TEXT_DEFAULTS).filter(k=>re.test(k)&&!(k in LOCKED_TEXTS));if(!keys.length)return;
     h+=`<h3 class="sub">${esc(name)}</h3><div class="form-grid two">`+keys.map(k=>`<div class="field trow" data-search="${esc(TEXT_DEFAULTS[k])} ${esc(T(k))}"><label>${esc(TEXT_DEFAULTS[k])}</label><input data-text="${esc(k)}" value="${esc(cfg.texts[k]??'')}" placeholder="${esc(TEXT_DEFAULTS[k])}"></div>`).join('')+'</div>';
   });
   return h;
@@ -2249,25 +2266,25 @@ function tabTheme(){
 }
 
 /* ---- المستخدمون ---- */
-const onlyAdmin=u=>u.role==='مدير'&&u.active&&cfg.users.filter(x=>x.active&&x.role==='مدير').length<2;
+const onlyAdmin=u=>isAdmRole(u.role)&&u.active&&cfg.users.filter(x=>x.active&&isAdmRole(x.role)).length<2;
 function tabUsers(){
-  const adminNoPin=cfg.users.some(u=>u.active&&u.role==='مدير'&&!u.pin);
+  const adminNoPin=cfg.users.some(u=>u.active&&isAdmRole(u.role)&&!u.pin);
   const chk=(u,k,dis)=>`<input type="checkbox" data-up="${esc(u.id)}|${k}"${u.perms[k]?' checked':''}${dis?' disabled':''}>`;
   const sel=(u,k,opts,dis)=>`<select data-up="${esc(u.id)}|${k}"${dis?' disabled':''}>${opts.map(o=>`<option value="${o[0]}"${u.perms[k]===o[0]?' selected':''}>${o[1]}</option>`).join('')}</select>`;
   return sh('المستخدمون والصلاحيات','المدير وحده يعدّل هذا الجدول. اختر الدور كقالب ثم عدّل كل صلاحية لكل مستخدم بالتفصيل. التغييرات تُحفظ تلقائيًا.',`<button class="btn primary" data-act="usr-add">+ مستخدم جديد</button>`)+
   (adminNoPin?`<div class="notice warn">المدير بلا رقم سري: أي شخص يستطيع اختيار اسم المدير والدخول. عيّن رقمًا سريًا للمدير من عمود "الرقم السري".</div>`:'')+
   `<div class="table-wrap"><table class="ptable"><thead><tr><th>المستخدم</th><th>الدور</th><th>مفعّل</th><th>الرقم السري</th><th>يرى</th><th>إضافة</th><th>تعديل</th><th>تغيير الحالة</th><th>حذف</th><th>تصدير</th><th>الإعدادات</th><th>الصفحات</th><th></th></tr></thead><tbody>`+
-  cfg.users.map(u=>{const adm=u.role==='مدير';const np=(u.perms.pages||[]).length;return `<tr${u.active?'':' style="opacity:.55"'}>
-   <td><strong>${esc(u.name)}</strong></td>
-   <td><select data-up="${esc(u.id)}|role">${['مدير','موظف','مشاهد'].map(r=>`<option${u.role===r?' selected':''}>${r}</option>`).join('')}</select></td>
-   <td><input type="checkbox" data-up="${esc(u.id)}|active"${u.active?' checked':''}></td>
-   <td>${mb('usr-pin',u.id,u.pin?'تغيير ●●●':'تعيين')}</td>
+  cfg.users.map(u=>{const dv=isDevUser(u),adm=isAdmRole(u.role);const np=(u.perms.pages||[]).length;return `<tr${u.active?'':' style="opacity:.55"'}${dv?' class="dev-row"':''}>
+   <td><strong>${esc(u.name)}</strong>${dv?' <span class="chip c-dev" title="حساب محمي">🔒</span>':''}</td>
+   <td>${dv?`<span class="chip c-dev">${DEV_ROLE}</span>`:`<select data-up="${esc(u.id)}|role">${['مدير','موظف','مشاهد'].map(r=>`<option${u.role===r?' selected':''}>${r}</option>`).join('')}</select>`}</td>
+   <td>${dv?'✓':`<input type="checkbox" data-up="${esc(u.id)}|active"${u.active?' checked':''}>`}</td>
+   <td>${dv&&!isDev()?'محمي':mb('usr-pin',u.id,u.pin?'تغيير ●●●':'تعيين')}</td>
    <td>${sel(u,'scope',[['all','كل المعاملات'],['own','معاملاته فقط']],adm)}</td>
    <td>${chk(u,'add',adm)}</td>
    <td>${sel(u,'edit',[['all','الكل'],['own','معاملاته'],['none','لا']],adm)}</td>
    <td>${chk(u,'status',adm)}</td><td>${chk(u,'del',adm)}</td><td>${chk(u,'export',adm)}</td><td>${chk(u,'settings',adm)}</td>
    <td>${adm?'الكل':mb('usr-pages',u.id,np?np+' صفحات':'الكل')}</td>
-   <td><div class="row-actions">${mb('usr-edit',u.id,'تعديل')}${mb('usr-del',u.id,'حذف','danger')}</div></td></tr>`}).join('')+
+   <td><div class="row-actions">${dv?(isDev()?mb('usr-edit',u.id,'تعديل'):''):mb('usr-edit',u.id,'تعديل')+mb('usr-del',u.id,'حذف','danger')}</div></td></tr>`}).join('')+
   `</tbody></table></div>
   <p class="notice" style="margin-top:.9rem"><b>شرح الأعمدة:</b> "يرى" يحدد هل يشاهد كل المعاملات أو المسندة له فقط. "تعديل: معاملاته" يسمح له بتعديل المسندة له فقط. المستخدمون حسابات دخول فقط، وقائمة "الموظف المسؤول" مستقلة عنهم؛ "معاملاته" هي التي فيها اسم الموظف المرتبط بالمستخدم (من زر تعديل). "الإعدادات" تفتح له تبويبات الإعدادات عدا هذا الجدول. "الصفحات" تحدد الصفحات الظاهرة له.<br>هذه الحماية تمنع الاستخدام العادي غير المصرح، لكنها ليست تشفيرًا للبيانات: من يملك الملف وخبرة تقنية يستطيع قراءة البيانات المخزنة في المتصفح.</p>`;
 }
@@ -2286,6 +2303,7 @@ function editUser(id){
     persistCfg();
   }});
 }
+const devLocked=id=>{const u=cfg.users.find(x=>x.id===id);if(isDevUser(u)&&!isDev()){toast('حساب المطور محمي — يعدّله المطور فقط');return true}return false};
 function editPin(id){
   const u=cfg.users.find(x=>x.id===id);if(!u)return;
   openEditor({title:'الرقم السري — '+u.name,intro:'اتركه فارغًا لإزالة الرقم السري (الدخول باسمه بدون رقم).',fields:[{k:'pin',label:'الرقم السري الجديد'},{k:'pin2',label:'تأكيد الرقم السري'}],values:{},
@@ -2401,9 +2419,9 @@ const ACTIONS={
   'texts-reset':()=>{if(confirm('استعادة كل النصوص الافتراضية؟')){cfg.texts={};persistCfg()}},
   'preset':el=>{Object.assign(cfg.theme,PRESETS[el.dataset.id]);persistCfg()},
   // المستخدمون
-  'usr-add':()=>{if(isAdmin())editUser(null)},'usr-edit':el=>{if(isAdmin())editUser(el.dataset.id)},
-  'usr-pin':el=>{if(isAdmin())editPin(el.dataset.id)},'usr-pages':el=>{if(isAdmin())editUserPages(el.dataset.id)},
-  'usr-del':el=>{if(!isAdmin())return;const u=cfg.users.find(x=>x.id===el.dataset.id);if(!u)return;if(cfg.users.length<2||onlyAdmin(u)){toast('لا يمكن حذف آخر مدير مفعّل');return}if(confirm('حذف المستخدم "'+u.name+'"؟ المعاملات المسندة له تبقى باسمه.')){cfg.users=cfg.users.filter(x=>x!==u);persistCfg()}},
+  'usr-add':()=>{if(isAdmin())editUser(null)},'usr-edit':el=>{if(!isAdmin())return;if(devLocked(el.dataset.id))return;editUser(el.dataset.id)},
+  'usr-pin':el=>{if(!isAdmin())return;if(devLocked(el.dataset.id))return;editPin(el.dataset.id)},'usr-pages':el=>{if(isAdmin())editUserPages(el.dataset.id)},
+  'usr-del':el=>{if(!isAdmin())return;const u=cfg.users.find(x=>x.id===el.dataset.id);if(!u)return;if(isDevUser(u)){toast('حساب المطور محمي ولا يمكن حذفه');return}if(cfg.users.length<2||onlyAdmin(u)){toast('لا يمكن حذف آخر مدير مفعّل');return}if(confirm('حذف المستخدم "'+u.name+'"؟ المعاملات المسندة له تبقى باسمه.')){cfg.users=cfg.users.filter(x=>x!==u);persistCfg()}},
   // الربط والنسخ
   'cloud-link':()=>linkCloud($('#cloudUrl').value,$('#cloudToken').value),
   'cloud-now':()=>syncNow(true),
@@ -2833,12 +2851,14 @@ document.addEventListener('input',e=>{
   if(d.up){
     if(!isAdmin())return;
     const i=d.up.indexOf('|'),u=cfg.users.find(x=>x.id===d.up.slice(0,i)),key=d.up.slice(i+1);if(!u)return;
-    if(key==='role'){if(onlyAdmin(u)&&el.value!=='مدير'){toast('يجب أن يبقى مدير مفعّل واحد على الأقل');refresh();return}u.role=el.value;u.perms=Object.assign({},ROLE_PERMS[u.role],{pages:u.role==='مدير'?[]:(u.perms.pages||[])});persistCfg();return}
+    if(isDevUser(u)){toast('حساب المطور محمي');refresh();return}
+    if(key==='role'&&el.value===DEV_ROLE){refresh();return}
+    if(key==='role'){if(onlyAdmin(u)&&el.value!=='مدير'){toast('يجب أن يبقى مدير مفعّل واحد على الأقل');refresh();return}u.role=el.value;u.perms=Object.assign({},ROLE_PERMS[u.role],{pages:isAdmRole(u.role)?[]:(u.perms.pages||[])});persistCfg();return}
     if(key==='active'){if(onlyAdmin(u)&&!el.checked){toast('يجب أن يبقى مدير مفعّل واحد على الأقل');refresh();return}u.active=el.checked;persistCfg();return}
     u.perms[key]=el.type==='checkbox'?el.checked:el.value;persistCfg(true);return;
   }
   if(el.id==='loginUser'){syncLoginPin();return}
-  if(d.text!=null){if(el.value==='')delete cfg.texts[d.text];else cfg.texts[d.text]=el.value;persistCfg(true);return}
+  if(d.text!=null){if(d.text in LOCKED_TEXTS||(DEV_TEXTS.test(d.text)&&!isDev()))return;if(el.value==='')delete cfg.texts[d.text];else cfg.texts[d.text]=el.value;persistCfg(true);if(/^side\./.test(d.text))renderNav();return}
   if(d.expCol!=null){cfg.export.columns=allCols().map(c=>c[0]).filter(k=>{const c=$(`[data-exp-col="${k}"]`);return c&&c.checked});persistCfg(true);return}
   if(d.tfilter!=null){const q=el.value.trim();$$('.trow').forEach(r=>{r.style.display=(!q||r.dataset.search.includes(q))?'':'none'});return}
   if(el.id==='f_status'||el.id==='f_followup'||(el.hasAttribute&&el.hasAttribute('data-fuc')))syncCond();
